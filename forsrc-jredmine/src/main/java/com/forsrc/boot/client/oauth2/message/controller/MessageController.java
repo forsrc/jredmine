@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 
-@Controller
+//@Controller
 public class MessageController {
 
     @Autowired
