@@ -23,3 +23,7 @@ dist/
 nbdist/
 .nb-gradle/
 *.log
+forsrc-jredmine-ui/jredmine/platforms/browser/www/
+forsrc-jredmine-ui/jredmine/platforms/ios/
+forsrc-jredmine-ui/jredmine/platforms/android/
+forsrc-jredmine-ui/jredmine/.cordova

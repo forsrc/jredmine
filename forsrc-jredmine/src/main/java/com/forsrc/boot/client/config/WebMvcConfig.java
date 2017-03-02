@@ -8,6 +8,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -24,6 +25,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         //registry.addViewController("/404").setViewName("/404");
         //registry.addViewController("/403").setViewName("/403");
         //registry.addViewController("/502").setViewName("/502");
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/ststic/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/jredmine/**").addResourceLocations("classpath:/templates/jredmine/");
     }
 
     //@Bean
