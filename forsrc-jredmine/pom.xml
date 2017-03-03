@@ -10,7 +10,7 @@
 
     <name>forsrc-jredmine</name>
     <description>forsrc-jredmine</description>
-
+    
     <parent>
         <groupId>com.forsrc</groupId>
         <artifactId>jredmine</artifactId>
@@ -107,12 +107,12 @@
             <!--<resource>-->
             <!--<directory>../forsrc-lib/forsrc-core/src/main/java</directory>-->
             <!--</resource>-->
-            <!--<resource>-->
-            <!--<directory>../forsrc-lib/forsrc-core/src/main/resources</directory>-->
-            <!--<includes>-->
-            <!--<include>**</include>-->
-            <!--</includes>-->
-            <!--</resource>-->
+            <resource>
+                <directory>../forsrc-lib/forsrc-core/src/main/resources</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+            </resource>
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
@@ -122,8 +122,60 @@
                     <exclude>application.properties</exclude>
                 </excludes>-->
             </resource>
+            <resource>
+                <directory>../forsrc-jredmine-ui</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+                <excludes>
+                    <exclude>**/hooks/**</exclude>
+                    <exclude>**/plugins/**</exclude>
+                    <exclude>*.java</exclude>
+                </excludes>
+            </resource>
         </resources>
         <plugins>
+        <!--<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>../forsrc-jredmine-ui</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>-->
+            <!--<plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                         here the phase you need 
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/classes/templates</outputDirectory>
+                            <resources>          
+                                <resource>
+                                    <directory>../forsrc-jredmine-ui</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>              
+                        </configuration>            
+                    </execution>
+                </executions>
+            </plugin>-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

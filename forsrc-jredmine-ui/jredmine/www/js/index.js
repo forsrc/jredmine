@@ -28,6 +28,7 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
+        window.location.href = "web/login.html";
     },
 
     // Update DOM on a Received Event

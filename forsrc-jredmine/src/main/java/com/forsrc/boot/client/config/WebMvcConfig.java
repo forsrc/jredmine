@@ -30,7 +30,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/ststic/**").addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("/jredmine/**").addResourceLocations("classpath:/templates/jredmine/");
+        registry.addResourceHandler("/jredmine/**").addResourceLocations("classpath:/jredmine/");
     }
 
     //@Bean
