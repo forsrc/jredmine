@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <meta name="viewport" content="user-scalable=yes, initial-scale=1, minimum-scale=1, width=device-width"/>
+
+    <link rel="stylesheet" type="text/css" href="../css/roboto.css">
+    <link rel="stylesheet" type="text/css" href="../css/material-icons.css">
+    <link rel="stylesheet" type="text/css" href="../css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/ripples.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/snackbar.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/wikimedia-timeline.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/index.css"/>
+    <title>MyStudy Home</title>
+</head>
+
+<body onload="app.initialize();">
+
+<!-- container START -->
+<div class="container" style="padding:0px;">
+
+    <i id="loader" class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom loader"></i>
+
+    <!-- toolbar START -->
+    <div id="toolbar" class="col-xs-12 toolbar">
+
+        <ul class="nav nav-tabs pull-left">
+            <li>
+                <a><i class="material-icons">account_circle</i>
+                    <span id="username" style="color:green;font-size: 12px;"></span>
+                </a>
+            </li>
+        </ul>
+
+        <ul class="nav nav-tabs pull-right">
+            <li>
+                <a href="search.html" style="padding:0;"><i class="material-icons">search</i></a>
+            </li>
+
+            <li>
+                <div class="btn-group">
+                    <a data-target="#" class="btn btn-raised dropdown-toggle" data-toggle="dropdown">
+                        <i class="material-icons more-v">more_vert</i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <i class="material-icons caret-up">arrow_drop_up</i>
+                        <li><a href="../web/home.html"><i class="material-icons">home</i>Home</a></li>
+                        <li><a href="../web/search.html"><i class="material-icons">search</i>Search</a></li>
+                        <li><a href="../web/ionic/index.html"><i class="material-icons">done</i>Ionic</a></li>
+                        <li><a href="../web/logout.html"><i class="material-icons">exit_to_app</i>Logout</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+    <!-- toolbar END -->
+
+    <!--  -->
+    <div class="col-xs-12" style="padding:0px; background-color:white;">
+
+        <ul id="nav-tabs-ul" class="nav nav-tabs nav-justified activityTabs one-edge-shadow"
+            style="margin-bottom: 15px;">
+            <li class="active">
+                <a href="#timeline1" data-toggle="tab">Timeline #1</a>
+            </li>
+            <li>
+                <a href="#timeline2" data-toggle="tab">Timeline #2</a>
+            </li>
+        </ul>
+
+        <!-- #1 -->
+        <p id="deviceProperties">Loading device properties...</p>
+        <div id="timeline" class="tab-content">
+            <div class="tab-pane fade active in" id="timeline1">
+                <section>
+                    <div class="timeline-filter-wrapper">
+                        <header class="timeline-filter">
+                            <p>
+                                Feature
+                            </p>
+                        </header>
+                    </div>
+                    <article class="timeline">
+                        <!-- 1# -->
+                        <div class="timeline-entry first even" data-category="['staff-change', 'lila']">
+                            <div class="timeline-icon green">
+                                <i class="fa fa-plus"></i>
+                            </div>
+                            <div class="timeline-description">
+                                <span class="timestamp"><time datetime="2016-07-01">2016-07-01</time></span>
+                                <h2>
+                                    <a id="tretikov-joins" href="#tretikov-joins">
+                                        <i class="fa fa-link"></i>
+                                    </a>
+                                    <i class="material-icons">people</i>
+                                    User Management
+                                </h2>
+                                <div class="captioned-image image-right">
+                                    <a href="#">
+                                        <img src="../img/logo.png" alt="User">
+                                    </a>
+                            <span class="caption">User Management
+                                <span class="attribution-link">
+                                    <a href="#">(MyStudy Sub System)</a>
+                                </span>
+                            </span>
+                                </div>
+                                <p>See <a href="user.html">User Management</a>.</p>
+                                <ul>
+                                    <li>
+                                        <a href="user.html">list</a>
+                                    </li>
+                                    <li>
+                                        <a href="user.html">create</a>
+                                    </li>
+                                    <li>
+                                        <a href="user.html">read</a>
+                                    </li>
+                                    <li>
+                                        <a href="user.html">update</a>
+                                    </li>
+                                    <li>
+                                        <a href="user.html">delete</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 2# -->
+                        <div class="timeline-entry odd" data-category="['unrest']">
+                            <div class="timeline-icon red">
+                                <i class="material-icons more-v">mood</i>
+                            </div>
+                            <div class="timeline-description">
+                            <span class="timestamp">
+                                <time datetime="2016-06-01">2016-06-01</time>
+                            </span>
+                                <h2>
+                                    <a id="superprotect-conflict" href="#superprotect-conflict">
+                                        <i class="fa fa-link"></i>
+                                    </a>
+                                    Demo
+                                </h2>
+                                <p>Demo
+                                    <a href="demo.html">click here</a>
+                                </p>
+                                <ul>
+                                    <li>
+                                        <a href="demo.html">
+                                            <i>Signpost</i>: demo</a>
+                                    </li>
+                                    <li>
+                                        <a href="demo.html">
+                                            <i>Media Viewer</i>: demo</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </article>
+                    <footer class="page-footer">
+                        <p>
+                            Feature <a rel="license" href="home.html">see here</a>.
+                        </p>
+                    </footer>
+                </section>
+            </div>
+
+            <div class="tab-pane fade" id="timeline2">
+
+            </div>
+        </div>
+    </div>
+
+    <span id="fail" data-toggle="snackbar" data-html-allowed="true"
+          data-content="<i class='material-icons times'>error_outline</i>&nbsp;&nbsp;Cannot load data. Please Try again!!"></span>
+
+
+    <!--<nav class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container text-center">
+        <ul class="nav nav-tabs nav-justified bottomBar">
+            <li><a href="activity.html">Home</a></li>
+            <li><a href="search.html">Search</a></li>
+        </ul>
+      </div>
+    </nav>-->
+
+    <a class="btn btn-default btn-fab reload"><i class="material-icons">refresh</i></a>
+
+    <div id="deviceready">
+        <p class="event listening"></p>
+        <p class="event received"></p>
+    </div>
+
+
+</div>
+<!-- container END -->
+
+
+<script type="text/javascript" src="../cordova.js"></script>
+
+<script type="text/javascript" src="../js/lib/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/lib/material.min.js"></script>
+<script type="text/javascript" src="../js/lib/ripples.min.js"></script>
+<script type="text/javascript" src="../js/lib/snackbar.min.js"></script>
+
+<script type="text/javascript" src="../js/web/config.js"></script>
+<script type="text/javascript" src="../js/web/common.js"></script>
+<script type="text/javascript" src="../js/web/utils.js"></script>
+<script type="text/javascript" src="../js/web/home.js"></script>
+</body>
+
+</html>
