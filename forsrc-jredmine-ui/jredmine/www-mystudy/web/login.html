@@ -40,7 +40,6 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
 
-
     <!-- Material Design fonts -->
     <link rel="stylesheet" type="text/css" href="../css/roboto.css">
     <link rel="stylesheet" type="text/css" href="../css/material-icons.css">
@@ -52,60 +51,64 @@
     <link rel="stylesheet" type="text/css" href="../css/ripples.min.css">
     <link rel="stylesheet" type="text/css" href="../css/snackbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="../css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/login.css"/>
     <title>MyStudy Login</title>
 </head>
 
-<body  onload="app.initialize();"
-style="background-image:url(../img/pattern.jpg);background-repeat:repeat;">
+<body onload="app.initialize();"
+      style="background-image:url(../img/pattern.jpg);background-repeat:repeat;">
 
 <!-- container START -->
-<div class="container">
+<div class="container" id="main">
 
-    <div class="row text-center">
-        <div class="col-xs-12 logo">
-            <img src="../img/logo.png"/>
-        </div>
-        <div class="col-xs-12 appname">
-            <h3>MyStudy APP<img id="loader" src="../img/load.gif"/></h3>
-        </div>
-        <div class="col-xs-12">
-            <div class="well bs-component">
-                 <form class="form-horizontal">
-                    <fieldset>
-                        <div class="form-group label-floating is-empty">
-                            <div class="col-md-12">
-                                <label class="control-label" for="username">Username</label>
-                                <input type="text" class="form-control" id="username">
-                                <span class="help-block">Enter your <code>Username</code></span>
+    <div class="row text-center login-div">
+        <div class="login-box">
+            <div class="col-xs-12 logo">
+                <img src="../img/logo.png"/>
+            </div>
+            <div class="col-xs-12 appname">
+                <h3>MyStudy APP<img id="loader" src="../img/load.gif"/></h3>
+            </div>
+            <div class="col-xs-12">
+                <div class="well bs-component">
+                    <form class="form-horizontal">
+                        <fieldset>
+                            <div class="form-group label-floating is-empty">
+                                <div class="col-md-12">
+                                    <label class="control-label" for="username">Username</label>
+                                    <input type="text" class="form-control" id="username">
+                                    <span class="help-block">Enter your <code>Username</code></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group label-floating is-empty">
-                            <div class="col-md-12">
-                                <label class="control-label" for="password">Password</label>
-                                <input type="password" class="form-control" id="password">
-                                <span class="help-block">Enter your <code>Password</code></span>
+                            <div class="form-group label-floating is-empty">
+                                <div class="col-md-12">
+                                    <label class="control-label" for="password">Password</label>
+                                    <input type="password" class="form-control" id="password">
+                                    <span class="help-block">Enter your <code>Password</code></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <!--<a id="login" class="btn btn-raised btn-primary login">LOGIN</a>-->
-                                <input type="button" id="login" class="btn btn-raised btn-primary login" disabled="disabled" value="LOGIN">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <!--<a id="login" class="btn btn-raised btn-primary login">LOGIN</a>-->
+                                    <input type="button" id="login" class="btn btn-raised btn-primary login"
+                                           disabled="disabled" value="LOGIN">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="col-md-12">
                                 <span id="loginError" class="error"
                                       style="color:#eb4141;font-weight: bold;display: none;">Invalid Username / password !!</span>
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
-                </form>
+                        </fieldset>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
-     <span id="fail" data-toggle="snackbar" data-html-allowed="true"
-           data-content="<i class='material-icons times'>error_outline</i>&nbsp;&nbsp;Cannot connect to server. Please Try again!!"></span>
+    <span id="fail" data-toggle="snackbar" data-html-allowed="true"
+          data-content="<i class='material-icons times'>error_outline</i>&nbsp;&nbsp;Cannot connect to server. Please Try again!!"></span>
 
     <span id="failMessage" data-toggle="snackbar" data-html-allowed="true"
           data-content="<i class='material-icons times'>error_outline</i>&nbsp;&nbsp;Cannot connect to server. Please Try again!!"></span>
@@ -117,11 +120,8 @@ style="background-image:url(../img/pattern.jpg);background-repeat:repeat;">
     </div>
 
 
-
-
 </div>
 <!-- container END -->
-
 
 
 <!--<script type="text/javascript" src="../js/lib/require.min.js"></script>-->
