@@ -1,43 +1,69 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title></title>
 
-    <link rel="manifest" href="manifest.json">
+        <link rel="manifest" href="manifest.json">
 
-    <!-- un-comment this code to enable service worker
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(() => console.log('service worker installed'))
-          .catch(err => console.log('Error', err));
-      }
-    </script>-->
+        <!-- un-comment this code to enable service worker
+        <script>
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+              .then(() => console.log('service worker installed'))
+              .catch(err => console.log('Error', err));
+          }
+        </script>-->
 
 
-    <!-- compiled css output -->
-    <link href="css/ionic.app.css" rel="stylesheet">
+        <!-- compiled css output -->
+        <link href="css/angular-material.css" rel="stylesheet">
+        <link href="css/angular-material-icons.css" rel="stylesheet">
+        <link href="css/ionic.app.css" rel="stylesheet">    
+        <link href="css/login.css" rel="stylesheet">
 
-    <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
 
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+        <!-- ionic/angularjs js -->
+        <script type="text/javascript" src="js/lib/angular-1.6.2/angular.js"></script>
+        <script type="text/javascript" src="js/lib/angular-1.6.2/angular-animate.js"></script>
+        <script type="text/javascript" src="js/lib/angular-1.6.2/angular-sanitize.js"></script>
+        <script type="text/javascript" src="js/lib/angular-1.6.2/angular-route.js"></script>
+        <script type="text/javascript" src="js/lib/angular-1.6.2/angular-aria.js"></script>
+        <script type="text/javascript" src="js/lib/angular-1.6.2/angular-cookies.js"></script>
+        <script type="text/javascript" src="js/lib/angular-1.6.2/angular-loader.js"></script>
+        <script type="text/javascript" src="js/lib/angular-1.6.2/angular-messages.js"></script>
+        <script type="text/javascript" src="js/lib/angular-1.6.2/angular-message-format.js"></script>
+        <script type="text/javascript" src="js/lib/angular-1.6.2/angular-mocks.js"></script>
+        <script type="text/javascript" src="js/lib/angular-1.6.2/angular-resource.js"></script>
+        <script type="text/javascript" src="js/lib/angular-1.6.2/angular-scenario.js"></script>
+        <script type="text/javascript" src="js/lib/angular-1.6.2/angular-touch.js"></script>
+        <script type="text/javascript" src="js/lib/angular-material/angular-material.js"></script>
+        <script type="text/javascript" src="js/lib/angular-material/angular-material-icons.js"></script>
+        <script type="text/javascript" src="js/lib/ng/ng-cordova.min.js"></script>
+        <script type="text/javascript" src="js/lib/ng/ngStorage.min.js"></script>
 
-    <!-- your app's js -->
-    <script src="js/app/app.js"></script>
-    <script src="js/app/controllers.js"></script>
-    <script src="js/app/services.js"></script>
-  </head>
-  <body ng-app="jredmineNgApp">
-    <!--
-      The nav bar that will be updated as we navigate between views.
-    -->
+        <script type="text/javascript" src="lib/ionic/js/ionic.js"></script>
+        <script type="text/javascript" src="lib/ionic/js/ionic.mybundle.js"></script>
+
+        <!--    <script type="text/javascript" src="lib/ionic/js/ionic.js"></script>-->
+
+        <!-- cordova script (this will be a 404 during development) -->
+        <script type="text/javascript" src="cordova.js"></script>
+
+        <!-- your app's js -->
+        <script type="text/javascript" src="app/app.js"></script>
+        <script type="text/javascript" src="app/routes.js"></script>
+        <script type="text/javascript" src="app/controllers.js"></script>
+        <script type="text/javascript" src="app/services.js"></script>
+    </head>
+    <body ng-app="jredmineNgApp">
+        <!--
+          The nav bar that will be updated as we navigate between views.
+        -->
     <ion-nav-bar class="bar-positive">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
+        <ion-nav-back-button>
+        </ion-nav-back-button>
     </ion-nav-bar>
     <!--
       The views will be rendered in the <ion-nav-view> directive below
@@ -45,5 +71,5 @@
       have templates inline in this html file if you'd like).
     -->
     <ion-nav-view></ion-nav-view>
-  </body>
+</body>
 </html>

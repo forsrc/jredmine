@@ -1,0 +1,46 @@
+<ion-view view-title="Login" align-title="left" ng-controller="loginController">
+    <ion-content style="background: url(img/login.jpg) center; background-size: cover;">
+        <form name="loginForm">
+            <div class="login-div">
+                <div class="login-box">
+                    <div class="hero no-header flat">
+                        <div class="content">
+                            <div class="app-icon"></div>
+                            <h1>Jredmine</h1>
+                        </div>
+                    </div>
+                    <div class="list">
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Username</label>
+                            <input type="text" name="username" ng-model="username" md-maxlength="30" required/>
+                            <div class="hint" ng-if="showHints">Tell us what we should call you!</div>
+                            <div ng-messages="loginForm.username.$error" ng-if="!showHints">
+                                <div ng-message="required">Name is required.</div>
+                                <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Password</label>
+                            <input type="password" name="password" ng-model="password" md-maxlength="30" required/>
+                            <div class="hint" ng-if="showHints">Tell us what we should call you!</div>
+                            <div ng-messages="loginForm.password.$error" ng-if="!showHints">
+                                <div ng-message="required">Password is required.</div>
+                                <div ng-message="md-maxlength">The password has to be less than 30 characters long.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div class="padding">
+                        <button ui-sref="app.profile" class="button button-full button-assertive ink">Login</button>
+                    </div>
+                    <div class="button-bar social-login">
+                        <button class="button button-small button-border icon-left ion-social-google button-assertive-900">Google+</button>
+                        <button class="button button-small button-border icon-left ion-social-twitter button-calm-900">Twitter</button>
+                        <button class="button button-small button-border icon-left ion-social-facebook button-positive-900">Facebook</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </ion-content>
+</ion-view>
