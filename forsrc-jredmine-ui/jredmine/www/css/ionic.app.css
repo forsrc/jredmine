@@ -7790,7 +7790,8 @@ input[type="url"],
 input[type="search"],
 input[type="tel"],
 input[type="color"] {
-  border: 0; }
+  /*border: 0; */
+}
 
 input[type="radio"],
 input[type="checkbox"] {
