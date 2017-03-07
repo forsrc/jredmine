@@ -13,23 +13,25 @@
                         <div class="list inputdeErrors">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Username</label>
-                                <input name="username" ng-model="username" md-maxlength="30" required/>
+                                <input name="username" ng-model="username" md-minlength="6" md-maxlength="30" required/>
                                 <div class="hint" ng-if="!loginForm.username.$touched">
-                                    <span class="help-block">Enter your <code>Username</code>.</span>
+                                    Please enter your <code>username</code>.
                                 </div>
                                 <div ng-messages="loginForm.username.$error" ng-if="loginForm.username.$touched">
                                     <div ng-message="required">Userame is required.</div>
+                                    <div ng-message="md-minlength">The username has to be more than 6 characters long.</div>
                                     <div ng-message="md-max11length">The username has to be less than 30 characters long.</div>
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Password</label>
-                                <input type="password" name="password" ng-model="password" md-maxlength="30" required/>
+                                <input type="password" name="password" ng-model="password" md-minlength="6" md-maxlength="30" required/>
                                 <div class="hint" ng-if="!loginForm.password.$touched">
-                                    <span class="help-block">Enter your <code>Password</code>.</span>
+                                    Please enter your <code>password</code>.
                                 </div>
                                 <div ng-messages="loginForm.password.$error" ng-if="loginForm.password.$touched">
                                     <div ng-message="required">Password is required.</div>
+                                    <div ng-message="md-minlength">The password has to be more than 6 characters long.</div>
                                     <div ng-message="md-maxlength">
                                         The password has to be less than 30 characters long.
                                     </div>

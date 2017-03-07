@@ -67,3 +67,11 @@
     bottom: 7px;
     opacity: 1;
 }
+
+md-input-container label {
+    color: rgb(84, 22, 29);
+}
+
+md-input-container.md-input-has-value:not(.md-input-invalid) label {
+    color: rgb(84, 22, 29);
+}
