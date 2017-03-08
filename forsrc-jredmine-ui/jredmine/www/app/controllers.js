@@ -18,12 +18,13 @@ define(["angular", "console"], function(angular, console) {
     console.info("controllers.js --> ");
     function initialize(angular) {
         console.info("controllers.js --> initialize()");
-        angular.module('jredmineNgApp.controllers', ['ngMaterial', 'ngMessages'])
-                .controller('loginController', function($scope) {
-            $scope.showHints = true;
-            //$scope.username = "";
-            //$scope.password = "";
-        });
+        angular
+            .module('jredmineNgApp.controllers', ['ngMaterial', 'ngMessages'])
+            .controller('loginController', function($scope) {
+                $scope.showHints = true;
+                //$scope.username = "";
+                //$scope.password = "";
+            });
     }
     console.groupEnd();
     return {initialize: initialize};

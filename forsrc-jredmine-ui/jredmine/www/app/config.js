@@ -65,6 +65,9 @@ require.config({
         "angular-material": {
             deps: ["angular"]
         },
+        "angular-material-icons": {
+            deps: ["angular"]
+        },
         "angular-route": {
             deps: ["angular"]
         },
@@ -89,12 +92,15 @@ require.config({
         "console": {
             deps: ["console-min", "order"]
         }
-    }//,
+    },
+    priority: [
+        "angular"
+    ]//,
     //baseUrl: '/'
 });
 
 
-require(["app"],
+require(["app", "angular"],
     function (App) {
         App.initialize();
     }

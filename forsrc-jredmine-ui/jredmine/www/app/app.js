@@ -38,6 +38,7 @@ define(
             "shared-service",
             "angular-animate",
             "angular-material",
+            "angular-material-icons",
             "angular-route",
             "angular-sanitize",
             "angular-aria",
@@ -53,21 +54,21 @@ define(
              "svg-assets-cache"
 
         ],
-        function(angular, console, filters, directives, routes, controllers, services, shared) {
+        function (angular, console, filters, directives, routes, controllers, services, shared) {
             console.group("app.js");
             console.info("app.js --> ", angular);
-            if (!window.angular) {
-                window.angular = angular;
-            }
+
             var initialize = function() {
                 console.info("app.js --> initialize()");
                 // angular.element(document).ready(() => {
-                angular.element(document).ready(function() {
+                angular.element(window.document).ready(function() {
                     console.info("app.js --> angular.element(document).ready()");
                     angular
-                            .module('jredmineNgApp', ['ngResource', 'ui.router', 'ionic', 'ngMaterial', 'ngCordova', 'ngStorage',
-                            'jredmineNgApp.shared', 'jredmineNgApp.filters', 'jredmineNgApp.routes', 'jredmineNgApp.directives', 'jredmineNgApp.controllers', 'jredmineNgApp.services'
-                    ])
+                            .module("jredmineNgApp", ['ng', 'ngResource', 'ui.router', 'ionic', 'ngMaterial', 'ngCordova',
+                                'ngStorage', 'ngAnimate', 'ngSanitize', 'ngMdIcons', "ngAria", 'ngMessages', "ngRoute",
+                                'jredmineNgApp.shared', 'jredmineNgApp.filters', 'jredmineNgApp.routes',
+                                'jredmineNgApp.directives', 'jredmineNgApp.controllers', 'jredmineNgApp.services'
+                            ])
                             .run(function($ionicPlatform) {
                                 console.info("app.js --> run()");
                                 $ionicPlatform.ready(function() {
@@ -83,7 +84,18 @@ define(
                                         StatusBar.styleDefault();
                                     }
                                 });
+                            })
+                            .config(function($mdThemingProvider, $mdGestureProvider) { // Angular-Material Color Theming
+                                $mdGestureProvider.skipClickHijack();
+
+                                $mdThemingProvider.theme('default')
+                                    .primaryPalette('red')
+                                    .accentPalette('blue');
+                            })
+                            .controller('jredmineNgAppController', function($scope) {
+
                             });
+
                     shared.initialize(angular);
                     filters.initialize(angular);
                     routes.initialize(angular);
@@ -91,7 +103,7 @@ define(
                     services.initialize(angular);
                     directives.initialize(angular);
 
-                    angular.bootstrap(document, ["jredmineNgApp"]);
+                    angular.bootstrap(window.document, ["jredmineNgApp"]);
                     console.info("app.js --> angular.bootstrap()");
                 });
             };
