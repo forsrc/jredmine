@@ -25,6 +25,11 @@ require.config({
         "svg-assets-cache": "../js/lib/svg/svg-assets-cache",
         "ionic": "../lib/ionic/js/ionic",
         "ionic-angular": "../lib/ionic/js/ionic-angular",
+        "console-min": "../js/lib/console/console-min",
+        "console": "../js/lib/console/console",
+        "order": "../js/lib/require/order",
+        "css": "../js/lib/require/order",
+        "text": "../js/lib/require/text",
         "app": "app",
         "filters": "filters",
         "controllers": "controllers",
@@ -72,12 +77,18 @@ require.config({
         "angular-ui-router": {
             deps: ["angular"]
         },
+        "app": {
+            deps: ["angular"]
+        },
         "routes": {
             deps: ["angular"]
         },
         "controllers": {
             deps: ["angular"]
         },
+        "console": {
+            deps: ["console-min", "order"]
+        }
     }//,
     //baseUrl: '/'
 });

@@ -2,93 +2,104 @@
 
 /**
  (function(angular) {
-
-    angular
-            .module('jredmineNgApp', ['ionic', 'ui.router', 'ngMaterial', 'ngCordova', 'ngStorage',
-                     'jredmineNgApp.filters', 'jredmine.controllers', 'jredmine.services'
-                    ])
-            .run(function($ionicPlatform) {
-        $ionicPlatform.ready(function() {
-            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-            // for form inputs)
-            if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-                cordova.plugins.Keyboard.disableScroll(true);
-
-            }
-            if (window.StatusBar) {
-                // org.apache.cordova.statusbar required
-                StatusBar.styleDefault();
-            }
-        });
-    });
-
-
-})(angular);*/
+ 
+ angular
+ .module('jredmineNgApp', ['ionic', 'ui.router', 'ngMaterial', 'ngCordova', 'ngStorage',
+ 'jredmineNgApp.filters', 'jredmine.controllers', 'jredmine.services'
+ ])
+ .run(function($ionicPlatform) {
+ $ionicPlatform.ready(function() {
+ // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+ // for form inputs)
+ if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+ cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+ cordova.plugins.Keyboard.disableScroll(true);
+ 
+ }
+ if (window.StatusBar) {
+ // org.apache.cordova.statusbar required
+ StatusBar.styleDefault();
+ }
+ });
+ });
+ 
+ 
+ })(angular);*/
 
 define(
-    [
-        "angular",
-        "filters",
-        "directives",
-        "routes",
-        "controllers",
-        "services",
-        "angular-animate",
-        "angular-material",
-        "angular-route",
-        "angular-sanitize",
-        "angular-aria",
-        "angular-messages",
-        "angular-message-format",
-        "ionic",
-        "ionic-angular",
-        "angular-ui-router",
-        "ng-cordova",
-        "ngStorage"
+        [
+            "angular",
+            "console",
+            "filters",
+            "directives",
+            "routes",
+            "controllers",
+            "services",
+            "shared-service",
+            "angular-animate",
+            "angular-material",
+            "angular-route",
+            "angular-sanitize",
+            "angular-aria",
+            "angular-messages",
+            "angular-message-format",
+            "angular-resource",
+            "ionic",
+            "ionic-angular",
+            "angular-ui-router",
+            "ionic-angular",
+            "ng-cordova",
+            "ngStorage",
+             "svg-assets-cache"
 
-    ],
-
-    function init(angular, filters, directives, routes, controllers, services, angularAnimate, angularMaterial) {
-        var initialize = function () {
-
-            var app = angular
-                .module('jredmineNgApp', ['ionic', 'ui.router', 'ngMaterial', 'ngCordova', 'ngStorage',
-                    'jredmineNgApp.filters', 'jredmineNgApp.controllers', 'jredmineNgApp.services'
-                ])
-                .run(function ($ionicPlatform) {
-                    $ionicPlatform.ready(function () {
-                        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-                        // for form inputs)
-                        if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-                            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-                            cordova.plugins.Keyboard.disableScroll(true);
-
-                        }
-                        if (window.StatusBar) {
-                            // org.apache.cordova.statusbar required
-                            StatusBar.styleDefault();
-                        }
-                    });
-                });
-
-            if(!window.angular){
+        ],
+        function(angular, console, filters, directives, routes, controllers, services, shared) {
+            console.group("app.js");
+            console.info("app.js --> ", angular);
+            if (!window.angular) {
                 window.angular = angular;
             }
-            filters.initialize(angular.module('jredmineNgApp.filters', []));
-            routes.initialize(angular.module('jredmineNgApp.routes', []));
-            controllers.initialize(angular.module('jredmineNgApp.controllers', ['ngMaterial', 'ngMessages']));
-            services.initialize(angular.module('jredmineNgApp.services', []));
-            //angular.module('jredmineNgApp.services', []).factory(services);
-            angular.module('jredmineNgApp.directives', []).directive(directives);
+            var initialize = function() {
+                console.info("app.js --> initialize()");
+                // angular.element(document).ready(() => {
+                angular.element(document).ready(function() {
+                    console.info("app.js --> angular.element(document).ready()");
+                    angular
+                            .module('jredmineNgApp', ['ngResource', 'ui.router', 'ionic', 'ngMaterial', 'ngCordova', 'ngStorage',
+                            'jredmineNgApp.shared', 'jredmineNgApp.filters', 'jredmineNgApp.routes', 'jredmineNgApp.directives', 'jredmineNgApp.controllers', 'jredmineNgApp.services'
+                    ])
+                            .run(function($ionicPlatform) {
+                                console.info("app.js --> run()");
+                                $ionicPlatform.ready(function() {
+                                    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+                                    // for form inputs)
+                                    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+                                        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+                                        cordova.plugins.Keyboard.disableScroll(true);
 
-            angular.bootstrap(document, ["jredmineNgApp"]);
+                                    }
+                                    if (window.StatusBar) {
+                                        // org.apache.cordova.statusbar required
+                                        StatusBar.styleDefault();
+                                    }
+                                });
+                            });
+                    shared.initialize(angular);
+                    filters.initialize(angular);
+                    routes.initialize(angular);
+                    controllers.initialize(angular);
+                    services.initialize(angular);
+                    directives.initialize(angular);
 
-        };
-        return {
-            initialize: initialize
-        };
-    });
+                    angular.bootstrap(document, ["jredmineNgApp"]);
+                    console.info("app.js --> angular.bootstrap()");
+                });
+            };
+            console.groupEnd();
+            return {
+                initialize: initialize
+            };
+        });
 
 
 

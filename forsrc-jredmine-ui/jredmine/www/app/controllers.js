@@ -13,16 +13,19 @@
 })(angular);
  */
 
-define([],function() {
-
-    function initialize(app) {
-        app.controller('loginController', function($scope) {
+define(["angular", "console"], function(angular, console) {
+    console.group("controllers.js");
+    console.info("controllers.js --> ");
+    function initialize(angular) {
+        console.info("controllers.js --> initialize()");
+        angular.module('jredmineNgApp.controllers', ['ngMaterial', 'ngMessages'])
+                .controller('loginController', function($scope) {
             $scope.showHints = true;
             //$scope.username = "";
             //$scope.password = "";
-        })
+        });
     }
-
-    return {initialize : initialize};
+    console.groupEnd();
+    return {initialize: initialize};
 });
 

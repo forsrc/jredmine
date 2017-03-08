@@ -13,24 +13,30 @@
 })(angular);
  */
 
-define([], function () {
-
+define(["angular", "console"],function(angular, console) {
+    console.group("directives.js");
+    console.info("directives.js --> ");
     var directives = {};
 
-    directives.mydirective = function () {
-        return {
-            restrict: "jredmine",
-            template: "<strong>jredmineDirective</strong>",
-            replace: true
+    function initialize(angular) {
+        console.info("directives.js --> initialize()");
+        directives.mydirective = function() {
+            return {
+                restrict: "E",
+                template: "<strong>jredmineDirective</strong>",
+                replace: true
+            };
         };
-
-    };
+        angular.module('jredmineNgApp.directives', []).directive(directives);
+    }
 
     directives.appVersion = function (version) {
         return function (scope, elm, attrs) {
             elm.text(version);
         };
     };
-
-    return directives;
+    console.groupEnd();
+    return {
+        initialize: initialize
+    };
 });
