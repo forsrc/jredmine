@@ -33,7 +33,7 @@ define(
             console.group("app.js");
             console.info("app.js --> ", angular);
 
-            var initialize = function() {
+            var initialize = function(angular) {
                 console.info("app.js --> initialize()");
                 // angular.element(document).ready(() => {
                 angular.element(window.document).ready(function() {
@@ -65,7 +65,7 @@ define(
                         $mdThemingProvider.theme('default')
                                 .primaryPalette('red')
                                 .accentPalette('blue');
-                    })
+                    });
                     angularModule.controller('jredmineNgAppController', function($scope) {
 
                     });

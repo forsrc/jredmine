@@ -12,6 +12,7 @@ define(
                 "loginService": "services/login-service"
             };
             var factories = {
+                "login-factory": "services/login-factory"
             };
             function initialize(angular) {
                 console.info("services.js --> initialize()");
@@ -41,16 +42,18 @@ define(
                     if (!factoryJs) {
                         return;
                     }
-                    angularModule.factoryJs(name,
+                    angularModule.factory(name,
                             ['$scope', '$injector', '$_shared', '$http',
                                 function($scope, $injector, $_shared, $http) {
                                     require([factoryJs], function(service) {
                                         $injector.invoke(service, this,
                                                 {
-                                                    '$scope': $scope,
-                                                    '$_shared': $_shared,
-                                                    '$http': $http,
-                                                    '$_angularModule': angularModule
+                                                    'angular': angular,
+                                                    "name": name,
+                                                    "module": angularModule,
+                                                    "$scope": $scope,
+                                                    "$_shared": $_shared,
+                                                    '$http': $http
                                                 }
                                         );
                                     });

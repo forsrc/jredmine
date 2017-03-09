@@ -15,7 +15,7 @@ require.config({
         "angular-resource": "../js/lib/angular-1.6.2/angular-resource",
         "angular-route": "../js/lib/angular-1.6.2/angular-route",
         "angular-sanitize": "../js/lib/angular-1.6.2/angular-sanitize",
-        "angular-scenario": "../js/lib/angular-1.6.2/angular-scenario",
+        //"angular-scenario": "../js/lib/angular-1.6.2/angular-scenario",
         "angular-touch": "../js/lib/angular-1.6.2/angular-touch",
         "angular-material": "../js/lib/angular-material/angular-material",
         "angular-material-icons": "../js/lib/angular-material/angular-material-icons",
@@ -105,8 +105,8 @@ require.config({
 
 
 require(["app", "angular"],
-        function(App) {
-            App.initialize();
+        function(App, angular) {
+            App.initialize(angular);
         }
 );
 

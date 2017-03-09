@@ -2,7 +2,6 @@
 
 define(["console"], function(console) {
     console.group("login-service.js");
-    console.info("login-service.js --> ");
     var service =
             [
                 '$http', '$scope', "$_shared",
