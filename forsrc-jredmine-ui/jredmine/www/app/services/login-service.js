@@ -1,38 +1,16 @@
 "use strict";
-/**
-(function (angular) {
-    angular
-        .module('jredmine.services', [])
-        .controller('loginController', ['$scope', 'login', function ($scope, notify) {
-            $scope.login = function (){
-                login($scope.username, $scope.password);
-            }
-            ;
-        }])
-        .factory('login', ['$window', function (window) {
-            return function (username, password) {
-                window.alert(username);
-            };
-        }]);
 
-    ;
-})(angular);
-*/
-define([], function() {
-    function initialize(angular) {
-        angular
-                .module('jredmineNgApp.loginService', [])
-                .controller('loginController', ['$scope', 'login', function($scope, notify) {
-                    $scope.login = function() {
-                        login($scope.username, $scope.password);
-                    }
-                    ;
-                }])
-                .factory('login', ['$window', function(window) {
-                    return function(username, password) {
-                        window.alert(username);
-                    };
-                }]);
-    }
-    return {initialize: initialize};
+define(["console"], function(console) {
+    console.group("login-service.js");
+    console.info("login-service.js --> ");
+    var service =
+            [
+                '$http', '$scope', "$_shared",
+                function($http, $scope, $_shared) {
+                    console.info("login-controller.js --> function()", $_shared);
+
+                }
+            ];
+    console.groupEnd();
+    return service;
 });

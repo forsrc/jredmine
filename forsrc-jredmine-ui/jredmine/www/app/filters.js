@@ -1,31 +1,23 @@
 "use strict";
 
-/**
-(function (angular) {
-
-    angular.module('jredmineNgApp.filters', []).
-    filter('interpolate', ['version', function(version) {
-        return function(text) {
-            return String(text).replace(/\%VERSION\%/mg, version);
-        }
-    }]);
-
-})(angular);
-*/
-
-define(["angular", "console"],function(angular, console) {
+define(["angular", "console"], function(angular, console) {
     console.group("filters.js");
     console.info("filters.js --> ");
+    var filters = {
+    };
     function initialize(angular) {
         console.info("filters.js --> initialize()");
-        angular
-                .module('jredmineNgApp.filters', [])
-                .filter('interpolate', ["version", function(version) {
-                    return function(text) {
-                        return String(text).replace(/\%VERSION\%/mg, version);
-                    };
-                }]);
+        var angularModule = angular.module('jredmineNgApp.filters', []);
+        Object.keys(filters).forEach(function(name) {
+            var filter = filters[name];
+            if (!filter) {
+                return;
+            }
+            angularModule.filter(name, filter);
+            console.debug("services.js --> " + name, filter);
+        });
+
     }
     console.groupEnd();
-    return {initialize : initialize};
+    return {initialize: initialize};
 });

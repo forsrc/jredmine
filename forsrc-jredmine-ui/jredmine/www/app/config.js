@@ -38,6 +38,7 @@ require.config({
         "directives": "directives",
         "shared-service": "shared/shared-service",
         "loginService": "services/login-service",
+        "utils": "utils/angular-utils",
     },
     shim: {
         angular: {
@@ -89,6 +90,9 @@ require.config({
         "controllers": {
             deps: ["angular"]
         },
+        "utils": {
+            deps: ["angular"]
+        },
         "console": {
             deps: ["console-min", "order"]
         }
@@ -96,13 +100,13 @@ require.config({
     priority: [
         "angular"
     ]//,
-    //baseUrl: '/'
+            //baseUrl: '/'
 });
 
 
 require(["app", "angular"],
-    function (App) {
-        App.initialize();
-    }
+        function(App) {
+            App.initialize();
+        }
 );
 
