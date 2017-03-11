@@ -29,7 +29,7 @@ require.config({
         "console-min": "../js/lib/console/console-min",
         "console": "../js/lib/console/console",
         "order": "../js/lib/require/order",
-        "css": "../js/lib/require/order",
+        "css": "../js/lib/require/css",
         "text": "../js/lib/require/text",
         "app": "app",
         "filters": "filters",
@@ -46,7 +46,8 @@ require.config({
             exports: "angular"
         },
         "angular-require": {
-            exports: "angular"
+            exports: "angular-require",
+            deps: ["angular"]
         },
         ionic: {
             exports: "ionic",

@@ -36,13 +36,13 @@ define(["angular", "console", "angular-require"],function(angular, console) {
                     controller: "loginController",
                     //controllerAs: "login",
                     resolve: {
+                        // css: $requireProvider.requireCSS([
+                        //     'css!css/login.css'
+                        // ]),
                         deps: $requireProvider.requireJS([
                             'views/login/login-service',
                             'views/login/login-controller'
-                        ]),
-                        //css: $requireProvider.requireCSS([
-                        //    'css!../css/login.css'
-                        //])
+                        ])
                     }
                 });
 
