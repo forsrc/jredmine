@@ -20,13 +20,13 @@
 })(angular);
  */
 
-define(["angular", "console"],function(angular, console) {
+define(["angular", "console", "angular-require"],function(angular, console) {
     console.group("routes.js");
     console.time("routes.js");
     function initialize(angular) {
         console.info("routes.js --> initialize()");
-        var routesModule = angular.module('jredmineNgApp.routes', []);
-            routesModule.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
+        var routesModule = angular.module('jredmineNgApp.routes', ['ngRequire', 'ui.router']);
+            routesModule.config(["$stateProvider", "$urlRouterProvider", "$requireProvider", function ($stateProvider, $urlRouterProvider, $requireProvider) {
                 $urlRouterProvider.otherwise("/login");
 
                 $stateProvider.state("login", {
@@ -34,7 +34,16 @@ define(["angular", "console"],function(angular, console) {
                     templateUrl: "app/views/login/login.html",
                     title: "Login",
                     controller: "loginController",
-                    //controllerAs: "login"
+                    //controllerAs: "login",
+                    resolve: {
+                        deps: $requireProvider.requireJS([
+                            'views/login/login-service',
+                            'views/login/login-controller'
+                        ]),
+                        //css: $requireProvider.requireCSS([
+                        //    'css!../css/login.css'
+                        //])
+                    }
                 });
 
             }]);

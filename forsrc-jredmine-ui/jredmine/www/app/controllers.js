@@ -1,11 +1,12 @@
 "use strict";
 
 
-define(["angular", "console"], function (angular, console) {
+define(["angular", "console", "angular-require"
+], function (angular, console) {
     console.group("controllers.js");
     console.time("controllers.js");
     var controllers = {
-        'loginController': 'views/login/login-controller'
+        //'loginController': 'views/login/login-controller'
     };
 
     function initialize(angular) {
@@ -16,15 +17,13 @@ define(["angular", "console"], function (angular, console) {
 //                    $injector.invoke(controller, this, {'$scope': $scope});
 //                });
 //            }]);
-        //angularModule = angular.module('jredmineNgApp');
-
         Object.keys(controllers).forEach(function (name) {
             var controllerJs = controllers[name];
             if (!controllerJs) {
                 return;
             }
+
             angularModule.controller(name,
-                ["$injector", "$scope", "$_shared",
                     function ($injector, $scope, $_shared) {
                         require([controllerJs], function (controller) {
                             $injector.invoke(controller, this,
@@ -37,7 +36,7 @@ define(["angular", "console"], function (angular, console) {
                                 }
                             );
                         });
-                    }]);
+                    });
             console.debug("controllers.js --> " + name, controllerJs);
         });
     }

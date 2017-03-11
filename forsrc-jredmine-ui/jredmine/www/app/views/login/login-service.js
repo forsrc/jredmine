@@ -19,25 +19,34 @@ define(["angular", "console"], function (angular, console) {
     console.group("login-service.js");
     console.time("login-service.js");
 
+    angular.module('jredmineNgApp.routes')
+    .service("loginService",
+        function () {
+            console.debug("login-service.js --> function()");
+
+            this.login = function (user) {
+                console.info(user);
+                alert(user.username);
+            }
+        }
+    );
+
+
     function initialize(angular, module) {
         console.debug("login-service.js --> initialize()");
+        module.service("loginService",
+            function () {
+                console.debug("login-service.js --> function()");
 
-        module.service("loginService", [
-            '$http', '$scope', "$_shared",
-            function ($http, $scope, $_shared) {
-                console.debug("login-service.js --> function()", $_shared);
-
-                this.login = function () {
-                    $scope.dataLoading = true;
-                    console.info($scope.user);
-                    alert($scope.user.username);
+                this.login = function (user) {
+                    console.info(user);
+                    alert(user.username);
                 }
             }
-        ]);
-
+        );
     }
 
     console.timeEnd("login-service.js");
     console.groupEnd();
-    return {initialize: initialize};
+    //return {initialize: initialize};
 });

@@ -4,6 +4,7 @@
 require.config({
     paths: {
         "angular": "../js/lib/angular-1.6.2/angular",
+        "angular-require": "../js/lib/require/angular-require",
         "angular-animate": "../js/lib/angular-1.6.2/angular-animate",
         "angular-aria": "../js/lib/angular-1.6.2/angular-aria",
         "angular-cookies": "../js/lib/angular-1.6.2/angular-cookies",
@@ -42,6 +43,9 @@ require.config({
     },
     shim: {
         angular: {
+            exports: "angular"
+        },
+        "angular-require": {
             exports: "angular"
         },
         ionic: {
@@ -85,7 +89,7 @@ require.config({
             deps: ["angular"]
         },
         "routes": {
-            deps: ["angular"]
+            deps: ["angular", "angular-require"]
         },
         "controllers": {
             deps: ["angular"]

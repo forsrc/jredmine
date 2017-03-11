@@ -11,6 +11,7 @@ define(
             "services",
             "shared-service",
             "utils",
+            "angular-require",
             "angular-animate",
             "angular-material",
             "angular-material-icons",
@@ -27,7 +28,6 @@ define(
             "ng-cordova",
             "ngStorage",
             "svg-assets-cache"
-
         ],
         function(angular, console, filters, directives, routes, controllers, services, shared, utils) {
             console.group("app.js");
@@ -39,7 +39,7 @@ define(
                 // angular.element(document).ready(() => {
                 angular.element(window.document).ready(function() {
                     console.debug("app.js --> angular.element(document).ready()");
-                    var angularModule = angular.module("jredmineNgApp", ['ng', 'ngResource', 'ui.router', 'ionic', 'ngMaterial', 'ngCordova',
+                    var angularModule = angular.module("jredmineNgApp", ['ng', 'ngRequire', 'ngResource', 'ui.router', 'ionic', 'ngMaterial', 'ngCordova',
                         'ngStorage', 'ngAnimate', 'ngSanitize', 'ngMdIcons', "ngAria", 'ngMessages', "ngRoute",
                         'jredmineNgApp.utils', 'jredmineNgApp.shared', 'jredmineNgApp.filters', 'jredmineNgApp.routes',
                         'jredmineNgApp.directives', 'jredmineNgApp.controllers', 'jredmineNgApp.services'
