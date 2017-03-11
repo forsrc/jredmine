@@ -5,7 +5,7 @@ define(["angular", "console"], function (angular, console) {
     console.group("controllers.js");
     console.time("controllers.js");
     var controllers = {
-        'loginController': 'controllers/login-controller'
+        'loginController': 'views/login/login-controller'
     };
 
     function initialize(angular) {
@@ -17,6 +17,7 @@ define(["angular", "console"], function (angular, console) {
 //                });
 //            }]);
         //angularModule = angular.module('jredmineNgApp');
+
         Object.keys(controllers).forEach(function (name) {
             var controllerJs = controllers[name];
             if (!controllerJs) {

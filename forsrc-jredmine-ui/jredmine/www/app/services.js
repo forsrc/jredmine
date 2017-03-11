@@ -10,10 +10,10 @@ define(
             console.time("services.js");
             console.debug("services.js --> ");
             var services = {
-                "loginService": "services/login-service"
+                //"loginService": "views/login/login-service"
             };
             var factories = {
-                "login-factory": "services/login-factory"
+                //"login-factory": "views/login/login-factory"
             };
             function initialize(angular) {
                 console.debug("services.js --> initialize()");

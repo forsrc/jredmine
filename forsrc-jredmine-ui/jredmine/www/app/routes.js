@@ -31,10 +31,10 @@ define(["angular", "console"],function(angular, console) {
 
                 $stateProvider.state("login", {
                     url: "/login",
-                    templateUrl: "app/views/login.html",
+                    templateUrl: "app/views/login/login.html",
                     title: "Login",
                     controller: "loginController",
-                    controllerAs: "login"
+                    //controllerAs: "login"
                 });
 
             }]);

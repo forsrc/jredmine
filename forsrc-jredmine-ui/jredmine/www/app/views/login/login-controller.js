@@ -1,15 +1,34 @@
 "use strict";
 
 
-define(["console"], function (console) {
+define(["console", "views/login/login-service", "views/login/login-factory"], function (console, loginServiceJs, loginFactoryJs) {
     console.group("login-controller.js");
     console.time("login-controller.js");
+
+    function init(angular, module) {
+        console.debug("login-controller.js --> init()", angular, module);
+        loginServiceJs.initialize(angular, module);
+        loginFactoryJs.initialize(angular, module);
+    }
+
     var controller =
         [
             'angular', "name", "module", '$scope', "$_shared",
             function (angular, name, module, $scope, $_shared) {
-                console.info("login-controller.js --> function()", angular, name, $scope, $_shared);
+                console.debug("login-controller.js --> function()", angular, name, $scope, module, $_shared, loginService);
+                init(angular, module);
+
+                $scope.user = {
+                    username : "forsrc",
+                    password : "forsrc"
+                };
                 $scope.message = 'hello world!';
+                // $scope.login = function () {
+                //     $scope.dataLoading = true;
+                //     console.info($scope.user);
+                // };
+                //$scope.login = loginService.login();
+                $scope.dataLoading = false;
                 $scope.$apply();
             }
         ];
