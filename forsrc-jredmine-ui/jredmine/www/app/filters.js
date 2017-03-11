@@ -2,11 +2,11 @@
 
 define(["angular", "console"], function(angular, console) {
     console.group("filters.js");
-    console.info("filters.js --> ");
+    console.time("filters.js");
     var filters = {
     };
     function initialize(angular) {
-        console.info("filters.js --> initialize()");
+        console.debug("filters.js --> initialize()");
         var angularModule = angular.module('jredmineNgApp.filters', []);
         Object.keys(filters).forEach(function(name) {
             var filter = filters[name];
@@ -18,6 +18,7 @@ define(["angular", "console"], function(angular, console) {
         });
 
     }
+    console.timeEnd("filters.js");
     console.groupEnd();
     return {initialize: initialize};
 });

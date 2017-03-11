@@ -3,7 +3,7 @@
 
 define(["console"], function (console) {
     console.group("login-controller.js");
-
+    console.time("login-controller.js");
     var controller =
         [
             'angular', "name", "module", '$scope', "$_shared",
@@ -13,6 +13,7 @@ define(["console"], function (console) {
                 $scope.$apply();
             }
         ];
+    console.timeEnd("login-controller.js");
     console.groupEnd();
     return controller;
 });

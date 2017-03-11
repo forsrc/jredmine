@@ -7,7 +7,8 @@ define(
         ],
         function(angular, console) {
             console.group("services.js");
-            console.info("services.js --> ");
+            console.time("services.js");
+            console.debug("services.js --> ");
             var services = {
                 "loginService": "services/login-service"
             };
@@ -15,7 +16,7 @@ define(
                 "login-factory": "services/login-factory"
             };
             function initialize(angular) {
-                console.info("services.js --> initialize()");
+                console.debug("services.js --> initialize()");
                 var angularModule = angular.module('jredmineNgApp.services', ["jredmineNgApp.shared"]);
                 Object.keys(services).forEach(function(name) {
                     var serviceJs = services[name];
@@ -61,6 +62,7 @@ define(
                     console.debug("services.js --> " + name, factories);
                 });
             }
+            console.timeEnd("services.js");
             console.groupEnd();
             return {initialize: initialize};
         });

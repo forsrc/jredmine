@@ -31,20 +31,21 @@ define(
         ],
         function(angular, console, filters, directives, routes, controllers, services, shared, utils) {
             console.group("app.js");
-            console.info("app.js --> ", angular);
+            console.time("app.js");
+            console.debug("app.js --> ", angular);
 
             var initialize = function(angular) {
-                console.info("app.js --> initialize()");
+                console.debug("app.js --> initialize()");
                 // angular.element(document).ready(() => {
                 angular.element(window.document).ready(function() {
-                    console.info("app.js --> angular.element(document).ready()");
+                    console.debug("app.js --> angular.element(document).ready()");
                     var angularModule = angular.module("jredmineNgApp", ['ng', 'ngResource', 'ui.router', 'ionic', 'ngMaterial', 'ngCordova',
                         'ngStorage', 'ngAnimate', 'ngSanitize', 'ngMdIcons', "ngAria", 'ngMessages', "ngRoute",
                         'jredmineNgApp.utils', 'jredmineNgApp.shared', 'jredmineNgApp.filters', 'jredmineNgApp.routes',
                         'jredmineNgApp.directives', 'jredmineNgApp.controllers', 'jredmineNgApp.services'
                     ]);
                     angularModule.run(function($ionicPlatform) {
-                        console.info("app.js --> run()");
+                        console.debug("app.js --> run()");
                         $ionicPlatform.ready(function() {
                             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                             // for form inputs)
@@ -78,9 +79,10 @@ define(
                     controllers.initialize(angular);
 
                     angular.bootstrap(window.document, ["jredmineNgApp"]);
-                    console.info("app.js --> angular.bootstrap()");
+                    console.debug("app.js --> angular.bootstrap()");
                 });
             };
+            console.timeEnd("app.js");
             console.groupEnd();
             return {
                 initialize: initialize

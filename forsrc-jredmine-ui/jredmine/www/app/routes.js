@@ -22,7 +22,7 @@
 
 define(["angular", "console"],function(angular, console) {
     console.group("routes.js");
-    console.info("routes.js -->");
+    console.time("routes.js");
     function initialize(angular) {
         console.info("routes.js --> initialize()");
         var routesModule = angular.module('jredmineNgApp.routes', []);
@@ -39,6 +39,7 @@ define(["angular", "console"],function(angular, console) {
 
             }]);
     }
+    console.timeEnd("routes.js");
     console.groupEnd();
     return {initialize: initialize};
 });

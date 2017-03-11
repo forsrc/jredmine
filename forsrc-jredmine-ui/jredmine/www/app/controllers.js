@@ -3,13 +3,13 @@
 
 define(["angular", "console"], function (angular, console) {
     console.group("controllers.js");
-    console.info("controllers.js --> ");
+    console.time("controllers.js");
     var controllers = {
         'loginController': 'controllers/login-controller'
     };
 
     function initialize(angular) {
-        console.info("controllers.js --> initialize()");
+        console.debug("controllers.js --> initialize()");
         var angularModule = angular.module('jredmineNgApp.controllers', []);
 //        angularModule.controller('loginController', ['$scope', '$injector', function($scope, $injector) {
 //                require(['controllers/login-controller'], function(controller) {
@@ -41,6 +41,7 @@ define(["angular", "console"], function (angular, console) {
         });
     }
 
+    console.timeEnd("controllers.js");
     console.groupEnd();
     return {initialize: initialize};
 });

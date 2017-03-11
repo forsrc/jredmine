@@ -15,11 +15,12 @@
 
 define(["angular", "console"],function(angular, console) {
     console.group("directives.js");
-    console.info("directives.js --> ");
+    console.timeEnd("directives.js");
+    console.debug("directives.js --> ");
     var directives = {};
 
     function initialize(angular) {
-        console.info("directives.js --> initialize()");
+        console.debug("directives.js --> initialize()");
         directives.mydirective = function() {
             return {
                 restrict: "E",
@@ -35,6 +36,7 @@ define(["angular", "console"],function(angular, console) {
             elm.text(version);
         };
     };
+    console.timeEnd("directives.js");
     console.groupEnd();
     return {
         initialize: initialize

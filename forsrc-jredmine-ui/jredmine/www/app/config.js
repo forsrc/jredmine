@@ -104,9 +104,13 @@ require.config({
 });
 
 
-require(["app", "angular"],
+require(["app", "angular", "console"],
         function(App, angular) {
+            console.group("config.js");
+            console.time("config.js");
             App.initialize(angular);
+            console.timeEnd("config.js");
+            console.groupEnd();
         }
 );
 
