@@ -16,27 +16,31 @@
 
 
 define(["angular", "console"], function (angular, console) {
-    console.group("login-service.js");
-    console.time("login-service.js");
+    var jsName = "login-controller.js";
+    console.group(jsName);
+    console.time(jsName);
 
     angular.module('jredmineNgApp.routes')
     .service("loginService",
         function () {
-            console.debug("login-service.js --> function()");
+            console.debug("{0} --> function()".formatStr([jsName]));
 
             this.login = function (user) {
                 console.info(user);
-                alert(user.username);
+                if(user && user.username === "forsrc" && user.password === "forsrc"){
+                    return true;
+                }
+                return false;
             }
         }
     );
 
 
     function initialize(angular, module) {
-        console.debug("login-service.js --> initialize()");
+        console.debug("{0} --> initialize()".formatStr([jsName]));
         module.service("loginService",
             function () {
-                console.debug("login-service.js --> function()");
+                console.debug("{} --> function()".formatStr([jsName]));
 
                 this.login = function (user) {
                     console.info(user);
@@ -46,7 +50,7 @@ define(["angular", "console"], function (angular, console) {
         );
     }
 
-    console.timeEnd("login-service.js");
+    console.timeEnd(jsName);
     console.groupEnd();
     //return {initialize: initialize};
 });

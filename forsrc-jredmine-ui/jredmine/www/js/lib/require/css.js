@@ -1,14 +1,14 @@
-(function (win) {
+(function(win) {
     var doc = win.document,
         docBody = doc.body,
-        createLink = function (src) {
+        createLink = function(src) {
             var link = doc.createElement('link');
             link.type = 'text/css';
             link.rel = 'stylesheet';
             link.href = src;
             return link;
         },
-        resolveClassName = function (moduleName) {
+        resolveClassName = function(moduleName) {
             var parts = moduleName.split('/');
             return parts[parts.length - 1].replace('.', '-') + '-loaded';
         };
@@ -29,8 +29,8 @@
                 docBody.removeChild(test);
                 load();
             } else {
-                link = createLink(name);
-                head.appendChild(link);
+                link = createLink(name),
+                    head.appendChild(link);
 
                 interval = win.setInterval(function () {
                     if (test.offsetHeight > 0) {

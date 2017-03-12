@@ -20,16 +20,17 @@
 })(angular);
  */
 
-define(["angular", "console", "angular-require"],function(angular, console) {
+define(["angular", "console", "angular-require", "css"], function (angular, console) {
     console.group("routes.js");
     console.time("routes.js");
     function initialize(angular) {
         console.info("routes.js --> initialize()");
         var routesModule = angular.module('jredmineNgApp.routes', ['ngRequire', 'ui.router']);
-            routesModule.config(["$stateProvider", "$urlRouterProvider", "$requireProvider", function ($stateProvider, $urlRouterProvider, $requireProvider) {
-                $urlRouterProvider.otherwise("/login");
+        routesModule.config(["$stateProvider", "$urlRouterProvider", "$requireProvider", function ($stateProvider, $urlRouterProvider, $requireProvider) {
+            $urlRouterProvider.otherwise("/login");
 
-                $stateProvider.state("login", {
+            $stateProvider
+                .state("login", {
                     url: "/login",
                     templateUrl: "app/views/login/login.html",
                     title: "Login",
@@ -44,10 +45,27 @@ define(["angular", "console", "angular-require"],function(angular, console) {
                             'views/login/login-controller'
                         ])
                     }
+                })
+                .state("home", {
+                    url: "/home",
+                    templateUrl: "app/views/home/home.html",
+                    title: "Home",
+                    controller: "homeController",
+                    //controllerAs: "home",
+                    resolve: {
+                        // css: $requireProvider.requireCSS([
+                        //     'css!css/login.css'
+                        // ]),
+                        deps: $requireProvider.requireJS([
+                            'views/home/home-service',
+                            'views/home/home-controller'
+                        ])
+                    }
                 });
 
-            }]);
+        }]);
     }
+
     console.timeEnd("routes.js");
     console.groupEnd();
     return {initialize: initialize};

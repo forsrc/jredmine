@@ -40,6 +40,7 @@ require.config({
         "shared-service": "shared/shared-service",
         "loginService": "services/login-service",
         "utils": "utils/angular-utils",
+        "myutils": "utils/utils"
     },
     shim: {
         angular: {
@@ -47,7 +48,7 @@ require.config({
         },
         "angular-require": {
             exports: "angular-require",
-            deps: ["angular"]
+            deps: ["angular", "css"]
         },
         ionic: {
             exports: "ionic",
@@ -96,7 +97,7 @@ require.config({
             deps: ["angular"]
         },
         "utils": {
-            deps: ["angular"]
+            deps: ["angular", "myutils"]
         },
         "console": {
             deps: ["console-min", "order"]

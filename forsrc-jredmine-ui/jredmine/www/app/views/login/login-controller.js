@@ -3,36 +3,37 @@
 
 define(["angular", "console", 'views/login/login-service'], function (angular, console, loginService) {
 
-    console.group("login-controller.js");
-    console.time("login-controller.js");
+    var jsName = "login-controller.js";
+    console.group(jsName);
+    console.time(jsName);
 
-    console.debug("login-controller.js --> ", loginService);
+    console.debug("{0} --> ".formatStr([jsName]), loginService);
 
     angular.module('jredmineNgApp.routes')
-        .controller('loginController', function ($scope, loginService) {
+        .controller('loginController', function ($scope, $location, loginService) {
+
+            console.debug("{0} --> function()".formatStr([jsName]), $scope, loginService);
+            $scope.user = {
+                username: "forsrc",
+                password: "forsrc"
+            };
+            $scope.message = 'hello world!';
+            // $scope.login = function () {
+            //     $scope.dataLoading = true;
+            //     console.info($scope.user);
+            // };
+            $scope.toLogin = function () {
+                var success = loginService.login($scope.user);
+                if (success) {
+                    $location.path("/home")
+                }
+            };
+            $scope.dataLoading = false;
+            //$scope.$apply();
 
 
-        console.debug("login-controller.js --> function()", $scope, loginService);
-
-
-        $scope.user = {
-            username: "forsrc",
-            password: "forsrc"
-        };
-        $scope.message = 'hello world!';
-        // $scope.login = function () {
-        //     $scope.dataLoading = true;
-        //     console.info($scope.user);
-        // };
-        $scope.toLogin = function() {
-            loginService.login($scope.user);
-        }
-        $scope.dataLoading = false;
-        //$scope.$apply();
-
-
-    });
-    console.timeEnd("login-controller.js");
+        });
+    console.timeEnd(jsName);
     console.groupEnd();
 })
 ;

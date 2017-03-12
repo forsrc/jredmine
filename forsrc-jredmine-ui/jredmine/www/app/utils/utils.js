@@ -1,9 +1,37 @@
 "use strict";
 
-define([], function(console) {
-    //console.group("utils.js");
+define([], function() {
+
+    /**
+     * var str = "This {0} is test. {1} {-1}";
+     * str = str.formatStr(["func", "ok"]);
+     * @param args {Array}
+     * @returns {string}
+     */
+    String.prototype.formatStr = function (args) {
+        var str = this;
+        var regex = "";
+        if (this.formatStrRegExp) {
+            regex = this.formatStrRegExp;
+        } else {
+            String.prototype.formatStrRegExp = /{(-?[0-9]+)}/g;
+            regex = this.formatStrRegExp;
+        }
+
+        var intVal = 0;
+        return str.replace(regex, function (match, number) {
+            intVal = Number(number);
+            if (intVal >= 0 && intVal < args.length) {
+                return args[intVal] || match;
+            }
+            if (intVal < 0 && args.length + intVal >= 0 && args.length + intVal < args.length) {
+                return args[args.length + intVal] || match;
+            }
+
+        });
+    };
+
     function forEach(json, callback) {
-        //console.debug("controllers.js --> forEach()", json, callback);
         Object.keys(json).forEach(function(key) {
             var value = json[key];
             if (!value) {
@@ -12,8 +40,8 @@ define([], function(console) {
             callback(value);
         });
     }
-    //console.groupEnd();
     return {
-        forEach: forEach
+        forEach: forEach,
+        formatStr : String.formatStr
     };
 });

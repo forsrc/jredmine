@@ -16,23 +16,24 @@
 
 
 define(["angular", "console"], function (angular, console) {
-    console.group("login-factory.js");
-    console.time("login-factory.js");
+    var jsName = "login-factory.js";
+    console.group(jsName);
+    console.time(jsName);
 
     function initialize(angular, module) {
-        console.debug("login-factory.js --> initialize()");
+        console.debug("{0} --> initialize()".formatStr([jsName]));
 
         module.factory("loginFactory", [
             '$http', '$scope', "$_shared",
             function ($http, $scope, $_shared) {
-                console.info("login-factory.js --> function()", $_shared);
+                console.info("{0} --> function()".formatStr([jsName]), $_shared);
 
             }
         ]);
 
     }
 
-    console.timeEnd("login-factory.js");
+    console.timeEnd(jsName);
     console.groupEnd();
     return {initialize: initialize};
 });

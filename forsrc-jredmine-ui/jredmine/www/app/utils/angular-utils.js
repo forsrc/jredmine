@@ -1,15 +1,13 @@
 "use strict";
 
 
-define([], function() {
+define(["myutils"], function(myutils) {
 
     function initialize(angular) {
         var angularModule = angular.module('jredmineNgApp.utils', []);
         angularModule.service("utils",
                 function() {
-                    require(["utils"], ['$injector', function(service) {
-                            $injector.invoke(service, this, {});
-                        }]);
+                    return myutils;
                 });
     }
     return {initialize: initialize};
