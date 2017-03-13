@@ -2,35 +2,35 @@
 
 /**
  (function(angular) {
-    angular
-            .module("jredmineNgApp")
-            .config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
-                $urlRouterProvider.otherwise("/login");
-
-                $stateProvider.state("login", {
-                    url: "/login",
-                    templateUrl: "app/views/login.html",
-                    title: "Login",
-                    controller: "loginController",
-                    controllerAs: "login"
-                });
-
-        }]);
-
-})(angular);
+ angular
+ .module("jredmineNgApp")
+ .config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
+ $urlRouterProvider.otherwise("/login");
+ 
+ $stateProvider.state("login", {
+ url: "/login",
+ templateUrl: "app/views/login.html",
+ title: "Login",
+ controller: "loginController",
+ controllerAs: "login"
+ });
+ 
+ }]);
+ 
+ })(angular);
  */
 
-define(["angular", "console", "angular-require", "css"], function (angular, console) {
+define(["angular", "console", "angular-require", "css"], function(angular, console) {
     console.group("routes.js");
     console.time("routes.js");
     function initialize(angular) {
         console.info("routes.js --> initialize()");
-        var routesModule = angular.module('jredmineNgApp.routes', ['ngRequire', 'ui.router']);
-        routesModule.config(["$stateProvider", "$urlRouterProvider", "$requireProvider", function ($stateProvider, $urlRouterProvider, $requireProvider) {
-            $urlRouterProvider.otherwise("/login");
+        var routesModule = angular.module('jredmineNgApp.routes', ['ionic', 'ngRequire', 'ui.router']);
+        routesModule.config(["$stateProvider", "$urlRouterProvider", "$requireProvider", function($stateProvider, $urlRouterProvider, $requireProvider) {
+                $urlRouterProvider.otherwise("/login");
 
-            $stateProvider
-                .state("login", {
+                $stateProvider
+                        .state("login", {
                     url: "/login",
                     templateUrl: "app/views/login/login.html",
                     title: "Login",
@@ -61,9 +61,88 @@ define(["angular", "console", "angular-require", "css"], function (angular, cons
                             'views/home/home-controller'
                         ])
                     }
-                });
+                })
+                .state('tab', {
+                    url: '/tab',
+                    //abstract: true,
+                    templateUrl: 'app/views/tab/tab.html',
+                    title: "Tab",
+                    controller: "tabController",
+                    //controllerAs: "home",
+                    resolve: {
+                        // css: $requireProvider.requireCSS([
+                        //     'css!css/login.css'
+                        // ]),
+                        deps: $requireProvider.requireJS([
+                            //'views/tab/tab-service',
+                            'views/tab/tab-controller'
+                        ])
+                    }
+                })
+                .state('menu', {
+                    url: '/menu',
+                    //abstract: true,
+                    templateUrl: 'app/views/menu/menu.html',
+                    title: "Menu",
+                    controller: "menuController",
+                    //controllerAs: "home",
+                    resolve: {
+                        // css: $requireProvider.requireCSS([
+                        //     'css!css/login.css'
+                        // ]),
+                        deps: $requireProvider.requireJS([
+                            //'views/menu/menu-service',
+                            'views/menu/menu-controller'
+                        ])
+                    }
+                })
+                .state("menu.home1", {
+                    url: "/home1",
+                    views: {
+                        'menuContent': {
+                            templateUrl: 'app/views/home/home.html',
+                            //controller: "homeController"
+                        }
+                    },
+                    //controller: "homeController",
+                    //templateUrl: "app/views/home/home.html",
+                    title: "Home",
+                    //controllerAs: "home",
+                    resolve: {
+                        // css: $requireProvider.requireCSS([
+                        //     'css!css/login.css'
+                        // ]),
+                        deps: $requireProvider.requireJS([
+                            'views/home/home-service',
+                            'views/home/home-controller'
+                        ])
+                    }
+                })
+                .state("tab.home2", {
+                    url: "/home2",
+                    views: {
+                        'tab-account': {
+                            templateUrl: 'app/views/home/home.html',
+                            //controller: "homeController"
+                        }
+                    },
+                    //controller: "homeController",
+                    //templateUrl: "app/views/home/home.html",
+                    title: "Home",
+                    //controllerAs: "home",
+                    resolve: {
+                        // css: $requireProvider.requireCSS([
+                        //     'css!css/login.css'
+                        // ]),
+                        deps: $requireProvider.requireJS([
+                            //'views/home/home-service',
+                            //'views/home/home-controller'
+                        ])
+                    }
+                })
+                ;
 
-        }]);
+            }]);
     }
 
     console.timeEnd("routes.js");

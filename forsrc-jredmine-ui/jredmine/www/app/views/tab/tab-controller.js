@@ -1,38 +1,20 @@
 "use strict";
 
 
-define(["angular", "console", 'views/login/login-service'], function (angular, console, loginService) {
+define(["angular", "console"], function (angular, console) {
 
-    var jsName = "login-controller.js";
+    var jsName = "tab-controller.js";
     console.group(jsName);
     console.time(jsName);
 
-    console.debug("{0} --> ".formatStr([jsName]), loginService);
+    console.debug("{0} --> ".formatStr([jsName]));
 
     angular.module('jredmineNgApp.routes')
-        .controller('loginController', function ($scope, $location, loginService) {
+        .controller('tabController', function ($scope, $location) {
 
-            console.debug("{0} --> function()".formatStr([jsName]), $scope, loginService);
-            $scope.user = {
-                username: "forsrc",
-                password: "forsrc"
-            };
-            $scope.message = 'hello world!';
-            // $scope.login = function () {
-            //     $scope.dataLoading = true;
-            //     console.info($scope.user);
-            // };
-            $scope.toLogin = function () {
-                var success = loginService.login($scope.user);
-                if (success) {
-                    //$location.path("/menu");
-                }
-                $location.path("/menu");
-            };
-            $scope.dataLoading = false;
+            console.debug("{0} --> function()".formatStr([jsName]), $scope);
+           
             //$scope.$apply();
-
-
         });
     console.timeEnd(jsName);
     console.groupEnd();

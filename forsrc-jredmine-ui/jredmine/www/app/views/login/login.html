@@ -1,4 +1,8 @@
-<ion-view view-title="Login" align-title="left" ngcontroller="logCtrl">
+<ion-view view-title="Login" align-title="left" ngcontroller="loginCtrl" ng-init="ionNavNar.enable=true">
+    <ion-nav-bar class="bar-positive" ngif="ionNavNar.enable">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+    </ion-nav-bar>
     <ion-content>
         <md-content layout-padding>
             <form name="loginForm" novalidate>
@@ -16,8 +20,11 @@
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Username</label>
                                 <input name="username" ng-model="user.username" minlength="6" md-maxlength="30" required/>
-                                <div class="hint" ng-if="!loginForm.username.$touched">
+                                <div class="hint" ng-if="!loginForm.username.$touched && !loginForm.username.$valid">
                                     Please enter your <code>username</code>.
+                                </div>
+                                <div class="hint" ng-if="loginForm.username.$valid">
+                                    Welcome <code>{{user.username}}</code>.
                                 </div>
                                 <div ng-messages="loginForm.username.$error" ng-if="loginForm.username.$touched">
                                     <div ng-message="required">Userame is required.</div>
@@ -28,7 +35,7 @@
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Password</label>
                                 <input type="password" name="password" ng-model="user.password" minlength="6" md-maxlength="30" required/>
-                                <div class="hint" ng-if="!loginForm.password.$touched">
+                                <div class="hint" ng-if="!loginForm.password.$touched && !loginForm.password.$valid">
                                     Please enter your <code>password</code>.
                                 </div>
                                 <div ng-messages="loginForm.password.$error" ng-if="loginForm.password.$touched">
