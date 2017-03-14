@@ -31,6 +31,7 @@ require.config({
         "order": "../js/lib/require/order",
         "css": "../js/lib/require/css",
         "text": "../js/lib/require/text",
+        "md-data-table": "../js/lib/md/md-data-table",
         "app": "app",
         "filters": "filters",
         "controllers": "controllers",
@@ -91,7 +92,7 @@ require.config({
             deps: ["angular"]
         },
         "routes": {
-            deps: ["angular", "angular-require"]
+            deps: ["angular", "angular-require", "angular-resource", "angular-cookies", "md-data-table"]
         },
         "controllers": {
             deps: ["angular"]
@@ -101,6 +102,9 @@ require.config({
         },
         "console": {
             deps: ["console-min", "order"]
+        },
+        "md-data-table": {
+            deps: ["angular", "angular-material"]
         }
     },
     priority: [

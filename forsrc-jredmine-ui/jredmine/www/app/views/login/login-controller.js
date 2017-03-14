@@ -10,9 +10,9 @@ define(["angular", "console", 'views/login/login-service'], function (angular, c
     console.debug("{0} --> ".formatStr([jsName]), loginService);
 
     angular.module('jredmineNgApp.routes')
-        .controller('loginController', function ($scope, $location, loginService) {
+        .controller('loginController', function ($scope, $http, $location, $cookies,  $httpParamSerializer, $mdToast, loginService) {
 
-            console.debug("{0} --> function()".formatStr([jsName]), $scope, loginService);
+            console.debug("{0} --> function()".formatStr([jsName]), $scope, $cookies, loginService);
             $scope.user = {
                 username: "forsrc",
                 password: "forsrc"
@@ -22,18 +22,46 @@ define(["angular", "console", 'views/login/login-service'], function (angular, c
             //     $scope.dataLoading = true;
             //     console.info($scope.user);
             // };
+            var toast = $mdToast.simple()
+              .textContent('Welcome {0}'.formatStr([$scope.user.username]))
+              .action('OK')
+              .highlightAction(true)
+              .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
+              .position("right");
             $scope.toLogin = function () {
+                $mdToast.show(toast).then(function(response) {
+                    if (response === 'ok') {
+                         console.debug("{0} --> toLogin() toast:".formatStr([jsName]), toast, response);
+                    }
+                });
                 var success = loginService.login($scope.user);
                 if (success) {
                     //$location.path("/menu");
                 }
-                $location.path("/menu");
+                $scope.dataLoading = true;
+                var req = {
+                    method: 'GET',
+                    url: "app/data/login.jsonp",
+                    headers: {
+                        "Authorization": "Basic " + $scope.encoded,
+                        "Content-type": "application/x-www-form-urlencoded; charset=utf-8"
+                    },
+                    data: $httpParamSerializer($scope.user)
+                };
+                $http(req).then(function(response) {
+                    console.debug("{0} --> toLogin() response:".formatStr([jsName]), response);
+                    console.debug("{0} --> toLogin() response:".formatStr([jsName]), response.status, response.data);
+                    if(response.status === 200){
+                        $location.path("/menu/home1");
+                    }
+                }, function(response) {
+                    console.debug("{0} --> toLogin() error".formatStr([jsName]), response);
+                }); 
+
+                //$scope.$apply();
             };
-            $scope.dataLoading = false;
-            //$scope.$apply();
 
-
-        });
+    });
     console.timeEnd(jsName);
     console.groupEnd();
 })

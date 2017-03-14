@@ -25,12 +25,16 @@ define(["angular", "console", "angular-require", "css"], function(angular, conso
     console.time("routes.js");
     function initialize(angular) {
         console.info("routes.js --> initialize()");
-        var routesModule = angular.module('jredmineNgApp.routes', ['ionic', 'ngRequire', 'ui.router']);
-        routesModule.config(["$stateProvider", "$urlRouterProvider", "$requireProvider", function($stateProvider, $urlRouterProvider, $requireProvider) {
+        var routesModule = angular.module('jredmineNgApp.routes', ['ionic', 'ngRequire', 'ui.router', "ngResource","ngRoute","ngCookies", 'ngMaterial', 'md.data.table']);
+        routesModule.config(["$stateProvider", "$urlRouterProvider", "$requireProvider", "$mdThemingProvider", function($stateProvider, $urlRouterProvider, $requireProvider, $mdThemingProvider) {
+                $mdThemingProvider
+                        .theme('default')
+                        .primaryPalette('blue')
+                        .accentPalette('pink');
                 $urlRouterProvider.otherwise("/login");
 
                 $stateProvider
-                        .state("login", {
+                .state("login", {
                     url: "/login",
                     templateUrl: "app/views/login/login.html",
                     title: "Login",
@@ -64,7 +68,7 @@ define(["angular", "console", "angular-require", "css"], function(angular, conso
                 })
                 .state('tab', {
                     url: '/tab',
-                    //abstract: true,
+                    abstract: true,
                     templateUrl: 'app/views/tab/tab.html',
                     title: "Tab",
                     controller: "tabController",
@@ -81,7 +85,7 @@ define(["angular", "console", "angular-require", "css"], function(angular, conso
                 })
                 .state('menu', {
                     url: '/menu',
-                    //abstract: true,
+                    abstract: true,
                     templateUrl: 'app/views/menu/menu.html',
                     title: "Menu",
                     controller: "menuController",
@@ -101,7 +105,7 @@ define(["angular", "console", "angular-require", "css"], function(angular, conso
                     views: {
                         'menuContent': {
                             templateUrl: 'app/views/home/home.html',
-                            //controller: "homeController"
+                            controller: "homeController"
                         }
                     },
                     //controller: "homeController",
@@ -123,7 +127,7 @@ define(["angular", "console", "angular-require", "css"], function(angular, conso
                     views: {
                         'tab-account': {
                             templateUrl: 'app/views/home/home.html',
-                            //controller: "homeController"
+                            controller: "homeController"
                         }
                     },
                     //controller: "homeController",
@@ -135,8 +139,23 @@ define(["angular", "console", "angular-require", "css"], function(angular, conso
                         //     'css!css/login.css'
                         // ]),
                         deps: $requireProvider.requireJS([
-                            //'views/home/home-service',
-                            //'views/home/home-controller'
+                            'views/home/home-service',
+                            'views/home/home-controller'
+                        ])
+                    }
+                })
+                .state("table", {
+                    url: "/table",
+                    templateUrl: "app/views/table/table.html",
+                    title: "Table",
+                    controller: "tableController",
+                    //controllerAs: "login",
+                    resolve: {
+                        // css: $requireProvider.requireCSS([
+                        //     'css!css/login.css'
+                        // ]),
+                        deps: $requireProvider.requireJS([
+                            'views/table/table-controller'
                         ])
                     }
                 })

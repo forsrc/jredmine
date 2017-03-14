@@ -21,6 +21,7 @@ define(
             "angular-messages",
             "angular-message-format",
             "angular-resource",
+             "angular-cookies",
             "ionic",
             "ionic-angular",
             "angular-ui-router",
