@@ -29,8 +29,8 @@ define(["angular", "console", "angular-require", "css"], function(angular, conso
         routesModule.config(["$stateProvider", "$urlRouterProvider", "$requireProvider", "$mdThemingProvider", function($stateProvider, $urlRouterProvider, $requireProvider, $mdThemingProvider) {
                 $mdThemingProvider
                         .theme('default')
-                        .primaryPalette('blue')
-                        .accentPalette('pink');
+                        .primaryPalette('red')
+                        .accentPalette('blue');
                 $urlRouterProvider.otherwise("/login");
 
                 $stateProvider

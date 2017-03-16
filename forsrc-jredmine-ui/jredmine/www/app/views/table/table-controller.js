@@ -8,195 +8,145 @@ define(["angular", "console"], function(angular, console) {
     console.time(jsName);
 
     console.debug("{0} --> ".formatStr([jsName]));
+    
+    angular.module('jredmineNgApp.routes').factory('$nutrition', ['$resource', function($resource) {
+
+        return {
+            desserts: $resource('app/data/table.data.jsonp')
+        };
+    }]);
 
     angular.module('jredmineNgApp.routes')
-            .controller('tableController', ['$http', '$mdEditDialog', '$q', '$timeout', '$scope', function($http, $mdEditDialog, $q, $timeout, $scope) {
+            .controller('tableController', ['$http', '$mdEditDialog', '$q', '$timeout', '$scope', "$mdDialog", "$nutrition", function($http, $mdEditDialog, $q, $timeout, $scope, $mdDialog, $nutrition) {
 
             console.debug("{0} --> function()".formatStr([jsName]), $scope);
-            $scope.options = {
-                rowSelection: true,
-                multiSelect: true,
-                autoSelect: true,
-                decapitate: false,
-                largeEditDialog: false,
-                boundaryLinks: false,
-                limitSelect: true,
-                pageSelect: true
+            var bookmark;
+  
+            $scope.selected = [];
+
+            $scope.filter = {
+                options: {
+                    debounce: 500
+                }
             };
 
-            $scope.selected = [];
-            $scope.limitOptions = [5, 10, 15, {
-                    label: 'All',
-                    value: function() {
-                        return $scope.desserts ? $scope.desserts.count : 0;
-                    }
-                }];
-
             $scope.query = {
-                order: 'name',
-                limit: 5,
+                filter: '',
+                limit: '5',
+                order: 'nameToLower',
                 page: 1
             };
 
-            // for testing ngRepeat
-            $scope.columns = [{
-                    name: 'Dessert',
-                    orderBy: 'name',
-                    unit: '100g serving'
-                }, {
-                    descendFirst: true,
-                    name: 'Type',
-                    orderBy: 'type'
-                }, {
-                    name: 'Calories',
-                    numeric: true,
-                    orderBy: 'calories.value'
-                }, {
-                    name: 'Fat',
-                    numeric: true,
-                    orderBy: 'fat.value',
-                    unit: 'g'
-                }, /* {
-                 name: 'Carbs',
-                 numeric: true,
-                 orderBy: 'carbs.value',
-                 unit: 'g'
-                 }, */ {
-                    name: 'Protein',
-                    numeric: true,
-                    orderBy: 'protein.value',
-                    trim: true,
-                    unit: 'g'
-                }, /* {
-                 name: 'Sodium',
-                 numeric: true,
-                 orderBy: 'sodium.value',
-                 unit: 'mg'
-                 }, {
-                 name: 'Calcium',
-                 numeric: true,
-                 orderBy: 'calcium.value',
-                 unit: '%'
-                 }, */ {
-                    name: 'Iron',
-                    numeric: true,
-                    orderBy: 'iron.value',
-                    unit: '%'
-                }, {
-                    name: 'Comments',
-                    orderBy: 'comment'
-                }];
+            function success(desserts) {
+                $scope.desserts = desserts;
+            }
 
-            $http.get('app/data/table.data.jsonp').then(function(desserts) {
-                $scope.desserts = desserts.data;
-
-                // $scope.selected.push($scope.desserts.data[1]);
-
-                // $scope.selected.push({
-                //   name: 'Ice cream sandwich',
-                //   type: 'Ice cream',
-                //   calories: { value: 237.0 },
-                //   fat: { value: 9.0 },
-                //   carbs: { value: 37.0 },
-                //   protein: { value: 4.3 },
-                //   sodium: { value: 129.0 },
-                //   calcium: { value: 8.0 },
-                //   iron: { value: 1.0 }
-                // });
-
-                // $scope.selected.push({
-                //   name: 'Eclair',
-                //   type: 'Pastry',
-                //   calories: { value:  262.0 },
-                //   fat: { value: 16.0 },
-                //   carbs: { value: 24.0 },
-                //   protein: { value:  6.0 },
-                //   sodium: { value: 337.0 },
-                //   calcium: { value:  6.0 },
-                //   iron: { value: 7.0 }
-                // });
-
-                // $scope.promise = $timeout(function () {
-                //   $scope.desserts = desserts.data;
-                // }, 1000);
-            });
-
-            $scope.editComment = function(event, dessert) {
-                event.stopPropagation();
-
-                var dialog = {
-                    // messages: {
-                    //   test: 'I don\'t like tests!'
-                    // },
-                    modelValue: dessert.comment,
-                    placeholder: 'Add a comment',
-                    save: function(input) {
-                        dessert.comment = input.$modelValue;
-                    },
+            $scope.addItem = function(event) {
+                $mdDialog.show({
+                    clickOutsideToClose: true,
+                    controller: 'addItemController',
+                    controllerAs: 'ctrl',
+                    focusOnOpen: false,
                     targetEvent: event,
-                    title: 'Add a comment',
-                    validators: {
-                        'md-maxlength': 30
-                    }
-                };
-
-                var promise = $scope.options.largeEditDialog ? $mdEditDialog.large(dialog) : $mdEditDialog.small(dialog);
-
-                promise.then(function(ctrl) {
-                    var input = ctrl.getInput();
-
-                    input.$viewChangeListeners.push(function() {
-                        input.$setValidity('test', input.$modelValue !== 'test');
-                    });
-                });
+                    templateUrl: 'app/views/table/table-add-item-dialog.html',
+                }).then($scope.getDesserts);
             };
 
-            $scope.toggleLimitOptions = function() {
-                $scope.limitOptions = $scope.limitOptions ? undefined : [5, 10, 15];
+            $scope.delete = function(event) {
+                $mdDialog.show({
+                    clickOutsideToClose: true,
+                    controller: 'deleteController',
+                    controllerAs: 'ctrl',
+                    focusOnOpen: false,
+                    targetEvent: event,
+                    locals: {desserts: $scope.selected},
+                    templateUrl: 'app/views/table/table-delete-dialog.html',
+                }).then($scope.getDesserts);
             };
 
-            $scope.getTypes = function() {
-                return ['Candy', 'Ice cream', 'Other', 'Pastry'];
+            $scope.getDesserts = function() {
+                $scope.promise = $nutrition.desserts.get($scope.query, success).$promise;
             };
 
-            $scope.onPaginate = function(page, limit) {
-                console.log('Scope Page: ' + $scope.query.page + ' Scope Limit: ' + $scope.query.limit);
-                console.log('Page: ' + page + ' Limit: ' + limit);
+            $scope.removeFilter = function() {
+                $scope.filter.show = false;
+                $scope.query.filter = '';
 
-                $scope.promise = $timeout(function() {
-
-                }, 2000);
+                if ($scope.filter.form.$dirty) {
+                    $scope.filter.form.$setPristine();
+                }
             };
 
-            $scope.deselect = function(item) {
-                console.log(item.name, 'was deselected');
-            };
+            $scope.$watch('query.filter', function(newValue, oldValue) {
+                if (!oldValue) {
+                    bookmark = $scope.query.page;
+                }
 
-            $scope.log = function(item) {
-                console.log(item.name, 'was selected');
-            };
+                if (newValue !== oldValue) {
+                    $scope.query.page = 1;
+                }
 
-            $scope.loadStuff = function() {
-                $scope.promise = $timeout(function() {
+                if (!newValue) {
+                    $scope.query.page = bookmark;
+                }
 
-                }, 2000);
-            };
-
-            $scope.onReorder = function(order) {
-
-                console.log('Scope Order: ' + $scope.query.order);
-                console.log('Order: ' + order);
-
-                $scope.promise = $timeout(function() {
-
-                }, 2000);
-            };
+                $scope.getDesserts();
+            });
             //$scope.$apply();
         }]);
+        angular.module('jredmineNgApp.routes').controller('addItemController', ['$mdDialog', '$scope', '$nutrition', function ($mdDialog, $scope, $nutrition) {
+
+            this.cancel = $mdDialog.cancel;
+
+            function success(dessert) {
+                $mdDialog.hide(dessert);
+            }
+
+            this.addItem = function() {
+                $scope.item.form.$setSubmitted();
+
+                if ($scope.item.form.$valid) {
+                    //$nutrition.desserts.save({dessert: $scope.dessert}, success);
+                }
+            };
+
+        }]);
+        angular.module('jredmineNgApp.routes').controller('deleteController', ['desserts', '$mdDialog', '$scope', '$q', '$nutrition', function(desserts, $mdDialog, $scope, $q, $nutrition) {
+
+                this.cancel = $mdDialog.cancel;
+
+                function deleteDessert(dessert, index) {
+                    var deferred = $nutrition.desserts.remove({id: dessert._id});
+
+                    deferred.$promise.then(function() {
+                        desserts.splice(index, 1);
+                    });
+
+                    return deferred.$promise;
+                }
+
+                function onComplete() {
+                    $mdDialog.hide();
+                }
+
+                function error() {
+                    $scope.error = 'Invalid secret.';
+                }
+
+                function success() {
+                    $q.all(desserts.forEach(deleteDessert)).then(onComplete);
+                }
+
+                this.authorizeUser = function() {
+                    //$authorize.get({secret: $scope.authorize.secret}, success, error);
+                };
+
+            }]);
+    ;
     console.timeEnd(jsName);
     console.groupEnd();
 })
-        ;
+;
 
 // define(["console"], function (console) {
 //     console.group("login-controller.js");
