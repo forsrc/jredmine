@@ -12,6 +12,14 @@ define(["console"], function(console) {
                 title: "JRedmine",
                 auth: "forsrc"
             };
+			this.auth = {
+				access_token: null,
+				token_type: "bearer",
+				refresh_token: null,
+				expires_in: 0,
+				scope:"read write",
+				jti: null
+			};
         });
     }
     console.groupEnd();

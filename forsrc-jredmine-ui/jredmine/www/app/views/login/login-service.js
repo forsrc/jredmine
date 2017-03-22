@@ -20,7 +20,7 @@ define(["angular", "console"], function (angular, console) {
     console.group(jsName);
     console.time(jsName);
 
-    angular.module('jredmineNgApp.routes')
+    angular.module('jredmineNgApp')
     .service("loginService",
         function () {
             console.debug("{0} --> function()".formatStr([jsName]));

@@ -25,7 +25,7 @@ define(["angular", "console", "angular-require", "css"], function(angular, conso
     console.time("routes.js");
     function initialize(angular) {
         console.info("routes.js --> initialize()");
-        var routesModule = angular.module('jredmineNgApp.routes', ['ionic', 'ngRequire', 'ui.router', "ngResource","ngRoute","ngCookies", 'ngMaterial', 'md.data.table']);
+        var routesModule = angular.module('jredmineNgApp', ['ionic', 'ngRequire', 'ui.router', "ngResource","ngRoute","ngCookies", 'ngMaterial', 'md.data.table', "jredmineNgApp.shared"]);
         routesModule.config(["$stateProvider", "$urlRouterProvider", "$requireProvider", "$mdThemingProvider", function($stateProvider, $urlRouterProvider, $requireProvider, $mdThemingProvider) {
                 $mdThemingProvider
                         .theme('default')
