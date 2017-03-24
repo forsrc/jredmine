@@ -9,7 +9,7 @@ define(["angular", "console"], function (angular, console) {
 
     console.debug("{0} --> ".formatStr([jsName]));
 
-    angular.module('jredmineNgApp.routes')
+    angular.module('jredmineNgApp')
         .controller('menuController', function ($scope, $location) {
 
             console.debug("{0} --> function()".formatStr([jsName]), $scope);

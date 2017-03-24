@@ -4,7 +4,7 @@ define(["angular", "console", "utils", 'views/home/home-service'], function (ang
     console.time(jsName);
     console.debug("{0} --> ".formatStr([jsName]), homeService);
 
-    angular.module('jredmineNgApp.routes')
+    angular.module('jredmineNgApp')
         .controller('homeController', function ($scope, homeService) {
             console.debug("{0} --> function()".formatStr([jsName]), $scope, homeService);
             $scope.dataLoading = false;

@@ -76,10 +76,10 @@ define(["angular", "console", 'views/login/login-service'], function (angular, c
 						console.debug("{0} --> toLogin() response:".formatStr([jsName]), $_shared.auth);
 						//$location.path("/menu/home1");
                     }
+					$location.path("/menu/home1");
                 }, function(response) {
                     console.debug("{0} --> toLogin() error".formatStr([jsName]), response);
-                }); 
-				$location.path("/menu/home1");
+                });
                 //$scope.$apply();
             };
 
