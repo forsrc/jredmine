@@ -1,0 +1,8 @@
+<h1 mat-dialog-title><b>{{title}}</b> <mat-icon color="primary" aria-label="edit">{{icon}}</mat-icon> {{key}}</h1>
+<div mat-dialog-content>
+{{message}}
+</div>
+<div mat-dialog-actions align="end" class="md-button-right">
+  <button mat-raised-button color="primary" [mat-dialog-close]="data">Confirm</button>
+  <button mat-button color="primary" cdkFocusInitial mat-dialog-close>Cancel</button>
+</div>
