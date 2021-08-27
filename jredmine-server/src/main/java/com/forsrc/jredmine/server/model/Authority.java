@@ -1,5 +1,6 @@
 package com.forsrc.jredmine.server.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -26,7 +27,7 @@ import org.springframework.security.core.GrantedAuthority;
         )
 @IdClass(AuthorityPk.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Authority implements GrantedAuthority, java.io.Serializable {
+public class Authority implements GrantedAuthority, Cacheable, Serializable {
 
     private static final long serialVersionUID = -1985182093016989312L;
 
@@ -38,21 +39,23 @@ public class Authority implements GrantedAuthority, java.io.Serializable {
     @Column(name = "authority", unique = false, length = 200, nullable = false)
     private String authority;
 
-    @Column(name = "create", insertable = false, updatable = false, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at", insertable = false, updatable = false, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-    private Date create;
+    private Date createdAt;
+
     @PrePersist
-    protected void onCreate() {
-        this.create = new Date();
+    protected void onCreated() {
+        this.createdAt = new Date();
     }
-    @Column(name = "update", insertable = false, updatable = true, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+
+    @Column(name = "updated_at", insertable = false, updatable = true, nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-    private Date update;
+    private Date updatedAt;
     @PreUpdate
-    protected void onUpdate() {
-        this.update = new Date();
+    protected void onUpdated() {
+        this.updatedAt = new Date();
     }
 
     @Column(name = "version", insertable = false, updatable = true, nullable = false, columnDefinition = "INT DEFAULT 0")
@@ -83,20 +86,20 @@ public class Authority implements GrantedAuthority, java.io.Serializable {
         this.authority = authority;
     }
 
-    public Date getCreate() {
-        return create;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreate(Date create) {
-        this.create = create;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Date getUpdate() {
-        return update;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdate(Date update) {
-        this.update = update;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public int getVersion() {
@@ -109,9 +112,17 @@ public class Authority implements GrantedAuthority, java.io.Serializable {
 
     @Override
     public String toString() {
-        return String.format("{\"username\":\"%s\", \"authority\":\"%s\", \"create\":\"%s\", \"update\":\"%s\", \"version\":\"%s\"}",
-                username, authority, create, update, version);
+        return "Authority{" +
+                "username='" + username + '\'' +
+                ", authority='" + authority + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", version=" + version +
+                '}';
     }
 
-
+    @Override
+    public String getKey() {
+        return getUsername() + "-" + getAuthority();
+    }
 }

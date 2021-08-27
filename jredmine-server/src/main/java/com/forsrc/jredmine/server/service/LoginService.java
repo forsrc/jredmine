@@ -10,5 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(rollbackFor = { Exception.class })
 public interface LoginService {
+    @Transactional(readOnly = true)
     User check(String username, String password) throws NoSuchObjectException, PasswordNotMatchException;
 }

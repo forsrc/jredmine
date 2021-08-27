@@ -3,7 +3,9 @@ package com.forsrc.jredmine.server.service.impl;
 import java.util.List;
 
 import com.forsrc.jredmine.server.dao.AuthorityDao;
+import com.forsrc.jredmine.server.dao.BaseDao;
 import com.forsrc.jredmine.server.model.Authority;
+import com.forsrc.jredmine.server.model.AuthorityPk;
 import com.forsrc.jredmine.server.service.AuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -16,16 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(rollbackFor = { Exception.class })
-public class AuthorityServiceImpl implements AuthorityService {
+public class AuthorityServiceImpl extends BaseServiceImpl<Authority, AuthorityPk> implements AuthorityService {
 
     @Autowired
     private AuthorityDao authorityDao;
     
-    private static final String CACHE_NAME = "spring/cache/sso/Authority";
+    private static final String CACHE_NAME = "spring/cache/jredmine";
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = CACHE_NAME, key = "#username")
+    @Cacheable(value = CACHE_NAME, key = "#root.targetClass + '-' +#username")
     public List<Authority> getByUsername(String username) {
         Authority entity = new Authority();
         entity.setUsername(username);
@@ -34,7 +36,7 @@ public class AuthorityServiceImpl implements AuthorityService {
     }
 
     @Override
-    @CacheEvict(value = CACHE_NAME, key = "#username")
+    @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '-' +#username")
     public void delete(String username) {
         List<Authority> list = getByUsername(username);
         for (Authority authority : list) {
@@ -49,7 +51,7 @@ public class AuthorityServiceImpl implements AuthorityService {
      * @param list
      * @return
      */
-    @CachePut(value = CACHE_NAME, key = "#list.get(0).username")
+    @CachePut(value = CACHE_NAME, key = "#root.targetClass + '-' + #list.get(0).username")
     public List<Authority> update(List<Authority> list) {
        return authorityDao.saveAll(list);
     }
@@ -61,9 +63,13 @@ public class AuthorityServiceImpl implements AuthorityService {
      * @param list
      * @return
      */
-    @CachePut(value = CACHE_NAME, key = "#list.get(0).username")
+    @CachePut(value = CACHE_NAME, key = "#root.targetClass + '-' + #list.get(0).username")
     public List<Authority> save(List<Authority> list) {
         return authorityDao.saveAll(list);
     }
 
+    @Override
+    public BaseDao<Authority, AuthorityPk> getBaseDao() {
+        return authorityDao;
+    }
 }

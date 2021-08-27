@@ -1,6 +1,8 @@
 package com.forsrc.jredmine.server.model;
 
-public class AuthorityPk implements java.io.Serializable {
+import java.io.Serializable;
+
+public class AuthorityPk implements Serializable {
 
     private static final long serialVersionUID = -1985182093016989312L;
 
@@ -24,4 +26,11 @@ public class AuthorityPk implements java.io.Serializable {
         this.authority = authority;
     }
 
+    @Override
+    public String toString() {
+        return "AuthorityPk{" +
+                "username='" + username + '\'' +
+                ", authority='" + authority + '\'' +
+                '}';
+    }
 }

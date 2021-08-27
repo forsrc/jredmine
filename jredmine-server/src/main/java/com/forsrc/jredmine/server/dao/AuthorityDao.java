@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RepositoryRestResource(collectionResourceRel = "authority", path = "authority")
 public interface AuthorityDao
-        extends JpaRepository<Authority, AuthorityPk>, PagingAndSortingRepository<Authority, AuthorityPk> {
+        extends BaseDao<Authority, AuthorityPk> {
 
 }

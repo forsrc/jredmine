@@ -4,34 +4,17 @@
 <mapper namespace="com.forsrc.jredmine.server.dao.mapper.UserMapper">
 
     <resultMap id="resultMap" type="com.forsrc.jredmine.server.model.User">
-        <id property="id" column="id"/>
-        <result property="id" column="id"/>
-        <result property="tccId" column="tcc_id"/>
-        <result property="uri" column="uri" />
-        <result property="resourceId" column="resource_id" />
-        <result property="expire" column="expire" />
-        <result property="create" column="create" />
-        <result property="update" column="update" />
-        <result property="status" column="status" />
-
+        <id property="username" column="username"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>>
+        <result property="enable" column="enable" />
+        <result property="createdAt" column="created_at" />
+        <result property="updatedA" column="updated_at" />
+        <result property="version" column="version" />
     </resultMap>
 
-    <select id="getByResourceId" resultType="com.forsrc.tcc.domain.entity.Tcc"
+    <select id="getByResourceId" resultType="com.forsrc.jredmine.server.model.User"
             resultMap="resultMap">
-        SELECT
-            id,
-            tcc_id,
-            uri,
-            resource_id,
-            expire,
-        create,
-        update,
-            status
-        FROM
-            t_tcc_link TCC_LINK
-        WHERE
-            TCC_LINK.resource_id = #{resourceId}
-        ORDER BY create DESC
-        LIMIT 1
+        SELECT * FROM t_user
     </select>
 </mapper>
