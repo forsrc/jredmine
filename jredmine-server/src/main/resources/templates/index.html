@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Jredmine Server</title>
+</head>
+
+<body>
+<div th:if="!${#httpServletRequest.remoteUser}">
+    <a th:href="@{/login}">login</a>
+</div>
+<div th:if="${#httpServletRequest.remoteUser}">
+    <form th:action="@{/logout}" method="post">
+        [[${#httpServletRequest.remoteUser}]]<input type="submit" value="logout"/>
+    </form>
+</div>
+
+</body>
+</html>

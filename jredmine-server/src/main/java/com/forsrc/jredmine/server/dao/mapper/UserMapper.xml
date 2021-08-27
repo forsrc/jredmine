@@ -15,6 +15,6 @@
 
     <select id="getByResourceId" resultType="com.forsrc.jredmine.server.model.User"
             resultMap="resultMap">
-        SELECT * FROM t_user
+        SELECT * FROM t_user U INNER JOIN t_authority A ON U.username = A.username WHERE A.authority = #{authority}
     </select>
 </mapper>

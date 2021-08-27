@@ -1,0 +1,57 @@
+my:
+  hostname: ${MY_HOST_NAME:jredmine-server}
+  application-name: jredmine-server
+  context-path: /${my.application-name}
+  session-name: JREDMINE_SERVER_SESSION
+  port: 8080
+
+
+server:
+  port: ${my.port}
+  servlet:
+    context-path: ${my.context-path}
+    session:
+      cookie:
+        name: ${my.session-name}
+        path: ${my.context-path}
+
+
+spring:
+  main.allow-bean-definition-overriding: true
+  application:
+    name: ${my.application-name}
+  datasource:
+    url: ${MY_DB_URL:jdbc:h2:./db/h2/jredmine-server.h2;AUTO_SERVER=TRUE;MODE=MYSQL;}
+    username: ${MY_DB_USERNAME:sa}
+    password: ${MY_DB_PASSWORD:sa}
+    driver-class-name: ${MY_DB_DRIVER:org.h2.Driver}
+    data:
+      - classpath:schema.sql
+      - classpath:data.sql
+  jpa:
+    database-platform: ${MY_DB_DIALECT:org.hibernate.dialect.H2Dialect}
+    show-sql: true
+    properties:
+      hibernate.enable_lazy_load_no_trans: true
+      hibernate.show-sql: true
+      hibernate.hbm2ddl.auto: update
+    open-in-view: true
+  cloud:
+    discovery:
+      enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+logging:
+  level:
+    org.springframework.security: info
+    org.springframework.cloud.gateway: info
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+#debug: true
