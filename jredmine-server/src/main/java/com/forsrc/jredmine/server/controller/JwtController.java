@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.Optional;
@@ -36,7 +37,7 @@ public class JwtController {
 
     // curl -X POST -H "Content-Type: application/json" -d '{"username": "forsrc", "password": "forsrc"}' http://localhost:8080/jredmine-server/jwt/login
     @PostMapping(path = "/jwt/login", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDetails> login(@RequestBody User user, HttpServletRequest request) {
+    public ResponseEntity<UserDetails> login(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
 
         Authentication auth = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
@@ -53,8 +54,10 @@ public class JwtController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, JwtTokenUtil.generateAccessToken(user))
+                .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Authorization")
                 .body(userDetails);
 
     }

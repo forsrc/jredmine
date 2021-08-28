@@ -1,7 +1,8 @@
 import { AfterContentInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { OAuth2Service } from './service/oauth.service';
+import { LoginService } from './service/login.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent implements OnInit, AfterContentInit {
   title = 'MyAngularMaterial';
   isLoading = true;
 
-  constructor(public oauth2: OAuth2Service) {
+  constructor(public loginService: LoginService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -23,6 +24,9 @@ export class AppComponent implements OnInit, AfterContentInit {
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
-
+    this.loginService.toLogin();
+    // if(!this.loginService.isAuthenticated()) {
+    //   this.router.navigate(['/login']);
+    // }
   }
 }

@@ -4,13 +4,14 @@
       <div class="text-center">
         <h2 class="app-name">Login</h2>
       </div>
+      <span style="color: red">{{message}}</span>
       <div fxLayout="row">
         <div fxFlexFill>
           <mat-form-field class="w-100">
-            <input matInput placeholder="Email" value="{{email}}">
+            <input matInput placeholder="Username" [(ngModel)]="username" name="username">
           </mat-form-field>
           <mat-form-field class="w-100">
-            <input matInput type="password" placeholder="Password" value="{{password}}">
+            <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password">
           </mat-form-field>
         </div>
       </div>

@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,11 +22,30 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @Override
     @Transactional(readOnly = true)
     @Cacheable(value = CACHE_NAME, key = "#username")
     public User getByUsername(String username) {
         return userDao.getOne(username);
+    }
+
+    @Override
+    public User save(User user) {
+        if (user.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        return super.save(user);
+    }
+
+    @Override
+    public User update(User user) {
+        if (user.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        return super.update(user);
     }
 
     @Override
