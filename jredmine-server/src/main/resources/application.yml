@@ -43,9 +43,10 @@ spring:
     rest:
       base-path: /rest/api
   cache:
-    type: ehcache
+    type: jcache
     jcache:
-      config: classpath:/cache/jehcache.xml
+      config: classpath:/cache/jcache.xml
+      provider: org.ehcache.jsr107.EhcacheCachingProvider
 #    ehcache:
 #      config: classpath:/cache/ehcache.xml
 
@@ -62,6 +63,7 @@ management:
 logging:
   level:
     com.forsrc: debug
+    org.ehcache: debug
     org.springframework.security: info
     org.springframework.cloud.gateway: info
     org.hibernate.SQL: debug

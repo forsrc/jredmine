@@ -44,7 +44,7 @@ public class User implements Cacheable, Serializable {
     @Version
     private int version;
 
-    @OneToMany(mappedBy = "username")
+    @OneToMany(mappedBy = "username", fetch = FetchType.EAGER)
     private Set<Authority> authorities = new HashSet<>();
 
     @PrePersist
