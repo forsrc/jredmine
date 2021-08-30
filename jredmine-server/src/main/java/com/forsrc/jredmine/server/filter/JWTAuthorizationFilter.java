@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.forsrc.jredmine.server.dao.UserDao;
+import com.forsrc.jredmine.server.dao.UserDetailsDao;
 import com.forsrc.jredmine.server.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +29,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
 
     @Autowired
-    private UserDao userDao;
+    private UserDetailsDao userDetailsDao;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -59,7 +59,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         }
 
         // Get user identity and set it on the spring security context
-        UserDetails userDetails = userDao
+        UserDetails userDetails = userDetailsDao
                 .findById(JwtTokenUtil.getUsername(token))
                 .orElse(null);
 

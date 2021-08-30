@@ -39,7 +39,7 @@ public abstract class BaseController<T extends Serializable, PK> {
         return new ResponseEntity<>(t, HttpStatus.OK);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<Page<T>> get(@RequestParam(name = "page", required = false) Integer page,
                                        @RequestParam(name = "size", required = false) Integer size) {
         page = page == null || page == 0 ? 0 : page;
@@ -51,7 +51,7 @@ public abstract class BaseController<T extends Serializable, PK> {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<T> save(@RequestBody T t) {
         Assert.notNull(t, "save: Object is null");
         //Assert.notNull(t, "save: username is nul");
@@ -59,7 +59,7 @@ public abstract class BaseController<T extends Serializable, PK> {
         return new ResponseEntity<>(t, HttpStatus.OK);
     }
 
-    @PutMapping("/")
+    @PutMapping("")
     public ResponseEntity<T> update(@RequestBody T t) {
         Assert.notNull(t, "update: Object is null");
         //Assert.notNull(user.getUsername(), "save: username is nul");

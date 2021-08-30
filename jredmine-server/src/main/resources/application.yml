@@ -39,6 +39,9 @@ spring:
   cloud:
     discovery:
       enabled: false
+  data:
+    rest:
+      base-path: /rest/api
 management:
   endpoints:
     web:
