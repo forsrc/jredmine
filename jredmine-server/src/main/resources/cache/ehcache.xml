@@ -1,0 +1,23 @@
+<ehcache>
+
+    <diskStore path="java.io.tmpdir" />
+
+    <defaultCache maxElementsInMemory="100000" eternal="false"
+                  timeToIdleSeconds="60"
+                  timeToLiveSeconds="600"
+                  overflowToDisk="true" />
+
+    <cache name="jredmine"
+           maxElementsInMemory="100000"
+           eternal="false"
+           timeToIdleSeconds="60"
+           timeToLiveSeconds="600"
+           overflowToDisk="true" />
+
+    <cache name="jredmine/page"
+           maxElementsInMemory="100000"
+           eternal="false"
+           timeToIdleSeconds="60"
+           timeToLiveSeconds="600"
+           overflowToDisk="true" />
+</ehcache>

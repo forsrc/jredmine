@@ -16,39 +16,36 @@ import java.io.Serializable;
 @Transactional(rollbackFor = {Exception.class})
 public abstract class BaseServiceImpl<T extends Serializable, PK> implements BaseService<T, PK> {
 
-
-    public static final String CACHE_NAME = "spring/cache/jredmine";
+    public static final String CACHE_NAME = "jredmine";
+    public static final String CACHE_PAGE_NAME = CACHE_NAME + "/page";
 
     @Override
     @CachePut(value = CACHE_NAME, key = "#root.targetClass + '-' + #t.getKey()")
-    @Caching(evict = {
-            @CacheEvict(value = CACHE_NAME + "/pages/"),
-            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '-' + #t.getKey()")
-    })
+    @CacheEvict(value = CACHE_PAGE_NAME)
+//    @Caching(evict = {
+//            @CacheEvict(value = CACHE_PAGE_NAME),
+//            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '-' + #t.getKey()")
+//    })
     public T save(T t) {
         return getBaseDao().save(t);
     }
 
     @Override
     @CachePut(value = CACHE_NAME, key = "#root.targetClass + '-' + #t.getKey()")
-    @CacheEvict(value = CACHE_NAME)
-    @Caching(evict = {
-            @CacheEvict(value = CACHE_NAME + "/pages"),
-            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '-' + #t.getKey()")
-    })
+    @CacheEvict(value = CACHE_PAGE_NAME)
     public T update(T t) {
         return getBaseDao().save(t);
     }
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = CACHE_NAME + "/pages", key = "#root.targetClass + '-' + #pk")
+    @Cacheable(value = CACHE_NAME, key = "#root.targetClass + '-' + #pk")
     public T get(PK pk) {
         return getBaseDao().findById(pk).get();
     }
 
     @Override
-    @Cacheable(value = CACHE_NAME + "/pages", key = "#root.targetClass + '-' + #page + '-' + #size")
+    @Cacheable(value = CACHE_PAGE_NAME, key = "#root.targetClass + '-' + #page + '-' + #size")
     public Page<T> get(int page, int size) {
         Page<T> p = getBaseDao().findAll(PageRequest.of(page, size));
         return p;
@@ -56,7 +53,8 @@ public abstract class BaseServiceImpl<T extends Serializable, PK> implements Bas
 
     @Override
     @Caching(evict = {
-            @CacheEvict(value = CACHE_NAME + "/pages", key = "#root.targetClass + '-' + #pk")
+            @CacheEvict(value = CACHE_PAGE_NAME),
+            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '-' + #pk")
     })
     public void delete(PK pk) {
         getBaseDao().deleteById(pk);

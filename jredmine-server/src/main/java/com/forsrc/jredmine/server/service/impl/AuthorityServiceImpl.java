@@ -22,8 +22,6 @@ public class AuthorityServiceImpl extends BaseServiceImpl<Authority, AuthorityPk
 
     @Autowired
     private AuthorityDao authorityDao;
-    
-    private static final String CACHE_NAME = "spring/cache/jredmine";
 
     @Override
     @Transactional(readOnly = true)

@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Transactional(rollbackFor = { Exception.class })
 public interface BaseService<T extends Serializable, PK> {
 
+
+
     @Transactional(readOnly = true)
     public T get(PK pk);
 
@@ -24,7 +26,7 @@ public interface BaseService<T extends Serializable, PK> {
     @Transactional(readOnly = true)
     public Page<T> get(int page, int size);
 
-    @Transactional(readOnly = true)
+    @Transactional()
     public void delete(PK pk);
 
     public BaseDao<T, PK> getBaseDao();

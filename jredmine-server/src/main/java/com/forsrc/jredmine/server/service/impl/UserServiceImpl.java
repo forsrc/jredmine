@@ -27,12 +27,13 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = CACHE_NAME, key = "#username")
+    @Cacheable(value = CACHE_NAME, key = "#root.targetClass + '-' + #username")
     public User getByUsername(String username) {
         return userDao.getOne(username);
     }
 
     @Override
+    @Cacheable(value = CACHE_NAME, key = "#root.targetClass + '-' + #user.getKey()")
     public User save(User user) {
         if (user.getPassword() != null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -41,6 +42,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     }
 
     @Override
+    @Cacheable(value = CACHE_NAME, key = "#root.targetClass + '-' + #user.getKey()")
     public User update(User user) {
         if (user.getPassword() != null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));

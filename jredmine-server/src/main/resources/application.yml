@@ -42,6 +42,14 @@ spring:
   data:
     rest:
       base-path: /rest/api
+  cache:
+    type: ehcache
+    jcache:
+      config: classpath:/cache/jehcache.xml
+#    ehcache:
+#      config: classpath:/cache/ehcache.xml
+
+
 management:
   endpoints:
     web:
@@ -53,8 +61,8 @@ management:
 
 logging:
   level:
+    com.forsrc: debug
     org.springframework.security: info
     org.springframework.cloud.gateway: info
     org.hibernate.SQL: debug
     org.hibernate.type.descriptor.sql.BasicBinder: trace
-#debug: true

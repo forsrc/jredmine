@@ -9,8 +9,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>my-oauth2</name>
-    <description>my-oauth2</description>
+    <name>jredmine</name>
+    <description>jredmine</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
