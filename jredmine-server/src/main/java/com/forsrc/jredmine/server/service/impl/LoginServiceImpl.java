@@ -5,7 +5,9 @@ import com.forsrc.jredmine.server.exception.NoSuchObjectException;
 import com.forsrc.jredmine.server.exception.PasswordNotMatchException;
 import com.forsrc.jredmine.server.model.UserDetails;
 import com.forsrc.jredmine.server.service.LoginService;
+import com.forsrc.jredmine.server.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,13 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class LoginServiceImpl implements LoginService {
 
     @Autowired
-    private UserDetailsDao userDetailsDao;
+    private UserDetailsService userDetailsService;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails check(String username, String password) throws NoSuchObjectException, PasswordNotMatchException {
-        UserDetails userDetails = userDetailsDao.findById(username).orElse(null);
+        UserDetails userDetails = userDetailsService.getByUsername(username);
         if (userDetails == null) {
             throw new NoSuchObjectException(username);
         }

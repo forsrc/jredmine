@@ -25,7 +25,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl<Authority, AuthorityPk
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = CACHE_NAME, key = "#root.targetClass + '-' +#username")
+    @Cacheable(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' +#username")
     public List<Authority> getByUsername(String username) {
         Authority entity = new Authority();
         entity.setUsername(username);
@@ -34,7 +34,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl<Authority, AuthorityPk
     }
 
     @Override
-    @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '-' +#username")
+    @CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' +#username")
     public void delete(String username) {
         List<Authority> list = getByUsername(username);
         for (Authority authority : list) {
@@ -47,9 +47,9 @@ public class AuthorityServiceImpl extends BaseServiceImpl<Authority, AuthorityPk
      * update Authorities<br/>
      * * all the username must be the same
      * @param list
-     * @return
+     * @returnb
      */
-    @CachePut(value = CACHE_NAME, key = "#root.targetClass + '-' + #list.get(0).username")
+    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #list.get(0).username")
     public List<Authority> update(List<Authority> list) {
        return authorityDao.saveAll(list);
     }
@@ -61,7 +61,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl<Authority, AuthorityPk
      * @param list
      * @return
      */
-    @CachePut(value = CACHE_NAME, key = "#root.targetClass + '-' + #list.get(0).username")
+    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #list.get(0).username")
     public List<Authority> save(List<Authority> list) {
         return authorityDao.saveAll(list);
     }

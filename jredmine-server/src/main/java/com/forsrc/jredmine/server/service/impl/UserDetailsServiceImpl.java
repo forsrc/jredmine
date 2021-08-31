@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl extends BaseServiceImpl<UserDetails, String>
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = CACHE_NAME, key = "#root.targetClass + '-' + #username")
+    @Cacheable(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #username")
     public UserDetails getByUsername(String username) {
         return userDetailsDao.getOne(username);
     }
