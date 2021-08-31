@@ -63,7 +63,7 @@ management:
 logging:
   level:
     com.forsrc: debug
-    org.ehcache: debug
+    org.ehcache: info
     org.springframework.security: info
     org.springframework.cloud.gateway: info
     org.hibernate.SQL: debug

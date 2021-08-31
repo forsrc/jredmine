@@ -24,7 +24,7 @@ public interface BaseService<T extends Serializable, PK> {
     public T update(T t);
 
     @Transactional(readOnly = true)
-    public Page<T> get(int page, int size);
+    public Page<T> page(int page, int size);
 
     @Transactional()
     public void delete(PK pk);

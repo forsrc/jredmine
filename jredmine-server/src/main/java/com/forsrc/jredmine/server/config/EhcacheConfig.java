@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.forsrc.jredmine.server.model.Cacheable;
 import lombok.SneakyThrows;
 import org.ehcache.config.CacheConfiguration;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
@@ -61,32 +62,34 @@ public class EhcacheConfig extends CachingConfigurerSupport {
 //        return cacheManager;
 //    }
 
-//    @Bean
-//    @Override
-//    public KeyGenerator keyGenerator() {
-//        // return new SimpleKeyGenerator();
-//        return new KeyGenerator() {
-//            @Override
-//            public Object generate(Object target, Method method, Object... params) {
-//                StringBuilder sb = new StringBuilder();
-//                sb.append(target.getClass().getName()).append(".").append(method.getName());
-//                if (params == null) {
-//                    sb.append("()");
-//                    System.out.println("[cache] ----> " + sb.toString());
-//                    return sb.toString();
-//                }
-//                sb.append("(");
-//                for (Object obj : params) {
-//                    sb.append(obj.toString()).append(", ");
-//                }
-//                int length = sb.length();
-//                sb.delete(length - 2, length);
-//                sb.append(")");
-//                System.out.println("[cache] ----> " + sb.toString());
-//                return sb.toString();
-//            }
-//        };
-//    }
+
+    @Override
+    @Bean("myKeyGenerator")
+    public KeyGenerator keyGenerator() {
+        // return new SimpleKeyGenerator();
+        return new KeyGenerator() {
+            @Override
+            public Object generate(Object target, Method method, Object... params) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(target.getClass().getName()).append("/");
+                if (params == null) {
+                    System.out.println("[cache] ----> " + sb.toString());
+                    return sb.toString();
+                }
+                for (Object obj : params) {
+                    if(obj instanceof Cacheable) {
+                        sb.append(((Cacheable) obj).getKey()).append("/");
+                    } else {
+                        sb.append(obj.toString()).append("/");
+                    }
+                }
+                int length = sb.length();
+                sb.delete(length - 1, length);
+                System.out.println("[cache] ----> " + sb.toString());
+                return sb.toString();
+            }
+        };
+    }
 
 //    @Bean
 //    @Override

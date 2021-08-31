@@ -20,7 +20,8 @@ public abstract class BaseServiceImpl<T extends Serializable, PK> implements Bas
     public static final String CACHE_PAGE_NAME = CACHE_NAME + "/page";
 
     @Override
-    @CachePut(value = CACHE_NAME, key = "#root.targetClass + '-' + #t.getKey()")
+    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getKey()")
+    //@CachePut(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
     @CacheEvict(value = CACHE_PAGE_NAME)
 //    @Caching(evict = {
 //            @CacheEvict(value = CACHE_PAGE_NAME),
@@ -31,7 +32,8 @@ public abstract class BaseServiceImpl<T extends Serializable, PK> implements Bas
     }
 
     @Override
-    @CachePut(value = CACHE_NAME, key = "#root.targetClass + '-' + #t.getKey()")
+    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getKey()")
+    //@CachePut(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
     @CacheEvict(value = CACHE_PAGE_NAME)
     public T update(T t) {
         return getBaseDao().save(t);
@@ -39,14 +41,16 @@ public abstract class BaseServiceImpl<T extends Serializable, PK> implements Bas
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = CACHE_NAME, key = "#root.targetClass + '-' + #pk")
+    @Cacheable(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #pk")
+    //@CachePut(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
     public T get(PK pk) {
         return getBaseDao().findById(pk).get();
     }
 
     @Override
-    @Cacheable(value = CACHE_PAGE_NAME, key = "#root.targetClass + '-' + #page + '-' + #size")
-    public Page<T> get(int page, int size) {
+    @Cacheable(value = CACHE_PAGE_NAME, key = "#root.targetClass.getName() + '/' + #page + '-' + #size")
+    //@CachePut(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
+    public Page<T> page(int page, int size) {
         Page<T> p = getBaseDao().findAll(PageRequest.of(page, size));
         return p;
     }
@@ -54,8 +58,11 @@ public abstract class BaseServiceImpl<T extends Serializable, PK> implements Bas
     @Override
     @Caching(evict = {
             @CacheEvict(value = CACHE_PAGE_NAME),
-            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '-' + #pk")
+            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #pk")
     })
+//    @Caching(evict = {
+//            @CacheEvict(value = CACHE_PAGE_NAME), @CacheEvict(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
+//    })
     public void delete(PK pk) {
         getBaseDao().deleteById(pk);
     }

@@ -45,7 +45,7 @@ public abstract class BaseController<T extends Serializable, PK> {
         page = page == null || page == 0 ? 0 : page;
         size = size == null || size == 0 ? 10 : size;
         size = size >= 1000 ? 1000 : size;
-        Page<T> list = getBaseService().get(page, size);
+        Page<T> list = getBaseService().page(page, size);
         LOGGER.info("--> get({}, {}) : {}", page, size, list);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
