@@ -1,6 +1,8 @@
 package com.forsrc.jredmine.server.filter;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.FilterChain;
@@ -16,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -58,20 +61,42 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             return;
         }
 
-        // Get user identity and set it on the spring security context
-        UserDetails userDetails = userDetailsDao
-                .findById(JwtTokenUtil.getUsername(token))
-                .orElse(null);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+//            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+//            Map<String, String> message = new HashMap<>(1);
+//            message.put("message", "Authentication is null");
+//            response.getWriter().write(objectMapper.writeValueAsString(message));
+//            chain.doFilter(request, response);
 
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null,
-                Optional.ofNullable(userDetails).map(UserDetails::getAuthorities).orElse(Collections.EMPTY_LIST)
-        );
+            // Get user identity and set it on the spring security context
+            UserDetails userDetails = userDetailsDao
+                    .findById(JwtTokenUtil.getUsername(token))
+                    .orElse(null);
 
-        authentication
-                .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                    userDetails, null,
+                    Optional.ofNullable(userDetails).map(UserDetails::getAuthorities).orElse(Collections.EMPTY_LIST)
+            );
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            usernamePasswordAuthenticationToken
+                    .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            chain.doFilter(request, response);
+            return;
+        }
+        String username = JwtTokenUtil.getUsername(token);
+        UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+        if (!userDetails.getUsername().equals(username)) {
+            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            Map<String, String> message = new HashMap<>(1);
+            message.put("message", "User not login");
+            response.getWriter().write(objectMapper.writeValueAsString(message));
+            chain.doFilter(request, response);
+            return;
+        }
+
         chain.doFilter(request, response);
     }
 

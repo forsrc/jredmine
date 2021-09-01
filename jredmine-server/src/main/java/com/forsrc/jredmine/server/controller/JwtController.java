@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.Optional;
@@ -54,10 +55,14 @@ public class JwtController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        HttpSession session = ((HttpServletRequest) request).getSession();
+        String sessionId = session.getId();
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, JwtTokenUtil.generateAccessToken(user))
                 .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Authorization")
+                .header(HttpHeaders.SET_COOKIE, "JREDMINE_SERVER_SESSION=" + sessionId + "; SameSite=None;  Httponly; Secure")
+                .header(HttpHeaders.SET_COOKIE, "jsessionid=" + sessionId + "; SameSite=None;  Httponly; Secure")
                 .body(userDetails);
 
     }
