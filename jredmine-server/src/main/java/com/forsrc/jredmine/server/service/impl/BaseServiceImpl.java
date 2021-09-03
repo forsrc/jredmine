@@ -1,6 +1,7 @@
 package com.forsrc.jredmine.server.service.impl;
 
-import com.forsrc.jredmine.server.service.BaseService;
+import java.io.Serializable;
+
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -10,7 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
+import com.forsrc.jredmine.server.service.BaseService;
 
 @Service
 @Transactional(rollbackFor = {Exception.class})

@@ -5,7 +5,21 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
+
+import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -15,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
         @Index(name = "index_user_username", columnList = "username")}, uniqueConstraints = {
         @UniqueConstraint(columnNames = {"username"})})
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
+@DynamicUpdate(true)
 public class User implements Cacheable, Serializable {
 
     private static final long serialVersionUID = 7053075402341362549L;
@@ -43,6 +58,9 @@ public class User implements Cacheable, Serializable {
     @Column(name = "version", insertable = false, updatable = true, nullable = false, columnDefinition = "INT DEFAULT 0")
     @Version
     private int version;
+    
+    @Column(name = "jwt_token", length = 1000, nullable = true)
+    private String jwtToken;
 
     @OneToMany(mappedBy = "username", fetch = FetchType.EAGER)
     private Set<Authority> authorities = new HashSet<>();
@@ -108,6 +126,16 @@ public class User implements Cacheable, Serializable {
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
+    
+    public String getJwtToken() {
+		return jwtToken;
+	}
+    
+    public void setJwtToken(String jwtToken) {
+		this.jwtToken = jwtToken;
+	}
+    
+ 
 
     @Override
     public String toString() {
@@ -118,6 +146,7 @@ public class User implements Cacheable, Serializable {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", version=" + version +
+                ", jwtToken=" + jwtToken +
                 ", authorities=" + authorities +
                 '}';
     }

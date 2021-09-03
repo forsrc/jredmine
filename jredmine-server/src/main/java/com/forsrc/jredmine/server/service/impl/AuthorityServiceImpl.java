@@ -2,11 +2,6 @@ package com.forsrc.jredmine.server.service.impl;
 
 import java.util.List;
 
-import com.forsrc.jredmine.server.dao.AuthorityDao;
-import com.forsrc.jredmine.server.dao.BaseDao;
-import com.forsrc.jredmine.server.model.Authority;
-import com.forsrc.jredmine.server.model.AuthorityPk;
-import com.forsrc.jredmine.server.service.AuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -14,6 +9,12 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.forsrc.jredmine.server.dao.AuthorityDao;
+import com.forsrc.jredmine.server.dao.BaseDao;
+import com.forsrc.jredmine.server.model.Authority;
+import com.forsrc.jredmine.server.model.AuthorityPk;
+import com.forsrc.jredmine.server.service.AuthorityService;
 
 
 @Service

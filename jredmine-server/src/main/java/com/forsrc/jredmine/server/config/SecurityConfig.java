@@ -1,9 +1,10 @@
 package com.forsrc.jredmine.server.config;
 
+import java.util.EnumSet;
+
 import javax.servlet.SessionTrackingMode;
 import javax.sql.DataSource;
 
-import com.forsrc.jredmine.server.filter.JWTAuthorizationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 
-import java.util.EnumSet;
+import com.forsrc.jredmine.server.filter.JWTAuthorizationFilter;
 
 @Configuration
 @EnableWebSecurity

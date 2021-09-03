@@ -1,10 +1,16 @@
 package com.forsrc.jredmine.server.utils;
 
-import com.forsrc.jredmine.server.model.User;
-import io.jsonwebtoken.*;
-
 import java.security.SignatureException;
 import java.util.Date;
+
+import com.forsrc.jredmine.server.model.User;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 public class JwtTokenUtil {
 

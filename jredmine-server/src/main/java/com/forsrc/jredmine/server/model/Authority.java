@@ -16,9 +16,11 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.security.core.GrantedAuthority;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name = "t_authority", indexes = {
@@ -27,6 +29,7 @@ import org.springframework.security.core.GrantedAuthority;
         )
 @IdClass(AuthorityPk.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@DynamicUpdate
 public class Authority implements GrantedAuthority, Cacheable, Serializable {
 
     private static final long serialVersionUID = -1985182093016989312L;

@@ -1,11 +1,8 @@
 package com.forsrc.jredmine.server.dao;
 
-import com.forsrc.jredmine.server.model.User;
-import com.forsrc.jredmine.server.model.UserDetails;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.forsrc.jredmine.server.model.UserDetails;
 
 
 @Repository

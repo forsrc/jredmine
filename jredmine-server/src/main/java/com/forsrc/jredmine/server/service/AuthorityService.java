@@ -2,10 +2,11 @@ package com.forsrc.jredmine.server.service;
 
 import java.util.List;
 
-import com.forsrc.jredmine.server.model.Authority;
-import com.forsrc.jredmine.server.model.AuthorityPk;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.forsrc.jredmine.server.model.Authority;
+import com.forsrc.jredmine.server.model.AuthorityPk;
 
 
 @Service

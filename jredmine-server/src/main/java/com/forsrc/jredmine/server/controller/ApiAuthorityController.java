@@ -1,9 +1,9 @@
 package com.forsrc.jredmine.server.controller;
 
-import com.forsrc.jredmine.server.model.Authority;
-import com.forsrc.jredmine.server.model.AuthorityPk;
-import com.forsrc.jredmine.server.service.AuthorityService;
-import com.forsrc.jredmine.server.service.BaseService;
+import java.util.List;
+
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.NestedRuntimeException;
 import org.springframework.http.HttpStatus;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.List;
+import com.forsrc.jredmine.server.model.Authority;
+import com.forsrc.jredmine.server.service.AuthorityService;
 
 @RestController
 @RequestMapping("/api/authority")

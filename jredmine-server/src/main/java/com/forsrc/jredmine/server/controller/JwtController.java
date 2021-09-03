@@ -1,7 +1,13 @@
 package com.forsrc.jredmine.server.controller;
 
-import com.forsrc.jredmine.server.model.User;
-import com.forsrc.jredmine.server.utils.JwtTokenUtil;
+import java.security.Principal;
+import java.util.Collections;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -13,14 +19,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.security.Principal;
-import java.util.Collections;
-import java.util.Optional;
+import com.forsrc.jredmine.server.model.User;
+import com.forsrc.jredmine.server.service.UserService;
+import com.forsrc.jredmine.server.utils.JwtTokenUtil;
 
 @RestController
 public class JwtController {
@@ -28,6 +34,9 @@ public class JwtController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private UserService userService;
+    
     // curl -X GET http://localhost:8080/jredmine-server/jwt/user_info  --header "Authorization: Bearer `curl -X POST -H "Content-Type: application/json" -d '{"username": "forsrc", "password": "forsrc"}' http://localhost:8080/jredmine-server/jwt/login -s -v 2>&1 | grep "Authorization:" | awk '{print $3}'`"
     @GetMapping(path = "/jwt/user_info", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("isAuthenticated()")
@@ -52,6 +61,10 @@ public class JwtController {
 
         authentication
                 .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        
+        String jwtToken = JwtTokenUtil.generateAccessToken(user);
+
+        userService.updateJwtToken(user.getUsername(), jwtToken);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -59,7 +72,7 @@ public class JwtController {
         String sessionId = session.getId();
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.AUTHORIZATION, JwtTokenUtil.generateAccessToken(user))
+                .header(HttpHeaders.AUTHORIZATION, jwtToken)
                 .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Authorization")
                 .header(HttpHeaders.SET_COOKIE, "JREDMINE_SERVER_SESSION=" + sessionId + "; SameSite=None;  Httponly; Secure")
                 .header(HttpHeaders.SET_COOKIE, "jsessionid=" + sessionId + "; SameSite=None;  Httponly; Secure")

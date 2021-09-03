@@ -6,15 +6,21 @@
     <resultMap id="resultMap" type="com.forsrc.jredmine.server.model.User">
         <id property="username" column="username"/>
         <result property="username" column="username"/>
-        <result property="password" column="password"/>>
+        <result property="password" column="password"/>
         <result property="enable" column="enable" />
+        <result property="jwtToken" column="jwt_token" />
         <result property="createdAt" column="created_at" />
         <result property="updatedA" column="updated_at" />
         <result property="version" column="version" />
     </resultMap>
 
     <select id="getByResourceId" resultType="com.forsrc.jredmine.server.model.User"
-            resultMap="resultMap">
+            resultMap="resultMap" parameterType="String">
         SELECT * FROM t_user U INNER JOIN t_authority A ON U.username = A.username WHERE A.authority = #{authority}
     </select>
+    
+    <update id="updateJwtToken" flushCache="true">
+    	UPDATE t_user SET jwt_token = #{jwtToken} WHERE username = #{username} 
+    </update>
+    
 </mapper>

@@ -1,16 +1,15 @@
 package com.forsrc.jredmine.server.service.impl;
 
-import com.forsrc.jredmine.server.dao.UserDetailsDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.forsrc.jredmine.server.exception.NoSuchObjectException;
 import com.forsrc.jredmine.server.exception.PasswordNotMatchException;
 import com.forsrc.jredmine.server.model.UserDetails;
 import com.forsrc.jredmine.server.service.LoginService;
 import com.forsrc.jredmine.server.service.UserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(rollbackFor = {Exception.class})

@@ -1,16 +1,27 @@
 package com.forsrc.jredmine.server.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.security.core.GrantedAuthority;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
+
+import org.springframework.security.core.GrantedAuthority;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "t_user", indexes = {
@@ -45,6 +56,9 @@ public class UserDetails implements org.springframework.security.core.userdetail
     @Column(name = "version", insertable = false, updatable = true, nullable = false, columnDefinition = "INT DEFAULT 0")
     @Version
     private int version;
+    
+    @Column(name = "jwt_token", length = 1000, nullable = true)
+    private String jwtToken;
 
     @OneToMany(mappedBy = "username")
     private Set<Authority> authorities = new HashSet<>();
@@ -102,6 +116,10 @@ public class UserDetails implements org.springframework.security.core.userdetail
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
+    
+    public String getJwtToken() {
+		return jwtToken;
+	}
 
     @Override
     public String toString() {
@@ -112,6 +130,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", version=" + version +
+                ", jwtToken=" + jwtToken +
                 ", authorities=" + authorities +
                 '}';
     }
