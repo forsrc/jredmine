@@ -1,6 +1,5 @@
 package com.forsrc.jredmine.server.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,6 +15,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -30,7 +30,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @IdClass(AuthorityPk.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @DynamicUpdate
-public class Authority implements GrantedAuthority, Cacheable, Serializable {
+@DynamicInsert
+public class Authority extends BaseModel<AuthorityPk> implements GrantedAuthority, Cacheable<AuthorityPk> {
 
     private static final long serialVersionUID = -1985182093016989312L;
 
@@ -125,7 +126,13 @@ public class Authority implements GrantedAuthority, Cacheable, Serializable {
     }
 
     @Override
-    public String getKey() {
-        return getUsername() + "-" + getAuthority();
+    public AuthorityPk getPk() {
+        return new AuthorityPk(getUsername(), getAuthority());
     }
+
+	@Override
+	public void setPk(AuthorityPk pk) {
+		setUsername(username);
+		setAuthority(pk.getAuthority());
+	}
 }

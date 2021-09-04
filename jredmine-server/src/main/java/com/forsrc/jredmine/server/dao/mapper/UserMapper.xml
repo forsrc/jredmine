@@ -20,7 +20,7 @@
     </select>
     
     <update id="updateJwtToken" flushCache="true">
-    	UPDATE t_user SET jwt_token = #{jwtToken} WHERE username = #{username} 
+    	UPDATE t_user SET jwt_token = #{jwtToken}, version = version + 1 WHERE username = #{username} 
     </update>
     
 </mapper>

@@ -52,7 +52,7 @@ public class EhcacheConfig extends CachingConfigurerSupport {
                 }
                 for (Object obj : params) {
                     if(obj instanceof Cacheable) {
-                        sb.append(((Cacheable) obj).getKey()).append("/");
+                        sb.append(((Cacheable) obj).getPk()).append("/");
                     } else {
                         sb.append(obj.toString()).append("/");
                     }

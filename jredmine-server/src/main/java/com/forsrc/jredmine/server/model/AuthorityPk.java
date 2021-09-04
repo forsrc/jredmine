@@ -9,8 +9,16 @@ public class AuthorityPk implements Serializable {
     private String username;
 
     private String authority;
+    
+    public AuthorityPk() {
+	}
 
-    public String getUsername() {
+	public AuthorityPk(String username, String authority) {
+		this.username = username;
+		this.authority = authority;
+	}
+
+	public String getUsername() {
         return username;
     }
 

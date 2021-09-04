@@ -1,6 +1,5 @@
 package com.forsrc.jredmine.server.controller;
 
-import java.io.Serializable;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -19,13 +18,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.forsrc.jredmine.server.model.Cacheable;
 import com.forsrc.jredmine.server.service.BaseService;
 
 import io.jsonwebtoken.lang.Assert;
 
 
 @PreAuthorize("hasRole('ADMIN')")
-public abstract class BaseController<T extends Serializable, PK> {
+public abstract class BaseController<T extends Cacheable<PK>, PK> {
 
     public abstract BaseService<T, PK> getBaseService();
 
@@ -70,6 +70,7 @@ public abstract class BaseController<T extends Serializable, PK> {
     public ResponseEntity<T> update(@RequestBody T t) {
         Assert.notNull(t, "update: Object is null");
         //Assert.notNull(user.getUsername(), "save: username is nul");
+        
         t = getBaseService().update(t);
         return new ResponseEntity<>(t, HttpStatus.OK);
     }

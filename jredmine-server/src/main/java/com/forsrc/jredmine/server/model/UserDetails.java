@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
         @Index(name = "index_user_username", columnList = "username")}, uniqueConstraints = {
         @UniqueConstraint(columnNames = {"username"})})
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
-public class UserDetails implements org.springframework.security.core.userdetails.UserDetails, Principal, Cacheable, Serializable {
+public class UserDetails extends BaseModel<String> implements org.springframework.security.core.userdetails.UserDetails, Principal, Cacheable<String>, Serializable {
 
     private static final long serialVersionUID = 7053075402341362549L;
 
@@ -141,7 +141,12 @@ public class UserDetails implements org.springframework.security.core.userdetail
     }
 
     @Override
-    public String getKey() {
+    public String getPk() {
         return getUsername();
+    }
+    
+    @Override
+    public void setPk(String pk) {
+
     }
 }

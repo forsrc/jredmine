@@ -39,12 +39,12 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
 
     @Caching(
             put = {
-                    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getKey()")
+                    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getPk()", condition = "#user != null", unless = "#result == null")
             },
             evict = {
                     @CacheEvict(value = CACHE_PAGE_NAME),
-                    @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '/' + #t.getKey()"),
-                    //@CacheEvict(value = CACHE_NAME, key = "UserDetailsServiceImpl.class.getName() + '/' + #t.getKey()")
+                    @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '/' + #user.getPk()", condition = "#user != null"),
+                    //@CacheEvict(value = CACHE_NAME, key = "UserDetailsServiceImpl.class.getName() + '/' + #t.getPk()")
     })
     public User save(User user) {
         if (user.getPassword() != null) {
@@ -54,15 +54,15 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     }
 
     @Override
-    //@Cacheable(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getKey()")
+    //@Cacheable(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getPk()")
     @Caching(
             put = {
-                    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getKey()")
+                    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getPk()", condition = "#user != null" , unless = "#result == null")
             },
             evict = {
                     @CacheEvict(value = CACHE_PAGE_NAME),
-                    @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '/' + #t.getKey()"),
-                    //@CacheEvict(value = CACHE_NAME, key = "UserDetailsServiceImpl.class.getName() + '/' + #t.getKey()")
+                    @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '/' + #user.getPk()", condition = "#user != null"),
+                    //@CacheEvict(value = CACHE_NAME, key = "UserDetailsServiceImpl.class.getName() + '/' + #t.getPk()")
             })
     public User update(User user) {
         if (user.getPassword() != null) {

@@ -1,6 +1,7 @@
 package com.forsrc.jredmine.server.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     @Transactional(readOnly = true)
+    @CachePut(value = BaseServiceImpl.CACHE_NAME, key = "#root.targetClass.getName() + '/' + #username")
     public UserDetails check(String username, String password) throws NoSuchObjectException, PasswordNotMatchException {
         UserDetails userDetails = userDetailsService.getByUsername(username);
         if (userDetails == null) {

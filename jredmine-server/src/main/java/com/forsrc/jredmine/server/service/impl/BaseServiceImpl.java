@@ -1,7 +1,5 @@
 package com.forsrc.jredmine.server.service.impl;
 
-import java.io.Serializable;
-
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -12,32 +10,36 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.forsrc.jredmine.server.service.BaseService;
+import com.forsrc.jredmine.server.utils.BeanUtil;
 
 @Service
 @Transactional(rollbackFor = {Exception.class})
-public abstract class BaseServiceImpl<T extends Serializable, PK> implements BaseService<T, PK> {
+public abstract class BaseServiceImpl<T extends com.forsrc.jredmine.server.model.Cacheable<PK>, PK> implements BaseService<T, PK> {
 
     public static final String CACHE_NAME = "jredmine";
     public static final String CACHE_PAGE_NAME = CACHE_NAME + "/page";
 
     @Override
-    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getKey()")
+    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getPk()", condition = "#t != null" , unless = "#result == null")
     //@CachePut(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
     @CacheEvict(value = CACHE_PAGE_NAME)
 //    @Caching(evict = {
 //            @CacheEvict(value = CACHE_PAGE_NAME),
-//            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '-' + #t.getKey()")
+//            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '-' + #t.getPk()")
 //    })
     public T save(T t) {
         return getBaseDao().save(t);
     }
 
     @Override
-    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getKey()")
+    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getPk()", condition = "#t != null" , unless = "#result == null")
     //@CachePut(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
     @CacheEvict(value = CACHE_PAGE_NAME)
     public T update(T t) {
-        return getBaseDao().save(t);
+    	T source = getBaseDao().findById(t.getPk()).get();
+    	BeanUtil.copyIgnoreNull(t, source);
+    	T updated = getBaseDao().save(source);
+        return updated;
     }
 
     @Override
@@ -68,4 +70,16 @@ public abstract class BaseServiceImpl<T extends Serializable, PK> implements Bas
         getBaseDao().deleteById(pk);
     }
 
+    
+    @Override
+    @Caching(evict = {
+            @CacheEvict(value = CACHE_PAGE_NAME),
+            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getPk()", condition = "#t != null")
+    })
+//    @Caching(evict = {
+//            @CacheEvict(value = CACHE_PAGE_NAME), @CacheEvict(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
+//    })
+    public void delete(T t) {
+        getBaseDao().delete(t);
+    }
 }

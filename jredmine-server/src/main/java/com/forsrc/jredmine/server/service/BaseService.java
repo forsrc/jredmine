@@ -11,7 +11,7 @@ import com.forsrc.jredmine.server.dao.BaseDao;
 
 @Service
 @Transactional(rollbackFor = { Exception.class })
-public interface BaseService<T extends Serializable, PK> {
+public interface BaseService<T extends com.forsrc.jredmine.server.model.Cacheable<PK>, PK> {
 
 
 
@@ -30,5 +30,8 @@ public interface BaseService<T extends Serializable, PK> {
     @Transactional()
     public void delete(PK pk);
 
+    @Transactional()
+    public void delete(T t);
+  
     public BaseDao<T, PK> getBaseDao();
 }

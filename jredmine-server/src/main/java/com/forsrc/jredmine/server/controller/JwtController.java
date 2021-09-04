@@ -64,7 +64,10 @@ public class JwtController {
         
         String jwtToken = JwtTokenUtil.generateAccessToken(user);
 
-        userService.updateJwtToken(user.getUsername(), jwtToken);
+        // userService.updateJwtToken(user.getUsername(), jwtToken);
+        user.setPassword(null);
+        user.setJwtToken(jwtToken);
+        userService.update(user);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
