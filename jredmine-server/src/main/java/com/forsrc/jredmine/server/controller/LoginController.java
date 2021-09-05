@@ -1,8 +1,5 @@
 package com.forsrc.jredmine.server.controller;
-
-import java.util.Collections;
-import java.util.Optional;
-
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -58,7 +55,7 @@ public class LoginController {
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                 userDetails, null,
-                Optional.ofNullable(userDetails).map(UserDetails::getAuthorities).orElse(Collections.EMPTY_LIST)
+                userDetails.getAuthorities()
         );
         String jwtToken = JwtTokenUtil.generateAccessToken(user);
 
@@ -68,9 +65,13 @@ public class LoginController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         response.addHeader(HttpHeaders.AUTHORIZATION, jwtToken);
         HttpSession session = ((HttpServletRequest) request).getSession();
+        session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
         String sessionId = session.getId();
         response.addHeader(HttpHeaders.SET_COOKIE, "JREDMINE_SERVER_SESSION=" + sessionId + "; SameSite=None;  Httponly; Secure");
-        response.addHeader(HttpHeaders.SET_COOKIE, "jsessionid=" + sessionId + "; SameSite=None;  Httponly; Secure");
-        return "/home";
+        
+        Cookie cookie = new Cookie("JREDMINE_SERVER_SESSION", sessionId);
+        response.addCookie(cookie);
+        //response.addHeader(HttpHeaders.SET_COOKIE, "jsessionid=" + sessionId + "; SameSite=None;  Httponly; Secure");
+        return "redirect:/home;JREDMINE_SERVER_SESSION=" + sessionId;
     }
 }

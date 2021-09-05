@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and()
 //                .formLogin()
 //                .loginPage("/login")
+//                .loginProcessingUrl("/login")
 //                .permitAll()
                 .and()
                 .logout()
@@ -65,7 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.deleteCookies("jsessionid")
                 .and()
                 .sessionManagement()
-                .enableSessionUrlRewriting(true);
+                .enableSessionUrlRewriting(true)
+                ;
     }
 
     @Bean

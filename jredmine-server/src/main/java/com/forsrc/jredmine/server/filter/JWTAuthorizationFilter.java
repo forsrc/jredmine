@@ -40,6 +40,12 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	 
+		System.out.println("Authentication: " + authentication);
+		
+		
 		// Get authorization header and validate
 		final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
 		if (StringUtils.isEmpty(header) || !header.startsWith("Bearer ")) {
@@ -60,7 +66,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			return;
 		}
 
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		// authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication == null) {
 
 			// Get user identity and set it on the spring security context
