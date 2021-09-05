@@ -59,10 +59,12 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 		try {
 			JwtTokenUtil.validate(token);
 		} catch (Exception e) {
-
-			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			response.getWriter().write(objectMapper.writeValueAsString(e));
-			chain.doFilter(request, response);
+			Map<String, String> message = new HashMap<>(2);
+			message.put("status", HttpStatus.INTERNAL_SERVER_ERROR.toString());
+			message.put("message", e.getMessage());
+			message.put("exception", e.getClass().getName());
+			response.getWriter().write(objectMapper.writeValueAsString(message));
+			// chain.doFilter(request, response);
 			return;
 		}
 
@@ -85,10 +87,11 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 				return;
 			}
 			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			Map<String, String> message = new HashMap<>(1);
+			Map<String, String> message = new HashMap<>(2);
+			message.put("status", HttpStatus.INTERNAL_SERVER_ERROR.toString());
 			message.put("message", "Jwt token is not match.");
 			response.getWriter().write(objectMapper.writeValueAsString(message));
-			chain.doFilter(request, response);
+			//chain.doFilter(request, response);
 
 			return;
 		}
@@ -96,10 +99,11 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		if (!userDetails.getUsername().equals(username)) {
 			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			Map<String, String> message = new HashMap<>(1);
+			Map<String, String> message = new HashMap<>(2);
+			message.put("status", HttpStatus.INTERNAL_SERVER_ERROR.toString());
 			message.put("message", "User not login");
 			response.getWriter().write(objectMapper.writeValueAsString(message));
-			chain.doFilter(request, response);
+			//chain.doFilter(request, response);
 			return;
 		}
 
