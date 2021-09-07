@@ -131,7 +131,7 @@ public class UserDetails extends BaseModel<String> implements org.springframewor
                 ", updatedAt=" + updatedAt +
                 ", version=" + version +
                 ", jwtToken=" + jwtToken +
-                ", authorities=" + authorities +
+                ", authorities=" + (authorities == null ? null : authorities) +
                 '}';
     }
 

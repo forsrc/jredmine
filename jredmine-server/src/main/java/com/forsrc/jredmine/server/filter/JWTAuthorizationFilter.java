@@ -43,7 +43,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	 
-		System.out.println("Authentication: " + authentication);
+		// System.out.println("Authentication: " + authentication);
 		
 		
 		// Get authorization header and validate
@@ -59,8 +59,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 		try {
 			JwtTokenUtil.validate(token);
 		} catch (Exception e) {
-			Map<String, String> message = new HashMap<>(2);
-			message.put("status", HttpStatus.INTERNAL_SERVER_ERROR.toString());
+			Map<String, String> message = new HashMap<>(3);
+			message.put("status", HttpStatus.FORBIDDEN.toString());
 			message.put("message", e.getMessage());
 			message.put("exception", e.getClass().getName());
 			response.getWriter().write(objectMapper.writeValueAsString(message));
@@ -76,8 +76,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
 			if (token.equals(userDetails.getJwtToken())) {
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-						userDetails, null, Optional.ofNullable(userDetails).map(UserDetails::getAuthorities)
-								.orElse(Collections.EMPTY_LIST));
+						userDetails, null, userDetails.getAuthorities());
 
 				usernamePasswordAuthenticationToken
 						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -86,9 +85,9 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 				chain.doFilter(request, response);
 				return;
 			}
-			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			response.setStatus(HttpStatus.FORBIDDEN.value());
 			Map<String, String> message = new HashMap<>(2);
-			message.put("status", HttpStatus.INTERNAL_SERVER_ERROR.toString());
+			message.put("status", HttpStatus.FORBIDDEN.toString());
 			message.put("message", "Jwt token is not match.");
 			response.getWriter().write(objectMapper.writeValueAsString(message));
 			//chain.doFilter(request, response);
@@ -98,9 +97,9 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 		String username = JwtTokenUtil.getUsername(token);
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		if (!userDetails.getUsername().equals(username)) {
-			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			response.setStatus(HttpStatus.FORBIDDEN.value());
 			Map<String, String> message = new HashMap<>(2);
-			message.put("status", HttpStatus.INTERNAL_SERVER_ERROR.toString());
+			message.put("status", HttpStatus.FORBIDDEN.toString());
 			message.put("message", "User not login");
 			response.getWriter().write(objectMapper.writeValueAsString(message));
 			//chain.doFilter(request, response);
