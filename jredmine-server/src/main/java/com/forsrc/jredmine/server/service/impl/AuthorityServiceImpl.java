@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
@@ -50,7 +49,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl<Authority, AuthorityPk
      * @param list
      * @returnb
      */
-    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #list.get(0).username")
+    @Cacheable(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #list.get(0).username")
     public List<Authority> update(List<Authority> list) {
        return authorityDao.saveAll(list);
     }
@@ -62,7 +61,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl<Authority, AuthorityPk
      * @param list
      * @return
      */
-    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #list.get(0).username")
+    @Cacheable(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #list.get(0).username")
     public List<Authority> save(List<Authority> list) {
         return authorityDao.saveAll(list);
     }

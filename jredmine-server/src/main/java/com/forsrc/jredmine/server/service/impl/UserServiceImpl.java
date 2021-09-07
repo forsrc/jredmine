@@ -38,9 +38,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     @Override
 
     @Caching(
-            put = {
-                    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getPk()", condition = "#user != null", unless = "#result == null")
-            },
+//            put = {
+//                    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getPk()", condition = "#user != null", unless = "#result == null")
+//            },
             evict = {
                     @CacheEvict(value = CACHE_PAGE_NAME),
                     @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '/' + #user.getPk()", condition = "#user != null"),
@@ -56,9 +56,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     @Override
     //@Cacheable(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getPk()")
     @Caching(
-            put = {
-                    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getPk()", condition = "#user != null" , unless = "#result == null")
-            },
+//            put = {
+//                    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getPk()", condition = "#user != null" , unless = "#result == null")
+//            },
             evict = {
                     @CacheEvict(value = CACHE_PAGE_NAME),
                     @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '/' + #user.getPk()", condition = "#user != null"),
@@ -77,6 +77,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     }
 
 	@Override
+	@CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #username")
 	public void updateJwtToken(String username, String jwtToken) {
 		userMapper.updateJwtToken(username, jwtToken);
 	}

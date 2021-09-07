@@ -20,7 +20,7 @@ public abstract class BaseServiceImpl<T extends com.forsrc.jredmine.server.model
     public static final String CACHE_PAGE_NAME = CACHE_NAME + "/page";
 
     @Override
-    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getPk()", condition = "#t != null" , unless = "#result == null")
+    //@CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getPk()", condition = "#t != null" , unless = "#result == null")
     //@CachePut(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
     @CacheEvict(value = CACHE_PAGE_NAME)
 //    @Caching(evict = {
@@ -32,7 +32,7 @@ public abstract class BaseServiceImpl<T extends com.forsrc.jredmine.server.model
     }
 
     @Override
-    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getPk()", condition = "#t != null" , unless = "#result == null")
+    //@CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getPk()", condition = "#t != null" , unless = "#result == null")
     //@CachePut(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
     @CacheEvict(value = CACHE_PAGE_NAME)
     public T update(T t) {
@@ -74,7 +74,7 @@ public abstract class BaseServiceImpl<T extends com.forsrc.jredmine.server.model
     @Override
     @Caching(evict = {
             @CacheEvict(value = CACHE_PAGE_NAME),
-            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getPk()", condition = "#t != null")
+            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getPk()")
     })
 //    @Caching(evict = {
 //            @CacheEvict(value = CACHE_PAGE_NAME), @CacheEvict(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
