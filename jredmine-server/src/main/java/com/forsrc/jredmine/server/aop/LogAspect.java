@@ -42,13 +42,13 @@ public class LogAspect {
 		} catch (Throwable e) {
 			Long time = System.currentTimeMillis() - start;
 			LOG.warn("[Around Exception]--> {}; Time: {}ms; Exception: {}, {};", uuid, time, e.getClass().getName(), e.getMessage());
-			Map<String, Object> message = new HashMap<>(3);
-			message.put("status", HttpStatus.FORBIDDEN.toString());
-			message.put("message", e.getMessage());
-			message.put("args", joinPoint.getArgs());
-			message.put("exception", e.getClass().getName());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
-			//throw e;
+//			Map<String, Object> message = new HashMap<>(3);
+//			message.put("status", HttpStatus.INTERNAL_SERVER_ERROR.toString());
+//			message.put("message", e.getMessage());
+//			message.put("args", joinPoint.getArgs());
+//			message.put("exception", e.getClass().getName());
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
+			throw e;
 			
 		}
 		Long time = System.currentTimeMillis() - start;
