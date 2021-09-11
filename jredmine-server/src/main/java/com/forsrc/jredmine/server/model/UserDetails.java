@@ -36,6 +36,7 @@ public class UserDetails extends BaseModel<String> implements org.springframewor
     @Column(name = "username", unique = true, length = 200, nullable = false)
     private String username;
 
+
     @Column(name = "password", length = 200, nullable = false)
     private String password;
 
@@ -91,7 +92,9 @@ public class UserDetails extends BaseModel<String> implements org.springframewor
         return password;
     }
 
-
+	public void setPassword(String password) {
+		this.password = password;
+	}
     public Integer getEnabled() {
         return enabled;
     }

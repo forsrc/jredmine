@@ -39,7 +39,7 @@ public class User extends BaseModel<String> implements Cacheable<String>, Serial
     @Column(name = "username", unique = true, length = 200, nullable = false)
     private String username;
 
-    @JsonIgnore
+    //@JsonIgnore
     @Column(name = "password", length = 200)
     private String password;
 
