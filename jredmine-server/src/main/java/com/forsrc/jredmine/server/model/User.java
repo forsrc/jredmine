@@ -19,21 +19,17 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.SelectBeforeUpdate;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "t_user", indexes = {
         @Index(name = "index_user_username", columnList = "username")}, uniqueConstraints = {
         @UniqueConstraint(columnNames = {"username"})})
-@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
-@SelectBeforeUpdate(true)
-@DynamicUpdate(true)
-@DynamicInsert(true)
+//@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
+//@SelectBeforeUpdate(true)
+//@DynamicUpdate(true)
+//@DynamicInsert(true)
 public class User extends BaseModel<String> implements Cacheable<String>, Serializable {
 
     private static final long serialVersionUID = 7053075402341362549L;
@@ -43,6 +39,7 @@ public class User extends BaseModel<String> implements Cacheable<String>, Serial
     @Column(name = "username", unique = true, length = 200, nullable = false)
     private String username;
 
+    @JsonIgnore
     @Column(name = "password", length = 200)
     private String password;
 

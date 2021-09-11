@@ -32,17 +32,13 @@ public class LogAspect {
 
 	@After(value = "execution(* com.forsrc..*Controller.*(..))")
 	public void after(JoinPoint joinPoint) {
-		LOG.info("[END]---------------> {}; {}; {}", joinPoint.getSignature(), joinPoint.getArgs(), joinPoint.getTarget());
+		LOG.info("[END]---------------> {}; {}; {}", joinPoint.getSignature(), joinPoint.getArgs(), joinPoint.getTarget(), joinPoint);
 
 	}
 	
-//	@AfterThrowing(value = "execution(* com.forsrc..*Controller.*(..))", throwing = "e")
-//	public void afterThrowing(JoinPoint joinPoint, Exception e) {
-//		LOG.info("[AfterThrowing]-----> {}; {}; {}; Exception: {}", joinPoint.getSignature(), joinPoint.getArgs(), joinPoint.getTarget(), e);
-//
-//	}
+
 	
-	@Around(value = "execution(* com.forsrc..*Controller.*(..))")
+	//@Around(value = "execution(* com.forsrc..*Controller.*(..))")
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable{
 		long start = System.currentTimeMillis();
 		Object rt = null;

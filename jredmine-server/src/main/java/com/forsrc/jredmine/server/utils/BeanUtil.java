@@ -1,11 +1,13 @@
 package com.forsrc.jredmine.server.utils;
 
+import java.io.Serializable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.cglib.core.Converter;
 import org.springframework.security.util.FieldUtils;
+import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
@@ -13,7 +15,7 @@ public class BeanUtil {
 
 	public static final ConcurrentMap<String, BeanCopier> BEAN_COPIER_MAP = new ConcurrentHashMap<>();
 	
-	public static BeanCopier create(Class source, Class target, boolean useConverter) {
+	public static <S extends Serializable, T extends Serializable> BeanCopier create(Class<S> source, Class<T> target, boolean useConverter) {
 		String key = source.getName() + target.getName();
 		BeanCopier beanCopier = BEAN_COPIER_MAP.get(key);
 		if (beanCopier == null) {
@@ -27,12 +29,12 @@ public class BeanUtil {
 		return beanCopier;
 	}
 
-	public static <S, T> void copy(S source, T target) {
+	public static <S extends Serializable, T extends Serializable>  void copy(S source, T target) {
 		BeanCopier beanCopier = create(source.getClass(), target.getClass(), false);
 		beanCopier.copy(source, target, null);
 	}
 	
-	public static <S, T> void copyIgnoreNull(S source, T target) {
+	public static <S extends Serializable, T extends Serializable>  void copyIgnoreNull(S source, T target) {
 		BeanCopier beanCopier = create(source.getClass(), target.getClass(), true);
 		beanCopier.copy(source, target, new Converter() {
 			
@@ -51,16 +53,51 @@ public class BeanUtil {
 				}
 				if (sourceValue.getClass() == targetClass) {
 					return sourceValue;
-				}
+				}       
 				return null;
 			}
 			
 		});
 	}
 	
-	public static <S, T> void copy(S source, T target, Converter converter) {
+	public static <S extends Serializable, T extends Serializable>  void copy(S source, T target, Converter converter) {
 		BeanCopier beanCopier = create(source.getClass(), target.getClass(), converter != null);
 		beanCopier.copy(source, target, converter);
 	}
 	
+	private static class Test implements Serializable{
+		private String name;
+		private Integer age;
+		
+		public Test(String name, Integer age) {
+			this.name = name;
+			this.age = age;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public Integer getAge() {
+			return age;
+		}
+		public void setAge(Integer age) {
+			this.age = age;
+		}
+		@Override
+		public String toString() {
+			return "Test [name=" + name + ", age=" + age + "]";
+		}
+		
+	} 
+
+	public static void main(String[] args) {
+		Test test1 = new Test("test", null);
+		Test test2 = new Test(null, 18);
+		BeanUtil.copyIgnoreNull(test1, test2);
+		System.out.println(test1.toString());
+		System.out.println(test2.toString());
+		Assert.isTrue(test2.getAge().equals(18));
+	}
 }

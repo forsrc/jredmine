@@ -27,7 +27,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name = "t_user", indexes = {
         @Index(name = "index_user_username", columnList = "username")}, uniqueConstraints = {
         @UniqueConstraint(columnNames = {"username"})})
-@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
 public class UserDetails extends BaseModel<String> implements org.springframework.security.core.userdetails.UserDetails, Principal, Cacheable<String>, Serializable {
 
     private static final long serialVersionUID = 7053075402341362549L;
