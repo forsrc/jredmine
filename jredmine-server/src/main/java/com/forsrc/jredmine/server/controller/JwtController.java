@@ -24,7 +24,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.forsrc.jredmine.server.exception.NoSuchObjectException;
+import com.forsrc.jredmine.server.exception.PasswordNotMatchException;
 import com.forsrc.jredmine.server.model.User;
+import com.forsrc.jredmine.server.service.LoginService;
 import com.forsrc.jredmine.server.service.UserService;
 import com.forsrc.jredmine.server.utils.JwtTokenUtil;
 
@@ -37,6 +40,9 @@ public class JwtController {
     @Autowired
     private UserService userService;
     
+    @Autowired
+    private LoginService loginService;
+    
     // curl -X GET http://localhost:8080/jredmine-server/jwt/user_info  --header "Authorization: Bearer `curl -X POST -H "Content-Type: application/json" -d '{"username": "forsrc", "password": "forsrc"}' http://localhost:8080/jredmine-server/jwt/login -s -v 2>&1 | grep "Authorization:" | awk '{print $3}'`"
     @GetMapping(path = "/jwt/user_info", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("isAuthenticated()")
@@ -47,13 +53,16 @@ public class JwtController {
 
     // curl -X POST -H "Content-Type: application/json" -d '{"username": "forsrc", "password": "forsrc"}' http://localhost:8080/jredmine-server/jwt/login
     @PostMapping(path = "/jwt/login", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDetails> login(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<UserDetails> login(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) throws NoSuchObjectException, PasswordNotMatchException {
 
-        Authentication auth = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-
+//        Authentication auth = authenticationManager
+//                    .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+//
+//        
+//        UserDetails userDetails = (UserDetails)auth.getPrincipal();
         
-        UserDetails userDetails = (UserDetails)auth.getPrincipal();
+    	UserDetails userDetails = loginService.check(user.getUsername(), user.getPassword());
+
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                 userDetails, null,

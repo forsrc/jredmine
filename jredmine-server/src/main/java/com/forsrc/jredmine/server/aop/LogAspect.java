@@ -29,7 +29,7 @@ public class LogAspect {
 	public void before(JoinPoint joinPoint) {
 		UUID uuid = getUuid();
 		THREAD_LOCAL_UUID.set(uuid);
-		LOG.info("[START]\t[Controller] {}; {}; {}; {}; {}", uuid, joinPoint.getSignature(), joinPoint.getArgs(), joinPoint.getTarget());
+		LOG.info("[START]\t[Controller] {}; {}; {}; {};", uuid, joinPoint.getSignature(), joinPoint.getArgs(), joinPoint.getTarget());
 	}
 	
 	@Around(value = "execution(* com.forsrc..*Controller.*(..))")
