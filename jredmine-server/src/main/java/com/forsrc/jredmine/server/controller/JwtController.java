@@ -52,6 +52,7 @@ public class JwtController {
         Authentication auth = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 
+        
         UserDetails userDetails = (UserDetails)auth.getPrincipal();
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
@@ -73,6 +74,7 @@ public class JwtController {
 
         HttpSession session = ((HttpServletRequest) request).getSession();
         String sessionId = session.getId();
+
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, jwtToken)

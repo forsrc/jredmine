@@ -31,15 +31,6 @@ public class LogAspect {
 		THREAD_LOCAL_UUID.set(uuid);
 		LOG.info("[START]-------------> {}; {}; {}; {}; {}", uuid, joinPoint.getSignature(), joinPoint.getArgs(), joinPoint.getTarget());
 	}
-
-	@After(value = "execution(* com.forsrc..*Controller.*(..))")
-	public void after(JoinPoint joinPoint) {
-		UUID uuid = getUuid();
-		LOG.info("[END]---------------> {}; {}; {}; {}; {}", uuid, joinPoint.getSignature(), joinPoint.getArgs(), joinPoint.getTarget(), joinPoint);
-
-	}
-	
-
 	
 	@Around(value = "execution(* com.forsrc..*Controller.*(..))")
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -50,7 +41,7 @@ public class LogAspect {
 			rt = joinPoint.proceed();
 		} catch (Throwable e) {
 			Long time = System.currentTimeMillis() - start;
-			LOG.warn("[Around Exception]--> {}; Time: {}\tms; {}; {}; {}; Exception: {}, {};", uuid, time, joinPoint.getSignature(), joinPoint.getArgs(), joinPoint.getTarget(), e.getClass().getName(), e.getMessage());
+			LOG.warn("[Around Exception]--> {}; Time: {}ms; Exception: {}, {};", uuid, time, e.getClass().getName(), e.getMessage());
 			Map<String, Object> message = new HashMap<>(3);
 			message.put("status", HttpStatus.FORBIDDEN.toString());
 			message.put("message", e.getMessage());
@@ -61,9 +52,15 @@ public class LogAspect {
 			
 		}
 		Long time = System.currentTimeMillis() - start;
-		LOG.info("[Around]------------> {}; Time: {}\tms; {}; {}; {}; retrun: {};", uuid, time, joinPoint.getSignature(), joinPoint.getArgs(), joinPoint.getTarget(), rt);
+		LOG.info("[Around]------------> {}; Time: {}ms; {}", uuid, time, rt);
 		return rt;
-		
+	}
+	
+	@After(value = "execution(* com.forsrc..*Controller.*(..))")
+	public void after(JoinPoint joinPoint) {
+		UUID uuid = getUuid();
+		// LOG.info("[END]---------------> {}; {}; {}; {}; {}", uuid, joinPoint.getSignature(), joinPoint.getArgs(), joinPoint.getTarget(), joinPoint);
+		LOG.info("[END]---------------> {};", uuid);
 
 	}
 

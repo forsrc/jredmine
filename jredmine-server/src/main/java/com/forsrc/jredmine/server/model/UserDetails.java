@@ -22,6 +22,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.forsrc.jredmine.server.utils.JwtTokenUtil;
 
 @Entity
 @Table(name = "t_user", indexes = {
@@ -79,6 +80,10 @@ public class UserDetails extends BaseModel<String> implements org.springframewor
 
     @Override
     public boolean isCredentialsNonExpired() {
+    	if (jwtToken != null) {
+    		Date expirationDate = JwtTokenUtil.getExpirationDate(jwtToken);
+    		return expirationDate.getTime() >= new Date().getTime();
+    	}
         return isEnabled();
     }
 
