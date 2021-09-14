@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 
 import { HomeRoutingModule } from './home.routing';
 import { HomeComponent } from './home.component';
+import { LoginService } from '../service/login.service';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { HomeComponent } from './home.component';
     FlexLayoutModule,
     HomeRoutingModule
   ],
-  declarations: [HomeComponent]
+  declarations: [HomeComponent],
+  providers: [LoginService]
 })
 export class HomeModule {
 }

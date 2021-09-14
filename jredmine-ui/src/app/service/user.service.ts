@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { User } from '../shared/user';
 import { environment } from '../../environments/environment';
+import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,16 @@ import { environment } from '../../environments/environment';
 
 export class UserService {
 
-  endpoint = `${environment.baseUrl}/assets/json/user.json`;
+  endpoint = `${environment.baseUrl}/api/user`;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor(private http: HttpClient) { }
+
+
+
+  constructor(private http: HttpClient, private loginService: LoginService, ) { }
 
   list() : Observable<any>{
-    return this.http.get(`${this.endpoint}`);
+    return this.http.get(this.endpoint + this.loginService.getSessionUrl());
   }
 
 }

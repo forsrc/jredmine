@@ -24,6 +24,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoginService } from './service/login.service';
 import { NavBarModule } from './navbar/navbar.module';
 import { FooterModule } from './footer/footer.module';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -52,7 +53,7 @@ import { FooterModule } from './footer/footer.module';
     NavBarModule,
     FooterModule,
   ],
-  providers: [LoginService],
+  providers: [LoginService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

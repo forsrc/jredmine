@@ -20,6 +20,7 @@ import { UserComponent } from './user.component';
 import { UserService } from '../service/user.service';
 import { DialogConfirmedComponent } from '../dialog-confirmed/dialog-confirmed.component';
 import { UserEditDialogComponent } from './edit/user-edit-dialog.component';
+import { LoginService } from '../service/login.service';
 
 @NgModule({
   imports: [
@@ -41,7 +42,7 @@ import { UserEditDialogComponent } from './edit/user-edit-dialog.component';
     UserEditDialogComponent,
     DialogConfirmedComponent
   ],
-  providers: [UserService],
+  providers: [UserService, LoginService],
   entryComponents: [UserComponent, DialogConfirmedComponent]
 })
 export class UserModule {

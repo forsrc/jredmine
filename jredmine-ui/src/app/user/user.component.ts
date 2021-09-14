@@ -44,11 +44,11 @@ export class UserComponent implements OnInit {
   ngOnInit() {
 
     this.userService.list().subscribe(data => {
-      this.users = data.data|| [];
+      this.users = data.content || [];
       for (let index = 0; index <  this.users.length; index++) {
         this.users[index].index = index + 1;
       }
-      
+
       this.dataSource = new MatTableDataSource<User>(this.users);
       setTimeout(() => {
         this.dataSource.paginator = this.paginator;
@@ -102,7 +102,7 @@ export class UserComponent implements OnInit {
     };
     const dialogRef = this.dialog.open(UserEditDialogComponent, dialogConfig);
 
-    
+
     dialogRef.afterClosed().subscribe(result => {
       //console.log("dialogRef.afterClosed()", result)
       //console.log("--->", result);

@@ -88,6 +88,8 @@ public class JwtController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, jwtToken)
                 .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Authorization")
+                .header("JREDMINE_SERVER_SESSION", sessionId)
+                .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "JREDMINE_SERVER_SESSION")
                 .header(HttpHeaders.SET_COOKIE, "JREDMINE_SERVER_SESSION=" + sessionId + "; SameSite=None;  Httponly; Secure")
                 .header(HttpHeaders.SET_COOKIE, "jsessionid=" + sessionId + "; SameSite=None;  Httponly; Secure")
                 .body(userDetails);

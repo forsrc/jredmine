@@ -29,7 +29,9 @@ export class LoginComponent implements OnInit {
       console.log(res.headers.get("authorization"));
       localStorage.setItem('isLoggedin', 'true');
       this.loginService.setJwtToken(res.headers.get("authorization"))
+        .setSessionId(res.headers.get("JREDMINE_SERVER_SESSION"))
         .setUser(res.body);
+
       this.router.navigate(['/home']);
 
     }, error => {
