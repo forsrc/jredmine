@@ -23,7 +23,7 @@ import { UserEditDialogComponent } from './edit/user-edit-dialog.component';
 export class UserComponent implements OnInit {
 
   users: any = [];
-  displayedColumns: string[] = ['index', 'username', 'password', 'enabled', 'action'];
+  displayedColumns: string[] = ['index', 'username', 'password', 'enabled', 'version', 'createdAt', "updatedAt", 'action'];
 
   dataSource!: MatTableDataSource<User>;
 
