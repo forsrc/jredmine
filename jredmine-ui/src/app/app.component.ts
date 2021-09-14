@@ -24,9 +24,6 @@ export class AppComponent implements OnInit, AfterContentInit {
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
-    this.loginService.toLogin();
-    // if(!this.loginService.isAuthenticated()) {
-    //   this.router.navigate(['/login']);
-    // }
+    this.loginService.toLogin(window.location.pathname);
   }
 }

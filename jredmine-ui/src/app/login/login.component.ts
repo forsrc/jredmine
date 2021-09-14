@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    console.log("onLogin()...");
+    console.log("onLogin()...", this.router.url);
     this.loginService.login(this.username, this.password).subscribe((res: HttpResponse<User>) => {
       console.log(res.body);
       console.log(res.headers.get("authorization"));
@@ -31,8 +31,7 @@ export class LoginComponent implements OnInit {
       this.loginService.setJwtToken(res.headers.get("authorization"))
         .setSessionId(res.headers.get("JREDMINE_SERVER_SESSION"))
         .setUser(res.body);
-
-      this.router.navigate(['/home']);
+      this.loginService.toPage();
 
     }, error => {
       console.log(error);

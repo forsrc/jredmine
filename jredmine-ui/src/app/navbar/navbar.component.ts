@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoginService } from '../service/login.service';
 
 
 @Component({
@@ -8,6 +9,11 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
 
+  constructor(private loginService: LoginService) {
+  }
 
+  public onLogout() {
+    this.loginService.logout();
+  }
 }
 

@@ -23,7 +23,7 @@ import { UserEditDialogComponent } from './edit/user-edit-dialog.component';
 export class UserComponent implements OnInit {
 
   users: any = [];
-  displayedColumns: string[] = ['index', 'username', 'password', 'action'];
+  displayedColumns: string[] = ['index', 'username', 'password', 'enabled', 'action'];
 
   dataSource!: MatTableDataSource<User>;
 
@@ -59,7 +59,6 @@ export class UserComponent implements OnInit {
   }
 
   onLogin() {
-    //localStorage.setItem('isLoggedin', 'true');
     this.router.navigate(['/user']);
   }
 

@@ -95,4 +95,9 @@ public class JwtController {
                 .body(userDetails);
 
     }
+
+    @GetMapping(path = "/jwt/status")
+    public ResponseEntity<String> status() {
+    	return ResponseEntity.ok().body("{\"status\":\"OK\"}");
+    }
 }

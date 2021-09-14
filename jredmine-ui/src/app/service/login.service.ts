@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpEvent, HttpEventType, HttpResponse} from "@angular/common/http";
 import {User} from "../shared/user";
-import {Observable} from "rxjs";
+import {forkJoin, Observable} from "rxjs";
 import { CookieService } from 'ngx-cookie-service';
 
 (window as any).global = window;
@@ -26,11 +26,41 @@ export class LoginService {
   public login(username: string, password: string) : Observable<HttpResponse<User>>{
     return this.http.post<User>(`${environment.baseUrl}/jwt/login`, {username: username, password: password}, { observe: 'response' });
   }
-  public toLogin(): void {
-    console.log("this.sessionId", this.sessionId);
+
+
+  public toPage() {
+    let url = this.cookieService.get("TO_PAGE");
+    if (url != null) {
+      this.router.navigate([url]);
+      return;
+    }
+    this.router.navigate(['/home']);
+  }
+
+  public toLogin(url? : string | null): void {
+    this.cookieService.delete("TO_PAGE");
     if(!this.isAuthenticated()) {
       this.router.navigate(['/login']);
     }
+
+    let promise = new Promise((resolve, rejects) => {
+      this.http.get<any>(`${environment.baseUrl}/jwt/status/${this.getSessionUrl()}`, { observe: 'response' }).toPromise().then(
+        (res: HttpResponse<any>) => {
+          resolve(true);
+        }, error => {
+
+          rejects(error)
+        });
+    });
+    promise.then(status => {
+      console.log(status);
+    }).catch(error => {
+      console.log(error);
+      if (url != null && url != "/login") {
+        this.cookieService.set("TO_PAGE", url);
+      }
+      this.router.navigate(['/login']);
+    })
   }
 
   public logout(): void {
@@ -39,13 +69,18 @@ export class LoginService {
     this.sessionId = null;
     this.expiresAt = 0;
     this.isLogined = false;
+    this.cookieService.delete("JREDMINE_SERVER_SESSION");
     this.router.navigate(['/login']);
   }
 
   public isAuthenticated(): boolean {
-    // return new Date().getTime() < this.expiresAt;
+
     this.sessionId = this.cookieService.get("JREDMINE_SERVER_SESSION");
-    return this.sessionId != null;
+    return this.sessionId != null && this.sessionId != '';
+  }
+
+  public checkStatus() : Observable<HttpResponse<any>> {
+    return this.http.get<any>(`${environment.baseUrl}/jwt/status/${this.getSessionUrl()}`, { observe: 'response' });
   }
 
   public setJwtToken(jwtToken: string | null): LoginService {
