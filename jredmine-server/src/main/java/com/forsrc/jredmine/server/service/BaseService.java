@@ -1,17 +1,16 @@
 package com.forsrc.jredmine.server.service;
 
-import java.io.Serializable;
-
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.forsrc.jredmine.server.dao.BaseDao;
+import com.forsrc.jredmine.server.model.BaseModel;
 
 
 @Service
 @Transactional(rollbackFor = { Exception.class })
-public interface BaseService<T extends com.forsrc.jredmine.server.model.Cacheable<PK>, PK> {
+public interface BaseService<T extends BaseModel<PK>, PK> {
 
 
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.forsrc.jredmine.server.model.BaseModel;
 import com.forsrc.jredmine.server.model.Cacheable;
 import com.forsrc.jredmine.server.service.BaseService;
 
@@ -25,10 +26,9 @@ import io.jsonwebtoken.lang.Assert;
 
 
 @PreAuthorize("hasRole('ADMIN')")
-public abstract class BaseController<T extends Cacheable<PK>, PK> {
+public abstract class BaseController<T extends BaseModel<PK>, PK> {
 
     public abstract BaseService<T, PK> getBaseService();
-
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 

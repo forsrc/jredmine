@@ -1,7 +1,6 @@
 package com.forsrc.jredmine.server.service.impl;
 
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
@@ -9,12 +8,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.forsrc.jredmine.server.model.BaseModel;
 import com.forsrc.jredmine.server.service.BaseService;
 import com.forsrc.jredmine.server.utils.BeanUtil;
 
 @Service
 @Transactional(rollbackFor = {Exception.class})
-public abstract class BaseServiceImpl<T extends com.forsrc.jredmine.server.model.Cacheable<PK>, PK> implements BaseService<T, PK> {
+public abstract class BaseServiceImpl<T extends BaseModel<PK>, PK> implements BaseService<T, PK> {
 
     public static final String CACHE_NAME = "jredmine";
     public static final String CACHE_PAGE_NAME = CACHE_NAME + "/page";
