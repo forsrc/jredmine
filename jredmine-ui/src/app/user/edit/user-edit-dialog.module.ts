@@ -22,6 +22,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDialogModule,
     UserEditRoutingModule
   ],
-  declarations: [UserEditDialogComponent]
+  declarations: []
 })
 export class UserEditDialogModule { }

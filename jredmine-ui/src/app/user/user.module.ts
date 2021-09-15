@@ -39,11 +39,10 @@ import { LoginService } from '../service/login.service';
   ],
   declarations: [
     UserComponent,
-    UserEditDialogComponent,
-    DialogConfirmedComponent
+    UserEditDialogComponent
   ],
   providers: [UserService, LoginService],
-  entryComponents: [UserComponent, DialogConfirmedComponent]
+  entryComponents: [UserComponent, UserEditDialogComponent]
 })
 export class UserModule {
 }

@@ -21,9 +21,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatButtonModule,
     MatDialogModule,
     AuthorityEditRoutingModule
-  ],
-  declarations: [
-    AuthorityEditDialogComponent
   ]
 })
 export class AuthorityEditDialogModule { }

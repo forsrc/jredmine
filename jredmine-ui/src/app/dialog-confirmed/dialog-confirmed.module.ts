@@ -9,7 +9,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 
 import { DemoRoutingModule } from '../demo/demo.routing.module';
-import { DemoComponent } from '../demo/demo.component';
 
 @NgModule({
   imports: [
@@ -21,7 +20,7 @@ import { DemoComponent } from '../demo/demo.component';
     FlexLayoutModule,
     DemoRoutingModule
   ],
-  declarations: [DemoComponent]
+  declarations: []
 })
 export class DemoModule {
 }

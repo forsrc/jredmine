@@ -41,7 +41,7 @@ import { AuthorityEditDialogComponent } from './edit/authority-edit-dialog.compo
     AuthorityEditDialogComponent
   ],
   providers: [AuthorityService],
-  entryComponents: [AuthorityComponent, DialogConfirmedComponent]
+  entryComponents: [AuthorityComponent]
 })
 export class AuthorityModule {
 }

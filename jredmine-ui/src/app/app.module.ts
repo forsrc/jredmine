@@ -25,11 +25,13 @@ import { LoginService } from './service/login.service';
 import { NavBarModule } from './navbar/navbar.module';
 import { FooterModule } from './footer/footer.module';
 import { CookieService } from 'ngx-cookie-service';
+import { DialogConfirmedComponent } from './dialog-confirmed/dialog-confirmed.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DialogConfirmedComponent
   ],
   imports: [
     MatSidenavModule,

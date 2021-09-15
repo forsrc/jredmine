@@ -38,11 +38,10 @@ import { UserEditDialogComponent } from './edit/user-edit-dialog.component';
   ],
   declarations: [
     UserComponent,
-    UserEditDialogComponent,
-    DialogConfirmedComponent
+    UserEditDialogComponent
   ],
   providers: [UserService],
-  entryComponents: [UserComponent, DialogConfirmedComponent]
+  entryComponents: [UserComponent]
 })
 export class UserModule {
 }
