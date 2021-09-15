@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.forsrc.jredmine.server.model.User;
 import com.forsrc.jredmine.server.service.UserService;
+import com.forsrc.jredmine.server.utils.JwtTokenUtil;
 
 @RestController
 @RequestMapping("/test")
@@ -27,6 +28,16 @@ public class TestController {
     	User user = new User();
     	user.setUsername("test");
     	user.setPassword("forsrc");
+    	user = userService.update(user);
+        return user;
+    }
+    
+
+    @GetMapping("/change_jwt")
+    public User testChangeJwt() {
+    	User user = new User();
+    	user.setUsername("test");
+    	user.setJwtToken(JwtTokenUtil.generateAccessToken(user));
     	user = userService.update(user);
         return user;
     }
