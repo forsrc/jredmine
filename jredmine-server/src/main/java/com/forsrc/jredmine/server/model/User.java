@@ -1,6 +1,5 @@
 package com.forsrc.jredmine.server.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +19,6 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "t_user", indexes = {
@@ -30,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 //@SelectBeforeUpdate(true)
 //@DynamicUpdate(true)
 //@DynamicInsert(true)
-public class User extends BaseModel<String> implements Cacheable<String>, Serializable {
+public class User implements BaseModel<String> {
 
     private static final long serialVersionUID = 7053075402341362549L;
 

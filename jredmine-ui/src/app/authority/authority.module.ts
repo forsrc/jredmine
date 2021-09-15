@@ -14,12 +14,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 
 
-import { UserRoleRoutingModule } from './user-role.routing.module';
-import { UserRoleComponent } from './user-role.component';
+import { AuthorityRoutingModule } from './authority.routing.module';
+import { AuthorityComponent } from './authority.component';
 
-import { UserRoleService } from '../service/user-role.service';
+import { AuthorityService } from '../service/authority.service';
 import { DialogConfirmedComponent } from '../dialog-confirmed/dialog-confirmed.component';
-import { UserRoleEditDialogComponent } from './edit/user-role-edit-dialog.component';
+import { AuthorityEditDialogComponent } from './edit/authority-edit-dialog.component';
 
 @NgModule({
   imports: [
@@ -34,14 +34,14 @@ import { UserRoleEditDialogComponent } from './edit/user-role-edit-dialog.compon
     MatSortModule,
     MatIconModule,
     MatDialogModule,
-    UserRoleRoutingModule
+    AuthorityRoutingModule
   ],
   declarations: [
-    UserRoleComponent,
-    UserRoleEditDialogComponent
+    AuthorityComponent,
+    AuthorityEditDialogComponent
   ],
-  providers: [UserRoleService],
-  entryComponents: [UserRoleComponent, DialogConfirmedComponent]
+  providers: [AuthorityService],
+  entryComponents: [AuthorityComponent, DialogConfirmedComponent]
 })
-export class UserRoleModule {
+export class AuthorityModule {
 }

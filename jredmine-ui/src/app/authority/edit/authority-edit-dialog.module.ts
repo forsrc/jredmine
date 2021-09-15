@@ -7,8 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 
-import { UserRoleEditRoutingModule } from './user-role-edit-dialog.routing';
-import { UserRoleEditDialogComponent } from './user-role-edit-dialog.component';
+import { AuthorityEditRoutingModule } from './authority-edit-dialog.routing';
+import { AuthorityEditDialogComponent } from './authority-edit-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
@@ -20,10 +20,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatCheckboxModule,
     MatButtonModule,
     MatDialogModule,
-    UserRoleEditRoutingModule
+    AuthorityEditRoutingModule
   ],
   declarations: [
-    UserRoleEditDialogComponent
+    AuthorityEditDialogComponent
   ]
 })
-export class UserRoleEditDialogModule { }
+export class AuthorityEditDialogModule { }

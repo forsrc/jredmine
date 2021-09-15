@@ -21,14 +21,13 @@ import javax.persistence.Version;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.forsrc.jredmine.server.utils.JwtTokenUtil;
 
 @Entity
 @Table(name = "t_user", indexes = {
         @Index(name = "index_user_username", columnList = "username")}, uniqueConstraints = {
         @UniqueConstraint(columnNames = {"username"})})
-public class UserDetails extends BaseModel<String> implements org.springframework.security.core.userdetails.UserDetails, Principal, Cacheable<String>, Serializable {
+public class UserDetails implements BaseModel<String>, org.springframework.security.core.userdetails.UserDetails, Principal {
 
     private static final long serialVersionUID = 7053075402341362549L;
 

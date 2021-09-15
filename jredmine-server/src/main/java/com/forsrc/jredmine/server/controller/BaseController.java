@@ -47,7 +47,7 @@ public abstract class BaseController<T extends Cacheable<PK>, PK> {
     }
 
     @GetMapping("")
-    public ResponseEntity<Page<T>> get(@RequestParam(name = "page", required = false) Integer page,
+    public ResponseEntity<Page<T>> page(@RequestParam(name = "page", required = false) Integer page,
                                        @RequestParam(name = "size", required = false) Integer size) {
         page = page == null || page == 0 ? 0 : page;
         size = size == null || size == 0 ? 10 : size;

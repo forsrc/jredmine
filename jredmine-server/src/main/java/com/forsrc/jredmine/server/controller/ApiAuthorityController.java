@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.forsrc.jredmine.server.model.Authority;
+import com.forsrc.jredmine.server.model.AuthorityPk;
 import com.forsrc.jredmine.server.service.AuthorityService;
+import com.forsrc.jredmine.server.service.BaseService;
+
 
 @RestController
 @RequestMapping("/api/authority")
-public class ApiAuthorityController {
+public class ApiAuthorityController extends BaseController<Authority, AuthorityPk>{
 
     @Autowired
     private AuthorityService authorityService;
@@ -36,5 +39,18 @@ public class ApiAuthorityController {
 
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+    
+    @Override
+    @GetMapping("/_")
+    public ResponseEntity<Authority> get(AuthorityPk pk) {
+
+    	return null;
+    }
+
+	@Override
+	public BaseService<Authority, AuthorityPk> getBaseService() {
+		return authorityService;
+	}
+    
 
 }

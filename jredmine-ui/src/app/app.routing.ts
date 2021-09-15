@@ -7,7 +7,7 @@ import { HomeModule } from './home/home.module';
 import { LoginModule } from './login/login.module';
 import { TableModule } from './table/table.module';
 import { UserModule } from './user/user.module';
-import { UserRoleModule } from './user-role/user-role.module';
+import { AuthorityModule } from './authority/authority.module';
 
 const routes: Routes = [
   {
@@ -47,10 +47,10 @@ const routes: Routes = [
     loadChildren: () => UserModule
   },
   {
-    path: 'user-role',
+    path: 'authority',
     // component: UserComponent,
     // loadChildren: './user/user.module#UserModule'
-    loadChildren: () => UserRoleModule
+    loadChildren: () => AuthorityModule
   },
   {
     path: 'table',

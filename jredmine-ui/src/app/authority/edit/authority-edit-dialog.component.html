@@ -1,0 +1,14 @@
+<div class="container">
+      <h3 mat-dialog-title>{{ title }} <mat-icon color="primary" aria-label="edit">edit</mat-icon> Username: {{ authority.username }}</h3>
+
+      <mat-form-field class="w-100">
+            <input matInput placeholder="Username" value="{{authority.username}}" disabled>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+            <input matInput placeholder="Authority" value="{{authority.authority}}" [(ngModel)]="authority.authority" >
+      </mat-form-field>
+      <section mat-dialog-actions align="end" class="md-button-right">
+            <button color="primary" mat-raised-button cdkFocusInitial [mat-dialog-close]="authority"> Confirm </button>
+            <button color="primary" mat-button cdkFocusInitial mat-dialog-close> Cancel </button>
+      </section>
+</div>

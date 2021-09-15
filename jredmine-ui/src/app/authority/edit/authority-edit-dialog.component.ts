@@ -6,28 +6,28 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
-import UserRole from '../../shared/user-role';
+import Authorit from '../../shared/authority';
 
 @Component({
-  selector: 'app-user-role-edit',
-  templateUrl: './user-role-edit-dialog.component.html',
-  styleUrls: ['./user-role-edit-dialog.component.scss']
+  selector: 'app-authority-edit',
+  templateUrl: './authority-edit-dialog.component.html',
+  styleUrls: ['./authority-edit-dialog.component.scss']
 })
-export class UserRoleEditDialogComponent implements OnInit {
+export class AuthorityEditDialogComponent implements OnInit {
 
   title!: string;
-  userRole!: UserRole;
+  authority!: Authorit;
 
   public event: EventEmitter<any> = new EventEmitter();
 
   constructor(private router: Router,
-    public dialogRef: MatDialogRef<UserRoleEditDialogComponent>,
+    public dialogRef: MatDialogRef<AuthorityEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
   ngOnInit() {
     this.title = this.data.title;
-    this.userRole = this.data.userRole;
+    this.authority = this.data.authority;
 
   }
 

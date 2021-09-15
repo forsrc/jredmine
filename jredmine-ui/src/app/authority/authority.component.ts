@@ -10,22 +10,22 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDialogConfig } from '@angular/material/dialog';
 
 
-import UserRole from '../shared/user-role';
-import { UserRoleService } from '../service/user-role.service';
+import Authority from '../shared/authority';
+import { AuthorityService } from '../service/authority.service';
 import { DialogConfirmedComponent } from '../dialog-confirmed/dialog-confirmed.component';
-import { UserRoleEditDialogComponent } from './edit/user-role-edit-dialog.component';
+import { AuthorityEditDialogComponent } from './edit/authority-edit-dialog.component';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './user-role.component.html',
-  styleUrls: ['./user-role.component.scss']
+  templateUrl: './authority.component.html',
+  styleUrls: ['./authority.component.scss']
 })
-export class UserRoleComponent implements OnInit {
+export class AuthorityComponent implements OnInit {
 
-  userRoles: any = [];
-  displayedColumns: string[] = ['index', 'username', 'role', 'action'];
+  authorities: any = [];
+  displayedColumns: string[] = ['index', 'username', 'authority', 'version', 'createdAt', "updatedAt", 'action'];
 
-  dataSource!: MatTableDataSource<UserRole>;
+  dataSource!: MatTableDataSource<Authority>;
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -33,7 +33,7 @@ export class UserRoleComponent implements OnInit {
   @ViewChild(MatSort)
   sort!: MatSort;
 
-  constructor(private router: Router, private userRoleService: UserRoleService, public dialog: MatDialog) {
+  constructor(private router: Router, private authorityService: AuthorityService, public dialog: MatDialog) {
   }
 
   applyFilter(event: Event) {
@@ -43,13 +43,13 @@ export class UserRoleComponent implements OnInit {
 
   ngOnInit() {
 
-    this.userRoleService.list().subscribe(data => {
-      this.userRoles = data.data|| [];
-      for (let index = 0; index <  this.userRoles.length; index++) {
-        this.userRoles[index].index = index + 1;
+    this.authorityService.list().subscribe(data => {
+      this.authorities = data.content || [];
+      for (let index = 0; index <  this.authorities.length; index++) {
+        this.authorities[index].index = index + 1;
       }
-      
-      this.dataSource = new MatTableDataSource<UserRole>(this.userRoles);
+
+      this.dataSource = new MatTableDataSource<Authority>(this.authorities);
       setTimeout(() => {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -60,10 +60,10 @@ export class UserRoleComponent implements OnInit {
 
   onLogin() {
     //localStorage.setItem('isLoggedin', 'true');
-    this.router.navigate(['/user-role']);
+    this.router.navigate(['/authority']);
   }
 
-  delete(userRole: UserRole): void {
+  delete(authority: Authority): void {
     // Create configuration for the dialog
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -73,7 +73,7 @@ export class UserRoleComponent implements OnInit {
     dialogConfig.data = {
       title: "Delete",
       icon: "delete_forever",
-      key: userRole.username,
+      key: authority.username,
       message: 'Are you sure?'
     };
 
@@ -82,13 +82,13 @@ export class UserRoleComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       //console.log("dialogRef.afterClosed()", result)
       if (result) {
-        this.dataSource.data = this.dataSource.data.filter(e => e.username !== userRole.username);
+        this.dataSource.data = this.dataSource.data.filter(e => e.username !== authority.username);
         //this.userServicr.delete(user.username).subscribe();
       }
     });
   }
 
-  edit(userRole: UserRole): void {
+  edit(authority: Authority): void {
 
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -98,19 +98,19 @@ export class UserRoleComponent implements OnInit {
     dialogConfig.data = {
       title: "Edit",
       icon: "edit",
-      userRole: userRole
+      authority: authority
     };
-    const dialogRef = this.dialog.open(UserRoleEditDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(AuthorityEditDialogComponent, dialogConfig);
 
-    
+
     dialogRef.afterClosed().subscribe(result => {
       //console.log("dialogRef.afterClosed()", result)
       //console.log("--->", result);
       if (result) {
         this.dataSource.data.map((user , i) => {
           //console.log(user , i);
-          if (result.username === userRole.username) {
-            userRole.role = result.role;
+          if (result.username === authority.username) {
+            authority.authority = result.authority;
           }
         });
         //this.userServicr.delete(user.username).subscribe();

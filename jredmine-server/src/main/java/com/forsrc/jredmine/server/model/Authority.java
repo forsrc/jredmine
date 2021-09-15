@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @DynamicUpdate
 @DynamicInsert
-public class Authority extends BaseModel<AuthorityPk> implements GrantedAuthority, Cacheable<AuthorityPk> {
+public class Authority implements BaseModel<AuthorityPk>, GrantedAuthority {
 
     private static final long serialVersionUID = -1985182093016989312L;
 
