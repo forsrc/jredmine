@@ -18,6 +18,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -27,6 +29,8 @@ import com.forsrc.jredmine.server.utils.JwtTokenUtil;
 @Table(name = "t_user", indexes = {
         @Index(name = "index_user_username", columnList = "username")}, uniqueConstraints = {
         @UniqueConstraint(columnNames = {"username"})})
+@DynamicUpdate(true)
+@DynamicInsert(true)
 public class UserDetails implements BaseModel<String>, org.springframework.security.core.userdetails.UserDetails, Principal {
 
     private static final long serialVersionUID = 7053075402341362549L;

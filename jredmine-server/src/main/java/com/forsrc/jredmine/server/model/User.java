@@ -18,6 +18,9 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -26,8 +29,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
         @UniqueConstraint(columnNames = {"username"})})
 //@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
 //@SelectBeforeUpdate(true)
-//@DynamicUpdate(true)
-//@DynamicInsert(true)
+@DynamicUpdate(true)
+@DynamicInsert(true)
 public class User implements BaseModel<String> {
 
     private static final long serialVersionUID = 7053075402341362549L;
