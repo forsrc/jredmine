@@ -23,7 +23,7 @@ export class UserService {
 
 
 
-  constructor(private http: HttpClient, private loginService: LoginService, ) { }
+  constructor(private http: HttpClient, private loginService: LoginService) { }
 
   list() : Observable<any>{
     return this.http.get(this.endpoint + this.loginService.getSessionUrl());

@@ -1,6 +1,5 @@
 package com.forsrc.jredmine.server.controller;
 
-
 import javax.persistence.EntityNotFoundException;
 
 import org.slf4j.Logger;
@@ -19,11 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.forsrc.jredmine.server.model.BaseModel;
-import com.forsrc.jredmine.server.model.Cacheable;
 import com.forsrc.jredmine.server.service.BaseService;
 
 import io.jsonwebtoken.lang.Assert;
-
 
 @PreAuthorize("hasRole('ADMIN')")
 public abstract class BaseController<T extends BaseModel<PK>, PK> {
@@ -37,9 +34,9 @@ public abstract class BaseController<T extends BaseModel<PK>, PK> {
         T t = null;
         try {
             t = getBaseService().get(pk);
-            LOGGER.info("--> {} : {}", pk, t.toString());
+            LOGGER.info("-->\t{} : {}", pk, t);
         } catch (EntityNotFoundException | NestedRuntimeException e) {
-            LOGGER.warn("--> {} : {}", pk, e.getMessage());
+            LOGGER.warn("-->\t{} : {}", pk, e.getMessage());
             return new ResponseEntity<>(t, HttpStatus.OK);
         }
 
@@ -48,12 +45,12 @@ public abstract class BaseController<T extends BaseModel<PK>, PK> {
 
     @GetMapping("")
     public ResponseEntity<Page<T>> page(@RequestParam(name = "page", required = false) Integer page,
-                                       @RequestParam(name = "size", required = false) Integer size) {
+            @RequestParam(name = "size", required = false) Integer size) {
         page = page == null || page == 0 ? 0 : page;
         size = size == null || size == 0 ? 10 : size;
         size = size >= 1000 ? 1000 : size;
         Page<T> list = getBaseService().page(page, size);
-        LOGGER.info("--> get({}, {}) : {}", page, size, list);
+        LOGGER.info("-->\tpage({}, {}) : {}", page, size, list);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -61,7 +58,8 @@ public abstract class BaseController<T extends BaseModel<PK>, PK> {
     @PostMapping("")
     public ResponseEntity<T> save(@RequestBody T t) {
         Assert.notNull(t, "save: Object is null");
-        //Assert.notNull(t, "save: username is nul");
+        // Assert.notNull(t, "save: username is nul");
+        LOGGER.info("-->\tsave {}", t);
         t = getBaseService().save(t);
         return new ResponseEntity<>(t, HttpStatus.OK);
     }
@@ -69,8 +67,8 @@ public abstract class BaseController<T extends BaseModel<PK>, PK> {
     @PutMapping("")
     public ResponseEntity<T> update(@RequestBody T t) {
         Assert.notNull(t, "update: Object is null");
-        //Assert.notNull(user.getUsername(), "save: username is nul");
-        
+        // Assert.notNull(user.getUsername(), "save: username is nul");
+        LOGGER.info("-->\tupdate {}", t);
         t = getBaseService().update(t);
         return new ResponseEntity<>(t, HttpStatus.OK);
     }
@@ -78,6 +76,7 @@ public abstract class BaseController<T extends BaseModel<PK>, PK> {
     @DeleteMapping("/{pk}")
     public ResponseEntity<String> delete(@PathVariable("pk") PK pk) {
         Assert.notNull(pk, "delete: pk is nul");
+        LOGGER.info("-->\tdelete {}", pk);
         getBaseService().delete(pk);
         return new ResponseEntity<>(pk.toString() + " is deleted.", HttpStatus.OK);
     }

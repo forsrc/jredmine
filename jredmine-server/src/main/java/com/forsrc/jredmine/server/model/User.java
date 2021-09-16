@@ -22,13 +22,16 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.forsrc.jredmine.server.vo.ViewVo;
 
 @Entity
 @Table(name = "t_user", indexes = {
-        @Index(name = "index_user_username", columnList = "username")}, uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"username"})})
-//@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
-//@SelectBeforeUpdate(true)
+        @Index(name = "index_user_username", columnList = "username") }, uniqueConstraints = {
+                @UniqueConstraint(columnNames = { "username" }) })
+// @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler",
+// "fieldHandler"})
+// @SelectBeforeUpdate(true)
 @DynamicUpdate(true)
 @DynamicInsert(true)
 public class User implements BaseModel<String> {
@@ -40,8 +43,9 @@ public class User implements BaseModel<String> {
     @Column(name = "username", unique = true, length = 200, nullable = false)
     private String username;
 
-    //@JsonIgnore
+    // @JsonIgnore
     @Column(name = "password", length = 200)
+    // @JsonView(ViewVo.Ignore.class)
     private String password;
 
     @Column(name = "enabled", length = 1, columnDefinition = "INT DEFAULT 1")
@@ -60,7 +64,7 @@ public class User implements BaseModel<String> {
     @Column(name = "version", insertable = false, updatable = true, columnDefinition = "INT DEFAULT 0")
     @Version
     private int version;
-    
+
     @Column(name = "jwt_token", length = 1000)
     private String jwtToken;
 
@@ -128,39 +132,30 @@ public class User implements BaseModel<String> {
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
-    
+
     public String getJwtToken() {
-		return jwtToken;
-	}
-    
+        return jwtToken;
+    }
+
     public void setJwtToken(String jwtToken) {
-		this.jwtToken = jwtToken;
-	}
-    
- 
+        this.jwtToken = jwtToken;
+    }
 
     @Override
     public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", version=" + version +
-                ", jwtToken=" + jwtToken +
-                ", authorities=" + authorities +
-                '}';
+        return "User{" + "username='" + username + '\'' + ", password='" + password + '\'' + ", enabled=" + enabled
+                + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", version=" + version + ", jwtToken="
+                + jwtToken + ", authorities=" + authorities + '}';
     }
 
     @Override
     public String getPk() {
         return getUsername();
     }
-    
+
     @Override
     public void setPk(String pk) {
-    	setUsername(pk);
-    	
+        setUsername(pk);
+
     }
 }
