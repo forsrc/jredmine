@@ -6,9 +6,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { UserEditRoutingModule } from './user-edit-dialog.routing';
-import { UserEditDialogComponent } from './user-edit-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
@@ -20,6 +20,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatCheckboxModule,
     MatButtonModule,
     MatDialogModule,
+    MatRadioModule,
     UserEditRoutingModule
   ],
   declarations: []

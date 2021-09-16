@@ -1,18 +1,30 @@
 <div class="container">
   <h3 mat-dialog-title>{{ title }} <mat-icon color="primary" aria-label="edit">edit</mat-icon> Username: {{ user.username }}</h3>
-
-
-
       <mat-form-field class="w-100">
-            <input matInput placeholder="Username" value="{{user.username}}" disabled>
+            <input matInput placeholder="Username" value="{{user.username}}" name="user.username" disabled>
       </mat-form-field>
+
+      <label id="enabled" class="w-100">Enable</label>
+      <mat-radio-group aria-label="enabled" [(ngModel)]="user.enabled" name="user.enabled">
+          <mat-radio-button [value]="1">true</mat-radio-button>
+          <mat-radio-button [value]="0">false</mat-radio-button>
+      </mat-radio-group>
+
       <mat-form-field class="w-100">
-            <input matInput placeholder="Password" value="{{user.password}}" [(ngModel)]="user.password" >
+            <input matInput placeholder="Version" value="{{user.version}}" name="user.version" disabled>
+      </mat-form-field>
+
+      <mat-form-field class="w-100">
+            <input matInput placeholder="CreatedAt" value="{{user.createdAt}}" name="user.createdAt" disabled>
+      </mat-form-field>
+
+      <mat-form-field class="w-100">
+            <input matInput placeholder="UpdatedAt" value="{{user.updatedAt}}" name="user.updatedAt" disabled>
       </mat-form-field>
 
       <section mat-dialog-actions align="end" class="md-button-right">
-            <button color="primary" mat-raised-button cdkFocusInitial [mat-dialog-close]="user"> Confirm </button>
-            <button color="primary" mat-button cdkFocusInitial mat-dialog-close> Cancel </button>
+            <button color="primary" mat-button [mat-dialog-close]="user"> Confirm </button>
+            <button color="primary" mat-raised-button cdkFocusInitial mat-dialog-close> Cancel </button>
       </section>
 
 

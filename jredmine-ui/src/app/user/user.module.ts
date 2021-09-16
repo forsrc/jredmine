@@ -7,6 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -18,7 +19,6 @@ import { UserRoutingModule } from './user.routing.module';
 import { UserComponent } from './user.component';
 
 import { UserService } from '../service/user.service';
-import { DialogConfirmedComponent } from '../dialog-confirmed/dialog-confirmed.component';
 import { UserEditDialogComponent } from './edit/user-edit-dialog.component';
 import { LoginService } from '../service/login.service';
 
@@ -27,6 +27,7 @@ import { LoginService } from '../service/login.service';
     MatButtonModule,
     MatCheckboxModule,
     MatInputModule,
+    MatRadioModule,
     CommonModule,
     FormsModule,
     FlexLayoutModule,

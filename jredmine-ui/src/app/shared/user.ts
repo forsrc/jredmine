@@ -4,7 +4,7 @@ export class User {
 	username!: string;
 	password!: string;
 	email!: string;
-	enabled!: boolean;
+	enabled!: number;
   version!: number;
   createdAt!: Date;
   updatedAt!: Date;

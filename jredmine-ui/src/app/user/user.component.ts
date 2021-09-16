@@ -23,7 +23,7 @@ import { UserEditDialogComponent } from './edit/user-edit-dialog.component';
 export class UserComponent implements OnInit {
 
   users: any = [];
-  displayedColumns: string[] = ['index', 'username', 'password', 'enabled', 'version', 'createdAt', "updatedAt", 'action'];
+  displayedColumns: string[] = ['index', 'username', 'enabled', 'version', 'createdAt', "updatedAt", 'action'];
 
   dataSource!: MatTableDataSource<User>;
 
@@ -92,24 +92,26 @@ export class UserComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.height = '400px';
+    dialogConfig.height = '500px';
     dialogConfig.width = '800px';
     dialogConfig.data = {
       title: "Edit",
       icon: "edit",
-      user: user
+      user: JSON.parse(JSON.stringify(user))
     };
     const dialogRef = this.dialog.open(UserEditDialogComponent, dialogConfig);
 
 
     dialogRef.afterClosed().subscribe(result => {
-      //console.log("dialogRef.afterClosed()", result)
+      console.log("dialogRef.afterClosed()", result)
       //console.log("--->", result);
+
       if (result) {
         this.dataSource.data.map((user , i) => {
           //console.log(user , i);
           if (result.username === user.username) {
-            user.password = result.password;
+            //user.enabled = result.enabled;
+            Object.assign(user, result);
           }
         });
         //this.userServicr.delete(user.username).subscribe();
