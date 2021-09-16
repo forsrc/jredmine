@@ -1,6 +1,5 @@
 package com.forsrc.jredmine.server.model;
 
-import java.io.Serializable;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Date;
@@ -23,15 +22,19 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.forsrc.jredmine.server.utils.JwtTokenUtil;
 
 @Entity
 @Table(name = "t_user", indexes = {
-        @Index(name = "index_user_username", columnList = "username")}, uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"username"})})
+        @Index(name = "index_user_username", columnList = "username") }, uniqueConstraints = {
+                @UniqueConstraint(columnNames = { "username" }) })
 @DynamicUpdate(true)
 @DynamicInsert(true)
-public class UserDetails implements BaseModel<String>, org.springframework.security.core.userdetails.UserDetails, Principal {
+@JsonView(BaseModel.View.class)
+public class UserDetails
+        implements BaseModel<String>, org.springframework.security.core.userdetails.UserDetails, Principal {
 
     private static final long serialVersionUID = 7053075402341362549L;
 
@@ -40,8 +43,8 @@ public class UserDetails implements BaseModel<String>, org.springframework.secur
     @Column(name = "username", unique = true, length = 200, nullable = false)
     private String username;
 
-
     @Column(name = "password", length = 200, nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(name = "enabled", length = 1, nullable = false, columnDefinition = "INT DEFAULT 1")
@@ -60,8 +63,9 @@ public class UserDetails implements BaseModel<String>, org.springframework.secur
     @Column(name = "version", insertable = false, updatable = true, nullable = false, columnDefinition = "INT DEFAULT 0")
     @Version
     private int version;
-    
+
     @Column(name = "jwt_token", length = 1000, nullable = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String jwtToken;
 
     @OneToMany(mappedBy = "username")
@@ -83,10 +87,10 @@ public class UserDetails implements BaseModel<String>, org.springframework.secur
 
     @Override
     public boolean isCredentialsNonExpired() {
-    	if (jwtToken != null) {
-    		Date expirationDate = JwtTokenUtil.getExpirationDate(jwtToken);
-    		return expirationDate.getTime() >= new Date().getTime();
-    	}
+        if (jwtToken != null) {
+            Date expirationDate = JwtTokenUtil.getExpirationDate(jwtToken);
+            return expirationDate.getTime() >= new Date().getTime();
+        }
         return isEnabled();
     }
 
@@ -95,28 +99,25 @@ public class UserDetails implements BaseModel<String>, org.springframework.secur
         return enabled != null && enabled.equals(1);
     }
 
-
     public String getPassword() {
         return password;
     }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Integer getEnabled() {
         return enabled;
     }
-
 
     public Date getCreatedAt() {
         return createdAt;
     }
 
-
     public Date getUpdatedAt() {
         return updatedAt;
     }
-
 
     public int getVersion() {
         return version;
@@ -126,23 +127,16 @@ public class UserDetails implements BaseModel<String>, org.springframework.secur
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
-    
+
     public String getJwtToken() {
-		return jwtToken;
-	}
+        return jwtToken;
+    }
 
     @Override
     public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", version=" + version +
-                ", jwtToken=" + jwtToken +
-                ", authorities=" + (authorities == null ? null : authorities) +
-                '}';
+        return "User{" + "username='" + username + '\'' + ", password='" + password + '\'' + ", enabled=" + enabled
+                + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", version=" + version + ", jwtToken="
+                + jwtToken + ", authorities=" + (authorities == null ? null : authorities) + '}';
     }
 
     @Override
@@ -154,9 +148,8 @@ public class UserDetails implements BaseModel<String>, org.springframework.secur
     public String getPk() {
         return getUsername();
     }
-    
+
     @Override
     public void setPk(String pk) {
-
     }
 }

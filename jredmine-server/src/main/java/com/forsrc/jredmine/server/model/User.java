@@ -22,8 +22,8 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.forsrc.jredmine.server.vo.ViewVo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "t_user", indexes = {
@@ -34,6 +34,7 @@ import com.forsrc.jredmine.server.vo.ViewVo;
 // @SelectBeforeUpdate(true)
 @DynamicUpdate(true)
 @DynamicInsert(true)
+
 public class User implements BaseModel<String> {
 
     private static final long serialVersionUID = 7053075402341362549L;
@@ -43,9 +44,8 @@ public class User implements BaseModel<String> {
     @Column(name = "username", unique = true, length = 200, nullable = false)
     private String username;
 
-    // @JsonIgnore
     @Column(name = "password", length = 200)
-    // @JsonView(ViewVo.Ignore.class)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(name = "enabled", length = 1, columnDefinition = "INT DEFAULT 1")
@@ -66,6 +66,7 @@ public class User implements BaseModel<String> {
     private int version;
 
     @Column(name = "jwt_token", length = 1000)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String jwtToken;
 
     @OneToMany(mappedBy = "username", fetch = FetchType.EAGER)

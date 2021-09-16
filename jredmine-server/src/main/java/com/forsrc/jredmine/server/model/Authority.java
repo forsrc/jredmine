@@ -21,16 +21,17 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "t_authority", indexes = {
-            @Index(name = "index_authority_username", columnList = "username") },
-            uniqueConstraints = { @UniqueConstraint(columnNames = { "username", "authority" })}
-        )
+        @Index(name = "index_authority_username", columnList = "username") }, uniqueConstraints = {
+                @UniqueConstraint(columnNames = { "username", "authority" }) })
 @IdClass(AuthorityPk.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @DynamicUpdate
 @DynamicInsert
+@JsonView(BaseModel.View.class)
 public class Authority implements BaseModel<AuthorityPk>, GrantedAuthority {
 
     private static final long serialVersionUID = -1985182093016989312L;
@@ -57,6 +58,7 @@ public class Authority implements BaseModel<AuthorityPk>, GrantedAuthority {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private Date updatedAt;
+
     @PreUpdate
     protected void onUpdated() {
         this.updatedAt = new Date();
@@ -116,13 +118,8 @@ public class Authority implements BaseModel<AuthorityPk>, GrantedAuthority {
 
     @Override
     public String toString() {
-        return "Authority{" +
-                "username='" + username + '\'' +
-                ", authority='" + authority + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", version=" + version +
-                '}';
+        return "Authority{" + "username='" + username + '\'' + ", authority='" + authority + '\'' + ", createdAt="
+                + createdAt + ", updatedAt=" + updatedAt + ", version=" + version + '}';
     }
 
     @Override
@@ -130,9 +127,9 @@ public class Authority implements BaseModel<AuthorityPk>, GrantedAuthority {
         return new AuthorityPk(getUsername(), getAuthority());
     }
 
-	@Override
-	public void setPk(AuthorityPk pk) {
-		setUsername(username);
-		setAuthority(pk.getAuthority());
-	}
+    @Override
+    public void setPk(AuthorityPk pk) {
+        setUsername(username);
+        setAuthority(pk.getAuthority());
+    }
 }
