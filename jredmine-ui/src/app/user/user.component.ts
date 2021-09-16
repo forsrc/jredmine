@@ -26,6 +26,14 @@ export class UserComponent implements OnInit {
   displayedColumns: string[] = ['index', 'username', 'enabled', 'version', 'createdAt', "updatedAt", 'action'];
 
   dataSource!: MatTableDataSource<User>;
+  totalElements!: number;
+  page = {
+    length: 0,
+    pageSize: 10,
+    pageSizeOptions: [10, 20, 50, 100],
+    previousPageIndex: 0,
+    pageIndex: 0
+  }
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -37,24 +45,14 @@ export class UserComponent implements OnInit {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    let filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim();
   }
 
   ngOnInit() {
 
-    this.userService.list().subscribe(data => {
-      this.users = data.content || [];
-      for (let index = 0; index <  this.users.length; index++) {
-        this.users[index].index = index + 1;
-      }
 
-      this.dataSource = new MatTableDataSource<User>(this.users);
-      setTimeout(() => {
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }, 0);
-    })
+    this.onPage(this.page);
 
   }
 
@@ -103,19 +101,55 @@ export class UserComponent implements OnInit {
 
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("dialogRef.afterClosed()", result)
-      //console.log("--->", result);
-
-      if (result) {
-        this.dataSource.data.map((user , i) => {
-          //console.log(user , i);
-          if (result.username === user.username) {
-            //user.enabled = result.enabled;
-            Object.assign(user, result);
-          }
-        });
-        //this.userServicr.delete(user.username).subscribe();
+      // console.log("dialogRef.afterClosed()", result);
+      if (!result) {
+        return
       }
+      this.dataSource.data.forEach((data: User) => {
+        if (result.username === data.username) {
+          // user.enabled = result.enabled;
+          Object.assign(data, result);
+          data.enabledValue = data.enabled == 1 ? "true" : "false";
+        }
+      });
     });
+  }
+
+
+  onPage(page: any): void {
+    if(page.length != 0 && page.pageSize >= page.length) {
+      return;
+    }
+    this.users = [];
+    this.userService.list(page.pageIndex, page.pageSize).subscribe(data => {
+      this.users = data.content || [];
+      let length = this.users.length;
+      for (let index = 0; index <  length; index++) {
+        this.users[index].index = index + 1;
+        this.users[index].enabledValue = this.users[index].enabled == 1 ? "true" : "false";
+
+      }
+      this.dataSource = new MatTableDataSource<User>(this.users);
+      this.page.length = data.totalElements;
+      this.page.pageSize = data.pageable.size;
+      this.page.pageIndex = data.pageable.pageNumber;
+      this.dataSource.filterPredicate = this.filterPredicate
+      this.dataSource.sort = this.sort;
+      // setTimeout(() => {
+      //   //this.dataSource.paginator = this.paginator;
+      //   this.dataSource.sort = this.sort;
+      // }, 0);
+    })
+  }
+
+  filterPredicate(target: User, filter: string) {
+    let json = JSON.parse(JSON.stringify(target));
+        for(let key in json) {
+          if((json[key] + "").indexOf(filter) >= 0) {
+            console.log(json[key]);
+            return true;
+          }
+        }
+    return false;
   }
 }
