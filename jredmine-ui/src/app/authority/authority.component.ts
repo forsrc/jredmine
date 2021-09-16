@@ -27,6 +27,14 @@ export class AuthorityComponent implements OnInit {
 
   dataSource!: MatTableDataSource<Authority>;
 
+  page = {
+    length: 0,
+    pageSize: 10,
+    pageSizeOptions: [10, 20, 50, 100],
+    previousPageIndex: 0,
+    pageIndex: 0
+  }
+
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
@@ -38,23 +46,12 @@ export class AuthorityComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue.trim();
   }
 
   ngOnInit() {
 
-    this.authorityService.list().subscribe(data => {
-      this.authorities = data.content || [];
-      for (let index = 0; index <  this.authorities.length; index++) {
-        this.authorities[index].index = index + 1;
-      }
-
-      this.dataSource = new MatTableDataSource<Authority>(this.authorities);
-      setTimeout(() => {
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }, 0);
-    })
+    this.onPage(this.page);
 
   }
 
@@ -93,12 +90,12 @@ export class AuthorityComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.height = '400px';
+    dialogConfig.height = '500px';
     dialogConfig.width = '800px';
     dialogConfig.data = {
       title: "Edit",
       icon: "edit",
-      authority: authority
+      authority: JSON.parse(JSON.stringify(authority))
     };
     const dialogRef = this.dialog.open(AuthorityEditDialogComponent, dialogConfig);
 
@@ -116,5 +113,40 @@ export class AuthorityComponent implements OnInit {
         //this.userServicr.delete(user.username).subscribe();
       }
     });
+  }
+
+  onPage(page: any): void {
+    if(page.length != 0 && page.pageSize >= page.length) {
+      return;
+    }
+    this.authorities = [];
+    this.authorityService.list(page.pageIndex, page.pageSize).subscribe(data => {
+      this.authorities = data.content || [];
+      let length = this.authorities.length;
+      for (let index = 0; index <  length; index++) {
+        this.authorities[index].index = index + 1;
+      }
+      this.dataSource = new MatTableDataSource<Authority>(this.authorities);
+      this.page.length = data.totalElements;
+      this.page.pageSize = data.pageable.size;
+      this.page.pageIndex = data.pageable.pageNumber;
+      this.dataSource.filterPredicate = this.filterPredicate;
+      this.dataSource.sort = this.sort;
+      // setTimeout(() => {
+      //   //this.dataSource.paginator = this.paginator;
+      //   this.dataSource.sort = this.sort;
+      // }, 0);
+    })
+  }
+
+  filterPredicate(target: Authority, filter: string) {
+    let json = JSON.parse(JSON.stringify(target));
+        for(let key in json) {
+          if((json[key] + "").indexOf(filter) >= 0) {
+            console.log(json[key]);
+            return true;
+          }
+        }
+    return false;
   }
 }

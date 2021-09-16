@@ -7,8 +7,19 @@
       <mat-form-field class="w-100">
             <input matInput placeholder="Authority" value="{{authority.authority}}" [(ngModel)]="authority.authority" >
       </mat-form-field>
+      <mat-form-field class="w-100">
+            <input matInput placeholder="Version" value="{{authority.version}}" name="authority.version" disabled>
+      </mat-form-field>
+
+      <mat-form-field class="w-100">
+            <input matInput placeholder="CreatedAt" value="{{authority.createdAt}}" name="authority.createdAt" disabled>
+      </mat-form-field>
+
+      <mat-form-field class="w-100">
+            <input matInput placeholder="UpdatedAt" value="{{authority.updatedAt}}" name="authority.updatedAt" disabled>
+      </mat-form-field>
       <section mat-dialog-actions align="end" class="md-button-right">
-            <button color="primary" mat-raised-button cdkFocusInitial [mat-dialog-close]="authority"> Confirm </button>
-            <button color="primary" mat-button cdkFocusInitial mat-dialog-close> Cancel </button>
+            <button color="primary" mat-button [mat-dialog-close]="authority"> Confirm </button>
+            <button color="primary" mat-raised-button cdkFocusInitial mat-dialog-close> Cancel </button>
       </section>
 </div>

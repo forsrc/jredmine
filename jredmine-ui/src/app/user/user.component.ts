@@ -26,7 +26,6 @@ export class UserComponent implements OnInit {
   displayedColumns: string[] = ['index', 'username', 'enabled', 'version', 'createdAt', "updatedAt", 'action'];
 
   dataSource!: MatTableDataSource<User>;
-  totalElements!: number;
   page = {
     length: 0,
     pageSize: 10,
@@ -133,7 +132,7 @@ export class UserComponent implements OnInit {
       this.page.length = data.totalElements;
       this.page.pageSize = data.pageable.size;
       this.page.pageIndex = data.pageable.pageNumber;
-      this.dataSource.filterPredicate = this.filterPredicate
+      this.dataSource.filterPredicate = this.filterPredicate;
       this.dataSource.sort = this.sort;
       // setTimeout(() => {
       //   //this.dataSource.paginator = this.paginator;
