@@ -76,6 +76,6 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
 
     @Override
     public String[] removeKeys() {
-        return new String[] { getClass().getName() + "/page/", AuthorityServiceImpl.class.getName() + "/page/" };
+        return new String[] { getClass().getName(), AuthorityServiceImpl.class.getName() };
     }
 }

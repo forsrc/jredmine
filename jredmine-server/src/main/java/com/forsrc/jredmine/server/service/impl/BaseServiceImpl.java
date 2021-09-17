@@ -86,7 +86,7 @@ public abstract class BaseServiceImpl<T extends BaseModel<PK>, PK> implements Ba
             String key = e.getKey().toString();
             for (String removeKey : removeKeys()) {
                 if (key.startsWith(removeKey)) {
-                    LOG.debug("[CACHE]\tREMOVED\tKey = {}", e.getKey());
+                    LOG.debug("[CACHE]\tREMOVE\tKey = {}", e.getKey());
                     cacheManager.getCache(CACHE_PAGE_NAME).remove(e.getKey());
                 }
             }
@@ -94,6 +94,6 @@ public abstract class BaseServiceImpl<T extends BaseModel<PK>, PK> implements Ba
     }
 
     public String[] removeKeys() {
-        return new String[] { getClass().getName() + "/page/" };
+        return new String[] { getClass().getName() };
     }
 }

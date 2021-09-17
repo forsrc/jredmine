@@ -72,4 +72,9 @@ public class AuthorityServiceImpl extends BaseServiceImpl<Authority, AuthorityPk
     public BaseDao<Authority, AuthorityPk> getBaseDao() {
         return authorityDao;
     }
+
+    @Override
+    public String[] removeKeys() {
+        return new String[] { getClass().getName(), UserServiceImpl.class.getName() };
+    }
 }

@@ -79,8 +79,11 @@ export class UserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log("dialogRef.afterClosed()", result)
-      if (result) {
-        this.dataSource.data = this.dataSource.data.filter(e => e.username !== user.username);
+      if (result && result.confirm === user.username) {
+        this.userService.delete(user).subscribe(data => {
+
+          this.dataSource.data = this.dataSource.data.filter(e => e.username !== user.username);
+        });
         //this.userServicr.delete(user.username).subscribe();
       }
     });
