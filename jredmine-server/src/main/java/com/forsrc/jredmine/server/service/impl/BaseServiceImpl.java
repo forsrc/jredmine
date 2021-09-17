@@ -84,11 +84,16 @@ public abstract class BaseServiceImpl<T extends BaseModel<PK>, PK> implements Ba
     public void removePageCache() {
         cacheManager.getCache(CACHE_PAGE_NAME).forEach((e) -> {
             String key = e.getKey().toString();
-            String evictKey = getClass().getName() + "/page/";
-            if (key.startsWith(evictKey)) {
-                LOG.debug("[CACHE]\tREMOVED\tKey = {}", e.getKey());
-                cacheManager.getCache(CACHE_PAGE_NAME).remove(e.getKey());
+            for (String removeKey : removeKeys()) {
+                if (key.startsWith(removeKey)) {
+                    LOG.debug("[CACHE]\tREMOVED\tKey = {}", e.getKey());
+                    cacheManager.getCache(CACHE_PAGE_NAME).remove(e.getKey());
+                }
             }
         });
+    }
+
+    public String[] removeKeys() {
+        return new String[] { getClass().getName() + "/page/" };
     }
 }
