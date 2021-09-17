@@ -57,12 +57,9 @@ export class DialogConfirmedComponent implements OnInit {
     if (this.type === "delete") {
       if (this.confirm === this.data.key) {
         this.data.confirm = this.confirm;
-        const data = this.data;
-        const dialogRef = this.dialogRef;
-        const snackBar = this.snackBar;
-        this.data.callback(function(message: any) {
-          snackBar.open(message.message, "CLOSE");
-          dialogRef.close(data);
+        this.data.callback((message: any) => {
+          this.snackBar.open(message.message, "CLOSE");
+          this.dialogRef.close(this.data);
         });
       }
       return;

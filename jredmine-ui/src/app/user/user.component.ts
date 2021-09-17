@@ -76,9 +76,9 @@ export class UserComponent implements OnInit {
       confirm: ""
     };
 
-    const userService = this.userService;
-    dialogConfig.data.callback = function(fn: any) {
-      userService.delete(user).subscribe((data: any) => {
+
+    dialogConfig.data.callback = (fn: any) => {
+      this.userService.delete(user).subscribe((data: any) => {
         fn(data.body);
       });
     }
