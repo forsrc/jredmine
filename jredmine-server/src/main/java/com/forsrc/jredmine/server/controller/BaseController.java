@@ -1,5 +1,8 @@
 package com.forsrc.jredmine.server.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.EntityNotFoundException;
 
 import org.slf4j.Logger;
@@ -74,10 +77,12 @@ public abstract class BaseController<T extends BaseModel<PK>, PK> {
     }
 
     @DeleteMapping("/{pk}")
-    public ResponseEntity<String> delete(@PathVariable("pk") PK pk) {
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable("pk") PK pk) {
         Assert.notNull(pk, "delete: pk is nul");
         LOGGER.info("-->\tdelete {}", pk);
         getBaseService().delete(pk);
-        return new ResponseEntity<>(pk.toString() + " is deleted.", HttpStatus.OK);
+        Map<String, Object> message = new HashMap<>(1);
+        message.put("deleted", pk.toString());
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

@@ -4,11 +4,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -69,7 +71,10 @@ public class User implements BaseModel<String> {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String jwtToken;
 
-    @OneToMany(mappedBy = "username", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "username", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    // @JoinColumn(name = "username", foreignKey =
+    // @javax.persistence.ForeignKey(name = "none"))
+    // @JoinColumn(name = "username")
     private Set<Authority> authorities = new HashSet<>();
 
     @PrePersist

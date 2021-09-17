@@ -8,8 +8,10 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -68,7 +70,8 @@ public class UserDetails
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String jwtToken;
 
-    @OneToMany(mappedBy = "username")
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "username", foreignKey = @javax.persistence.ForeignKey(name = "none"))
     private Set<Authority> authorities = new HashSet<>();
 
     public String getUsername() {

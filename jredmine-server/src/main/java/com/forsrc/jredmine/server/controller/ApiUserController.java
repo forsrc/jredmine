@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.forsrc.jredmine.server.model.User;
 import com.forsrc.jredmine.server.service.BaseService;
 import com.forsrc.jredmine.server.service.UserService;
-import com.forsrc.jredmine.server.vo.ViewVo;
 
 @RestController
 @RequestMapping("/api/user")
