@@ -14,6 +14,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 
 import { UserRoutingModule } from './user.routing.module';
@@ -39,6 +41,7 @@ import { DialogConfirmedModule } from '../dialog-confirmed/dialog-confirmed.modu
     MatSortModule,
     MatIconModule,
     MatDialogModule,
+    MatSnackBarModule,
     UserRoutingModule,
     DialogConfirmedModule
   ],

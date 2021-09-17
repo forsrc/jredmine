@@ -82,7 +82,7 @@ public abstract class BaseController<T extends BaseModel<PK>, PK> {
         LOGGER.info("-->\tdelete {}", pk);
         getBaseService().delete(pk);
         Map<String, Object> message = new HashMap<>(1);
-        message.put("deleted", pk.toString());
+        message.put("message", "Deleted " + pk.toString());
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

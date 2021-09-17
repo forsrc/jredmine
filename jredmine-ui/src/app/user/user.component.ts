@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogConfig } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 import { User } from '../shared/user';
@@ -40,7 +41,7 @@ export class UserComponent implements OnInit {
   @ViewChild(MatSort)
   sort!: MatSort;
 
-  constructor(private router: Router, private userService: UserService, public dialog: MatDialog) {
+  constructor(private router: Router, private userService: UserService, public dialog: MatDialog, private snackBar: MatSnackBar) {
   }
 
   applyFilter(event: Event) {
@@ -75,15 +76,22 @@ export class UserComponent implements OnInit {
       confirm: ""
     };
 
+    const userService = this.userService;
+    dialogConfig.data.callback = function(fn: any) {
+      userService.delete(user).subscribe((data: any) => {
+        fn(data.body);
+      });
+    }
+
     const dialogRef = this.dialog.open(DialogConfirmedComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log("dialogRef.afterClosed()", result)
       if (result && result.confirm === user.username) {
-        this.userService.delete(user).subscribe(data => {
-
+        //this.userService.delete(user).subscribe(data => {
+          // this.snackBar.open("Deleted " + user.username, "CLOSE");
           this.dataSource.data = this.dataSource.data.filter(e => e.username !== user.username);
-        });
+        //});
         //this.userServicr.delete(user.username).subscribe();
       }
     });

@@ -3,6 +3,7 @@ import { Inject } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 /**
 
@@ -38,7 +39,8 @@ export class DialogConfirmedComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<DialogConfirmedComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private snackBar: MatSnackBar) {
 
   }
 
@@ -55,7 +57,13 @@ export class DialogConfirmedComponent implements OnInit {
     if (this.type === "delete") {
       if (this.confirm === this.data.key) {
         this.data.confirm = this.confirm;
-        this.dialogRef.close(this.data);
+        const data = this.data;
+        const dialogRef = this.dialogRef;
+        const snackBar = this.snackBar;
+        this.data.callback(function(message: any) {
+          snackBar.open(message.message, "CLOSE");
+          dialogRef.close(data);
+        });
       }
       return;
     }
