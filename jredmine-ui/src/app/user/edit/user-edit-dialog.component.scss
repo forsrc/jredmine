@@ -10,3 +10,7 @@ label ~ .mat-radio-group {
 .mat-radio-group ~ .mat-form-field {
   margin-top: 16px;
 }
+
+.mat-error ~ .mat-form-field {
+  margin-top: 16px;
+}

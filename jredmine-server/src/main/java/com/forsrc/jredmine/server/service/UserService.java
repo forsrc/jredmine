@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.forsrc.jredmine.server.model.User;
 
-
 @Service
 @Transactional(rollbackFor = { Exception.class })
 public interface UserService extends BaseService<User, String> {
@@ -13,5 +12,8 @@ public interface UserService extends BaseService<User, String> {
     @Transactional(readOnly = true)
     public User getByUsername(String username);
 
-    void updateJwtToken(String username, String jwtToken);
+)
+    void updateJwtToken(String username, String jwtToken, String version);
+
+    void updatePassword(String username, String password, String version);
 }

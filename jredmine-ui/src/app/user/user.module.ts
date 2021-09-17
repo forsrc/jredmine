@@ -13,6 +13,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
 
 
 import { UserRoutingModule } from './user.routing.module';
@@ -28,6 +29,7 @@ import { LoginService } from '../service/login.service';
     MatCheckboxModule,
     MatInputModule,
     MatRadioModule,
+    MatCardModule,
     CommonModule,
     FormsModule,
     FlexLayoutModule,

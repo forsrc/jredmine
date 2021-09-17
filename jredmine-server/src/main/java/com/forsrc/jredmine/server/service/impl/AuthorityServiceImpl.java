@@ -15,7 +15,6 @@ import com.forsrc.jredmine.server.model.Authority;
 import com.forsrc.jredmine.server.model.AuthorityPk;
 import com.forsrc.jredmine.server.service.AuthorityService;
 
-
 @Service
 @Transactional(rollbackFor = { Exception.class })
 public class AuthorityServiceImpl extends BaseServiceImpl<Authority, AuthorityPk> implements AuthorityService {
@@ -40,24 +39,27 @@ public class AuthorityServiceImpl extends BaseServiceImpl<Authority, AuthorityPk
         for (Authority authority : list) {
             authorityDao.delete(authority);
         }
+        removePageCache();
     }
 
     @Override
     /**
      * update Authorities<br/>
      * * all the username must be the same
+     * 
      * @param list
      * @returnb
      */
     @Cacheable(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #list.get(0).username")
     public List<Authority> update(List<Authority> list) {
-       return authorityDao.saveAll(list);
+        return authorityDao.saveAll(list);
     }
 
     @Override
     /**
      * save Authorities<br/>
      * * all the username must be the same
+     * 
      * @param list
      * @return
      */

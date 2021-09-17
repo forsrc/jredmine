@@ -2,7 +2,6 @@ package com.forsrc.jredmine.server.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,12 +15,12 @@ import com.forsrc.jredmine.server.model.User;
 import com.forsrc.jredmine.server.service.UserService;
 
 @Service
-@Transactional(rollbackFor = {Exception.class})
+@Transactional(rollbackFor = { Exception.class })
 public class UserServiceImpl extends BaseServiceImpl<User, String> implements UserService {
 
     @Autowired
     private UserDao userDao;
-    
+
     @Autowired
     private UserMapper userMapper;
 
@@ -36,16 +35,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     }
 
     @Override
-
-    @Caching(
-//            put = {
-//                    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getPk()", condition = "#user != null", unless = "#result == null")
-//            },
-            evict = {
-                    @CacheEvict(value = CACHE_PAGE_NAME),
-                    @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '/' + #user.getPk()", condition = "#user != null"),
-                    //@CacheEvict(value = CACHE_NAME, key = "UserDetailsServiceImpl.class.getName() + '/' + #t.getPk()")
-    })
+    @Caching(evict = { @CacheEvict(value = CACHE_PAGE_NAME, key = "#root.targetClass.getName() + '/page/'"),
+            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getPk()") })
     public User save(User user) {
         if (user.getPassword() != null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -54,16 +45,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     }
 
     @Override
-    //@Cacheable(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getPk()")
-    @Caching(
-//            put = {
-//                    @CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getPk()", condition = "#user != null" , unless = "#result == null")
-//            },
-            evict = {
-                    @CacheEvict(value = CACHE_PAGE_NAME),
-                    @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '/' + #user.getPk()", condition = "#user != null"),
-                    //@CacheEvict(value = CACHE_NAME, key = "UserDetailsServiceImpl.class.getName() + '/' + #t.getPk()")
-            })
+
+    @Caching(evict = { @CacheEvict(value = CACHE_PAGE_NAME, key = "#root.targetClass.getName() + '/page/'"),
+            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #user.getPk()") })
     public User update(User user) {
         if (user.getPassword() != null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -76,9 +60,17 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
         return userDao;
     }
 
-	@Override
-	@CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #username")
-	public void updateJwtToken(String username, String jwtToken) {
-		userMapper.updateJwtToken(username, jwtToken);
-	}
+    @Override
+    @Caching(evict = { @CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #username") })
+    public void updateJwtToken(String username, String jwtToken, String version) {
+        userMapper.updateJwtToken(username, jwtToken, version);
+        removePageCache();
+    }
+
+    @Override
+    @Caching(evict = { @CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #username") })
+    public void updatePassword(String username, String password, String version) {
+        userMapper.updatePassword(username, password, version);
+        removePageCache();
+    }
 }

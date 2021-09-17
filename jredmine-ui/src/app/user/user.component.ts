@@ -89,7 +89,7 @@ export class UserComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.height = '500px';
+    dialogConfig.height = '600px';
     dialogConfig.width = '800px';
     dialogConfig.data = {
       title: "Edit",

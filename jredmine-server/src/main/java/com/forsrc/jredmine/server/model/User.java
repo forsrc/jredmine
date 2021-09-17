@@ -44,7 +44,7 @@ public class User implements BaseModel<String> {
     @Column(name = "username", unique = true, length = 200, nullable = false)
     private String username;
 
-    @Column(name = "password", length = 200)
+    @Column(name = "password", length = 200, insertable = false, updatable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 

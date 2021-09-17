@@ -13,7 +13,7 @@ public class MyCacheEventLogger implements CacheEventListener<Object, Object> {
 
     @Override
     public void onEvent(CacheEvent cacheEvent) {
-        LOG.info("[CACHE]\tKey = {}; Type = {}; New value = {}; Old value = {}", cacheEvent.getKey(),
-                cacheEvent.getType(), cacheEvent.getNewValue(), cacheEvent.getOldValue());
+        LOG.info("[CACHE]\t{}\tKey = {}; New value = {}; Old value = {}", cacheEvent.getType(), cacheEvent.getKey(),
+                cacheEvent.getNewValue(), cacheEvent.getOldValue());
     }
 }

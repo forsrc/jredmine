@@ -47,6 +47,7 @@ public class LogAspect {
 			// message.put("args", joinPoint.getArgs());
 			// message.put("exception", e.getClass().getName());
 			// return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
+			e.printStackTrace();
 			throw e;
 
 		}
@@ -95,6 +96,7 @@ public class LogAspect {
 			Long time = System.currentTimeMillis() - start;
 			LOG.warn("[Around]\t{} {} [Service Exception]\tTime: {}ms; Exception: {}, {};", getSessionId(), uuid, time,
 					e.getClass().getName(), e.getMessage());
+
 			throw e;
 
 		}

@@ -1,5 +1,7 @@
 <div class="container">
   <h3 mat-dialog-title>{{ title }} <mat-icon color="primary" aria-label="edit">edit</mat-icon> Username: {{ user.username }}</h3>
+
+      <mat-error *ngIf="message">{{message}}</mat-error>
       <mat-form-field class="w-100">
             <input matInput placeholder="Username" value="{{user.username}}" name="user.username" disabled>
       </mat-form-field>
@@ -21,9 +23,8 @@
       <mat-form-field class="w-100">
             <input matInput placeholder="UpdatedAt" value="{{user.updatedAt}}" name="user.updatedAt" disabled>
       </mat-form-field>
-
       <section mat-dialog-actions align="end" class="md-button-right">
-            <button color="primary" mat-button [mat-dialog-close]="user"> Confirm </button>
+            <button color="primary" mat-button (click)="onUpdate()"> Confirm </button>
             <button color="primary" mat-raised-button cdkFocusInitial mat-dialog-close> Cancel </button>
       </section>
 

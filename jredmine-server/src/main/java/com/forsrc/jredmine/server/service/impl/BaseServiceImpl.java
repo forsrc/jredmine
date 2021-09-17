@@ -1,5 +1,8 @@
 package com.forsrc.jredmine.server.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -8,78 +11,84 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.cache.CacheManager;
+
 import com.forsrc.jredmine.server.model.BaseModel;
 import com.forsrc.jredmine.server.service.BaseService;
 import com.forsrc.jredmine.server.utils.BeanUtil;
 
 @Service
-@Transactional(rollbackFor = {Exception.class})
+@Transactional(rollbackFor = { Exception.class })
 public abstract class BaseServiceImpl<T extends BaseModel<PK>, PK> implements BaseService<T, PK> {
 
     public static final String CACHE_NAME = "jredmine";
     public static final String CACHE_PAGE_NAME = CACHE_NAME + "/page";
 
+    private static final Logger LOG = LoggerFactory.getLogger(BaseServiceImpl.class);
+
+    @Autowired
+    CacheManager cacheManager;
+
     @Override
-    //@CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getPk()", condition = "#t != null" , unless = "#result == null")
-    //@CachePut(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
-    @CacheEvict(value = CACHE_PAGE_NAME)
-//    @Caching(evict = {
-//            @CacheEvict(value = CACHE_PAGE_NAME),
-//            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass + '-' + #t.getPk()")
-//    })
+    @Caching(evict = { @CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getPk()") })
     public T save(T t) {
-        return getBaseDao().save(t);
+        T saved = getBaseDao().save(t);
+
+        removePageCache();
+
+        return saved;
     }
 
     @Override
-    //@CachePut(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getPk()", condition = "#t != null" , unless = "#result == null")
-    //@CachePut(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
-    @CacheEvict(value = CACHE_PAGE_NAME)
+    @Caching(evict = { @CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getPk()") })
     public T update(T t) {
-    	T source = getBaseDao().findById(t.getPk()).get();
-    	BeanUtil.copyIgnoreNull(t, source);
-    	T updated = getBaseDao().save(source);
+        T source = getBaseDao().findById(t.getPk()).get();
+        BeanUtil.copyIgnoreNull(t, source);
+        T updated = getBaseDao().save(source);
+
+        removePageCache();
+
         return updated;
     }
 
     @Override
     @Transactional(readOnly = true)
     @Cacheable(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #pk")
-    //@CachePut(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
+    // @CachePut(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
     public T get(PK pk) {
         return getBaseDao().findById(pk).get();
     }
 
     @Override
-    @Cacheable(value = CACHE_PAGE_NAME, key = "#root.targetClass.getName() + '/' + #page + '-' + #size")
-    //@CachePut(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
+    @Cacheable(value = CACHE_PAGE_NAME, key = "#root.targetClass.getName() + '/page/' + #page + '-' + #size")
+    // @CachePut(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
     public Page<T> page(int page, int size) {
         Page<T> p = getBaseDao().findAll(PageRequest.of(page, size));
         return p;
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = CACHE_PAGE_NAME),
-            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #pk")
-    })
-//    @Caching(evict = {
-//            @CacheEvict(value = CACHE_PAGE_NAME), @CacheEvict(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
-//    })
+    @Caching(evict = { @CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #pk") })
     public void delete(PK pk) {
         getBaseDao().deleteById(pk);
+        removePageCache();
     }
 
-    
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = CACHE_PAGE_NAME),
-            @CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getPk()")
-    })
-//    @Caching(evict = {
-//            @CacheEvict(value = CACHE_PAGE_NAME), @CacheEvict(value = CACHE_NAME, keyGenerator = "myKeyGenerator")
-//    })
+    @Caching(evict = { @CacheEvict(value = CACHE_NAME, key = "#root.targetClass.getName() + '/' + #t.getPk()") })
     public void delete(T t) {
         getBaseDao().delete(t);
+        removePageCache();
+    }
+
+    public void removePageCache() {
+        cacheManager.getCache(CACHE_PAGE_NAME).forEach((e) -> {
+            String key = e.getKey().toString();
+            String evictKey = getClass().getName() + "/page/";
+            if (key.startsWith(evictKey)) {
+                LOG.debug("[CACHE]\tREMOVED\tKey = {}", e.getKey());
+                cacheManager.getCache(CACHE_PAGE_NAME).remove(e.getKey());
+            }
+        });
     }
 }
