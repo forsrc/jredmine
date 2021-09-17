@@ -22,6 +22,7 @@ import { UserComponent } from './user.component';
 import { UserService } from '../service/user.service';
 import { UserEditDialogComponent } from './edit/user-edit-dialog.component';
 import { LoginService } from '../service/login.service';
+import { DialogConfirmedModule } from '../dialog-confirmed/dialog-confirmed.module';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { LoginService } from '../service/login.service';
     MatSortModule,
     MatIconModule,
     MatDialogModule,
-    UserRoutingModule
+    UserRoutingModule,
+    DialogConfirmedModule
   ],
   declarations: [
     UserComponent,

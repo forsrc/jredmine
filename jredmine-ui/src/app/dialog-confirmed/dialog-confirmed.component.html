@@ -3,6 +3,11 @@
 {{message}}
 </div>
 <div mat-dialog-actions align="end" class="md-button-right">
-  <button mat-button color="primary" [mat-dialog-close]="data">Confirm</button>
+
+    <mat-form-field *ngIf="type === 'delete'" class="w-100">
+        <input matInput placeholder="Please input '{{key}}' to confirm" name="confirm" [(ngModel)]="confirm">
+    </mat-form-field>
+
+  <button mat-button color="primary" (click)="onConfirmed()">Confirm</button>
   <button mat-raised-button color="primary" cdkFocusInitial mat-dialog-close>Cancel</button>
 </div>

@@ -64,19 +64,21 @@ export class UserComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.height = '200px';
+    dialogConfig.height = '300px';
     dialogConfig.width = '400px';
     dialogConfig.data = {
       title: "Delete",
       icon: "delete_forever",
       key: user.username,
-      message: 'Are you sure?'
+      message: 'Are you sure?',
+      type: "delete",
+      confirm: ""
     };
 
     const dialogRef = this.dialog.open(DialogConfirmedComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      //console.log("dialogRef.afterClosed()", result)
+      console.log("dialogRef.afterClosed()", result)
       if (result) {
         this.dataSource.data = this.dataSource.data.filter(e => e.username !== user.username);
         //this.userServicr.delete(user.username).subscribe();

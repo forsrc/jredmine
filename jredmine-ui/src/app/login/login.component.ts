@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {LoginService} from "../service/login.service";
-import {tap} from "rxjs/operators";
-import {HttpEvent, HttpResponse} from "@angular/common/http";
-import {User} from "../shared/user";
+import { LoginService } from "../service/login.service";
+import { HttpResponse } from "@angular/common/http";
+import { User } from "../shared/user";
 
 @Component({
   selector: 'app-login',

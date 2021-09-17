@@ -26,6 +26,7 @@ import { NavBarModule } from './navbar/navbar.module';
 import { FooterModule } from './footer/footer.module';
 import { CookieService } from 'ngx-cookie-service';
 import { DialogConfirmedComponent } from './dialog-confirmed/dialog-confirmed.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { DialogConfirmedComponent } from './dialog-confirmed/dialog-confirmed.co
     MatInputModule,
     MatSelectModule,
     MatProgressBarModule,
+    FormsModule,
 
     BrowserModule,
     AppRoutingModule,

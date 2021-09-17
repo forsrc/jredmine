@@ -1,4 +1,3 @@
-import { ChangeDetectionStrategy } from '@angular/core';
 import { Component } from '@angular/core';
 import { Inject } from '@angular/core';
 import { OnInit } from '@angular/core';
@@ -33,6 +32,8 @@ export class DialogConfirmedComponent implements OnInit {
   icon!: string;
   key!: string;
   message!: string;
+  type!: string;
+  confirm!:string;
 
 
   constructor(
@@ -45,8 +46,19 @@ export class DialogConfirmedComponent implements OnInit {
     this.title = this.data.title;
     this.key = this.data.key || "";
     this.icon = this.data.icon || "info";
+    this.type = this.data.type || "info";
     this.message = this.data.message || "Are you sure?";
 
   }
 
+  onConfirmed() {
+    if (this.type === "delete") {
+      if (this.confirm === this.data.key) {
+        this.data.confirm = this.confirm;
+        this.dialogRef.close(this.data);
+      }
+      return;
+    }
+    this.dialogRef.close(this.data);
+  }
 }
