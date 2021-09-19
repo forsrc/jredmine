@@ -72,10 +72,12 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "MyAngularMaterial:build:production"
+              "browserTarget": "MyAngularMaterial:build:production",
+              "host": "0.0.0.0"
             },
             "development": {
-              "browserTarget": "MyAngularMaterial:build:development"
+              "browserTarget": "MyAngularMaterial:build:development",
+              "host": "0.0.0.0"
             }
           },
           "defaultConfiguration": "development"

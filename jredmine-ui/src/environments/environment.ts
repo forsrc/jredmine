@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: "http://localhost:8080/jredmine-server"
+  baseUrl: location.protocol + "//" + location.hostname + ":8080/jredmine-server"
 };
 
 /*
