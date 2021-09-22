@@ -129,15 +129,13 @@ export class UserComponent implements OnInit {
 
 
   onPage(page: any): void {
-    if(page.length != 0 && page.pageSize >= page.length) {
-      return;
-    }
+
     this.users = [];
     this.userService.list(page.pageIndex, page.pageSize).subscribe(data => {
       this.users = data.content || [];
       let length = this.users.length;
       for (let index = 0; index <  length; index++) {
-        this.users[index].index = index + 1;
+        this.users[index].index = (page.pageIndex * page.pageSize) + index + 1;
         this.users[index].enabledValue = this.users[index].enabled == 1 ? "true" : "false";
 
       }

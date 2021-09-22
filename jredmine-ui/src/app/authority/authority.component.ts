@@ -116,15 +116,12 @@ export class AuthorityComponent implements OnInit {
   }
 
   onPage(page: any): void {
-    if(page.length != 0 && page.pageSize >= page.length) {
-      return;
-    }
     this.authorities = [];
     this.authorityService.list(page.pageIndex, page.pageSize).subscribe(data => {
       this.authorities = data.content || [];
       let length = this.authorities.length;
       for (let index = 0; index <  length; index++) {
-        this.authorities[index].index = index + 1;
+        this.authorities[index].index = (page.pageIndex * page.pageSize) + index + 1;
       }
       this.dataSource = new MatTableDataSource<Authority>(this.authorities);
       this.page.length = data.totalElements;
