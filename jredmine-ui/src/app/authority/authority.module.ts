@@ -12,13 +12,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 import { AuthorityRoutingModule } from './authority.routing.module';
 import { AuthorityComponent } from './authority.component';
 
 import { AuthorityService } from '../service/authority.service';
-import { DialogConfirmedComponent } from '../dialog-confirmed/dialog-confirmed.component';
 import { AuthorityEditDialogComponent } from './edit/authority-edit-dialog.component';
 
 @NgModule({
@@ -34,6 +34,7 @@ import { AuthorityEditDialogComponent } from './edit/authority-edit-dialog.compo
     MatSortModule,
     MatIconModule,
     MatDialogModule,
+    MatSnackBarModule,
     AuthorityRoutingModule
   ],
   declarations: [

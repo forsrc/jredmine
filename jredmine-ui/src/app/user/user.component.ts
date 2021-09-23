@@ -89,7 +89,7 @@ export class UserComponent implements OnInit {
       console.log("dialogRef.afterClosed()", result)
       if (result && result.confirm === user.username) {
         //this.userService.delete(user).subscribe(data => {
-          // this.snackBar.open("Deleted " + user.username, "CLOSE");
+          this.snackBar.open("Deleted: " + user.username, "CLOSE");
           this.dataSource.data = this.dataSource.data.filter(e => e.username !== user.username);
         //});
         //this.userServicr.delete(user.username).subscribe();
@@ -122,6 +122,7 @@ export class UserComponent implements OnInit {
           // user.enabled = result.enabled;
           Object.assign(data, result);
           data.enabledValue = data.enabled == 1 ? "true" : "false";
+          this.snackBar.open("Updated: " + user.username, "CLOSE");
         }
       });
     });

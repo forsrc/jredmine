@@ -58,7 +58,7 @@ export class DialogConfirmedComponent implements OnInit {
       if (this.confirm === this.data.key) {
         this.data.confirm = this.confirm;
         this.data.callback((message: any) => {
-          this.snackBar.open(message.message, "CLOSE");
+          // this.snackBar.open(message.message, "CLOSE");
           this.dialogRef.close(this.data);
         });
       }

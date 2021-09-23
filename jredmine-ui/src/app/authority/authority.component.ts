@@ -14,6 +14,7 @@ import Authority from '../shared/authority';
 import { AuthorityService } from '../service/authority.service';
 import { DialogConfirmedComponent } from '../dialog-confirmed/dialog-confirmed.component';
 import { AuthorityEditDialogComponent } from './edit/authority-edit-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -41,7 +42,8 @@ export class AuthorityComponent implements OnInit {
   @ViewChild(MatSort)
   sort!: MatSort;
 
-  constructor(private router: Router, private authorityService: AuthorityService, public dialog: MatDialog) {
+  constructor(private router: Router, private authorityService: AuthorityService, public dialog: MatDialog,
+    private snackBar: MatSnackBar) {
   }
 
   applyFilter(event: Event) {
@@ -79,6 +81,7 @@ export class AuthorityComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       //console.log("dialogRef.afterClosed()", result)
       if (result) {
+        this.snackBar.open("Deleted: " + authority.username, "CLOSE");
         this.dataSource.data = this.dataSource.data.filter(e => e.username !== authority.username);
         //this.userServicr.delete(user.username).subscribe();
       }
@@ -104,6 +107,7 @@ export class AuthorityComponent implements OnInit {
       //console.log("dialogRef.afterClosed()", result)
       //console.log("--->", result);
       if (result) {
+        this.snackBar.open("Updated: " + authority.username, "CLOSE");
         this.dataSource.data.map((user , i) => {
           //console.log(user , i);
           if (result.username === authority.username) {
