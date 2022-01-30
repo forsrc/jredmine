@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .addFilterAfter(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/", "/jwt/login", "/login").permitAll()
+                .antMatchers("/", "/jwt/login", "/login", "/actuator/**").permitAll()
                 .anyRequest().authenticated()
 //                .and()
 //                .formLogin()
