@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
+    "start": "ng serve --configuration=production",
+    "build": "ng build --configuration=production",
+    "build_k8s": "ng build --configuration=k8s",
+    "test": "ng test --configuration=production",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

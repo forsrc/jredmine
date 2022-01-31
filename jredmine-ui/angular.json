@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "MyAngularMaterial": {
+    "jredmine": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -28,7 +28,8 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              { "glob": "**/*", "input": "src/assets", "output": "/assets" }
             ],
             "styles": [
               "src/styles.scss"
@@ -40,13 +41,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "10mb",
-                  "maximumError": "10mb"
+                  "maximumWarning": "100mb",
+                  "maximumError": "100mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "10mb",
-                  "maximumError": "10mb"
+                  "maximumWarning": "100mb",
+                  "maximumError": "100mb"
                 }
               ],
               "fileReplacements": [
@@ -64,6 +65,27 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "k8s": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "100mb",
+                  "maximumError": "100mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "100mb",
+                  "maximumError": "100mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.k8s.ts"
+                }
+              ],
+              "outputHashing": "all"
             }
           },
           "defaultConfiguration": "production"
@@ -72,11 +94,11 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "MyAngularMaterial:build:production",
+              "browserTarget": "jredmine:build:production",
               "host": "0.0.0.0"
             },
             "development": {
-              "browserTarget": "MyAngularMaterial:build:development",
+              "browserTarget": "jredmine:build:development",
               "host": "0.0.0.0"
             }
           },
@@ -85,7 +107,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "MyAngularMaterial:build"
+            "browserTarget": "jredmine:build"
           }
         },
         "test": {
@@ -109,7 +131,7 @@
       }
     }
   },
-  "defaultProject": "MyAngularMaterial",
+  "defaultProject": "jredmine",
   "cli": {
     "analytics": "82fb1db6-8347-46a8-9aae-50a6207ea5b3"
   }

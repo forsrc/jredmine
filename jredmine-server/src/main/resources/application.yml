@@ -9,13 +9,9 @@ my:
 server:
   port: ${my.port}
   servlet:
-    context-path: ${my.context-path}
     session:
       cookie:
         name: ${my.session-name}
-        path: ${my.context-path}
-
-
 spring:
   main.allow-bean-definition-overriding: true
   application:

@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, AfterContentInit {
-  title = 'MyAngularMaterial';
+  title = 'jredmine';
   isLoading = true;
 
   constructor(public loginService: LoginService, private router: Router) {
