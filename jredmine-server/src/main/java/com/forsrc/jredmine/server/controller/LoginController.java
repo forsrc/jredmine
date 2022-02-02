@@ -35,7 +35,7 @@ public class LoginController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/login")
     public String toLoginPage(HttpServletResponse response) {
-        return "/login";
+        return "login";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
@@ -46,11 +46,11 @@ public class LoginController {
         } catch (NoSuchObjectException e) {
             model.addAttribute("hasError", true);
             model.addAttribute("errorMessage", e.getMessage());
-            return "/login";
+            return "login";
         } catch (PasswordNotMatchException e) {
             model.addAttribute("hasError", true);
             model.addAttribute("errorMessage", e.getMessage());
-            return "/login";
+            return "login";
         }
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
