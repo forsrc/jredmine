@@ -32,7 +32,7 @@ spec:
         - name: MY_PROFILE
           value: k8s
         - name: SERVER_URL
-          value: https://jredmine.forsrc.org/jredmine-server
+          value: http://jredmine-server.forsrc.org
         livenessProbe:
             httpGet:
               path: /index.html
@@ -50,7 +50,7 @@ spec:
       initContainers:
       - name: init-waiting
         image: busybox:1.28
-        command: ['sh', '-c', 'until nc -z jredmine-server 80; do echo waiting for jredmine-server 80; sleep 2; done;']
+        command: ['sh', '-c', 'until nc -z jredmine-server 8080; do echo waiting for jredmine-server 8080; sleep 2; done;']
 
 ---
 
