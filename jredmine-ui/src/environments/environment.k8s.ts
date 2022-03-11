@@ -2,5 +2,5 @@
 
 export const environment = {
   production: true,
-  baseUrl: "http://jredmine-server.forsrc.org"
+  baseUrl: location.protocol + "//jredmine-server.forsrc.org"
 };
